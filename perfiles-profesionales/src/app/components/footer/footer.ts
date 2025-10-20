@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { IonButton } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-footer',
-  imports: [],
+  imports: [IonButton],
   templateUrl: './footer.html',
   styleUrl: './footer.css'
 })

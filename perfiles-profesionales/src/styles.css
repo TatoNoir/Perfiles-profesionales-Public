@@ -1,3 +1,15 @@
+/* Ionic Global Styles */
+@import '~@ionic/angular/css/core.css';
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
+@import '~@ionic/angular/css/display.css';
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
+
 /* Global styles for Perfiles Profesionales */
 * {
   box-sizing: border-box;
@@ -70,4 +82,26 @@ input {
   .container {
     padding: 0 0.5rem;
   }
+}
+
+/* Ionic Custom Variables */
+:root {
+  --ion-color-primary: #20B2AA;
+  --ion-color-primary-rgb: 32, 178, 170;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #1c9d96;
+  --ion-color-primary-tint: #36b9b2;
+
+  --ion-color-secondary: #48CAE4;
+  --ion-color-secondary-rgb: 72, 202, 228;
+  --ion-color-secondary-contrast: #000000;
+  --ion-color-secondary-contrast-rgb: 0, 0, 0;
+  --ion-color-secondary-shade: #3fb2c8;
+  --ion-color-secondary-tint: #5acfe7;
+
+  --ion-background-color: #f8fafc;
+  --ion-background-color-rgb: 248, 250, 252;
+  --ion-text-color: #2d3748;
+  --ion-text-color-rgb: 45, 55, 72;
 }

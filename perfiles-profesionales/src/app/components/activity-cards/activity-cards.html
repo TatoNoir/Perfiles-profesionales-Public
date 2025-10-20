@@ -1,11 +1,26 @@
-<div class="cards-container">
-  <div *ngFor="let activity of activities; trackBy: trackByActivityId"
-       class="activity-card"
-       (click)="onCardClick(activity)">
-    <div class="card-icon" [style.background-color]="activity.color">
-      <span class="icon-emoji">{{ activity.icon }}</span>
-    </div>
-    <h3 class="card-title">{{ activity.name }}</h3>
-    <p class="card-count">{{ activity.professionals }} profesionales</p>
-  </div>
-</div>
+<ion-grid class="cards-container">
+  <ion-row>
+    <ion-col
+      *ngFor="let activity of activities; trackBy: trackByActivityId"
+      size="6"
+      size-md="4"
+      size-lg="2"
+      class="activity-col">
+      <ion-card
+        class="activity-card"
+        (click)="onCardClick(activity)">
+        <ion-card-content class="card-content">
+          <div class="card-icon" [style.background-color]="activity.color">
+            <ion-icon
+              [name]="activity.ionIcon"
+              class="ion-icon">
+            </ion-icon>
+            <span class="icon-emoji">{{ activity.icon }}</span>
+          </div>
+          <h3 class="card-title">{{ activity.name }}</h3>
+          <p class="card-count">{{ activity.professionals }} profesionales</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>

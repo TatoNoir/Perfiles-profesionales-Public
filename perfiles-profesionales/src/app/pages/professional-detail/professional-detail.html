@@ -1,148 +1,156 @@
-<div class="professional-detail-page" *ngIf="professional">
-  <!-- Navigation Header -->
-  <div class="navigation-header">
-    <button class="back-button" (click)="goBack()">
-      <svg class="back-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      Volver al directorio
-    </button>
-    <span class="current-page">/professionals/{{ professional.id }}</span>
-  </div>
+<ion-content [fullscreen]="true">
+  <!-- Header -->
+  <ion-header [translucent]="true" *ngIf="professional">
+    <ion-toolbar>
+      <ion-button fill="clear" slot="start" (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+      <ion-title>{{ professional.name }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-  <!-- Main Content -->
-  <div class="main-content">
+  <div class="professional-detail-page" *ngIf="professional">
+    <!-- Main Content -->
+    <div class="main-content">
     <!-- Left Column -->
     <div class="left-column">
       <!-- Profile Card -->
-      <div class="profile-card">
-        <div class="profile-header">
-          <div class="avatar-container">
-            <div class="avatar">
-              {{ professional.name.charAt(0) }}{{ professional.name.split(' ')[1]?.charAt(0) || '' }}
-            </div>
-          </div>
-          <div class="profile-info">
-            <div class="name-container">
-              <h1 class="professional-name">{{ professional.name }}</h1>
-              <svg *ngIf="professional.isVerified"
-                   class="verified-icon"
-                   viewBox="0 0 24 24"
-                   fill="none"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <p class="profession">{{ professional.profession }}</p>
-            <div class="rating-location">
-              <div class="rating">
-                <svg class="star-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#FCD34D" stroke="#FCD34D" stroke-width="1"/>
-                </svg>
-                <span class="rating-text">{{ professional.rating }} ({{ professional.reviews }} reseñas)</span>
-              </div>
-              <div class="location">
-                <svg class="location-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M21 10C21 17 12 23 12 23S3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.3639 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="#6B7280" stroke-width="2"/>
-                  <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#6B7280" stroke-width="2"/>
-                </svg>
-                <span class="location-text">{{ professional.location }}</span>
+      <ion-card class="profile-card">
+        <ion-card-content class="profile-content">
+          <div class="profile-header">
+            <div class="avatar-container">
+              <div class="avatar">
+                {{ professional.name.charAt(0) }}{{ professional.name.split(' ')[1]?.charAt(0) || '' }}
               </div>
             </div>
-            <div class="status-tag" [style.background-color]="getStatusColor(professional.status)">
-              {{ getStatusText(professional.status) }}
+            <div class="profile-info">
+              <div class="name-container">
+                <h1 class="professional-name">{{ professional.name }}</h1>
+                <ion-icon
+                  *ngIf="professional.isVerified"
+                  name="checkmark-circle"
+                  class="verified-icon">
+                </ion-icon>
+              </div>
+              <p class="profession">{{ professional.profession }}</p>
+              <div class="rating-location">
+                <div class="rating">
+                  <ion-icon name="star" class="star-icon"></ion-icon>
+                  <span class="rating-text">{{ professional.rating }} ({{ professional.reviews }} reseñas)</span>
+                </div>
+                <div class="location">
+                  <ion-icon name="location" class="location-icon"></ion-icon>
+                  <span class="location-text">{{ professional.location }}</span>
+                </div>
+              </div>
+              <div class="status-tag" [style.background-color]="getStatusColor(professional.status)">
+                {{ getStatusText(professional.status) }}
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </ion-card-content>
+      </ion-card>
 
       <!-- About Me Card -->
-      <div class="info-card">
-        <h2 class="card-title">Sobre mí</h2>
-        <p class="about-text">{{ professional.aboutMe }}</p>
-      </div>
+      <ion-card class="info-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Sobre mí</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="about-text">{{ professional.aboutMe }}</p>
+        </ion-card-content>
+      </ion-card>
 
       <!-- Skills Card -->
-      <div class="info-card">
-        <h2 class="card-title">Habilidades</h2>
-        <div class="skills-container">
-          <span *ngFor="let skill of professional.skills" class="skill-tag">{{ skill }}</span>
-        </div>
-      </div>
+      <ion-card class="info-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Habilidades</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="skills-container">
+            <ion-chip *ngFor="let skill of professional.skills" class="skill-tag">{{ skill }}</ion-chip>
+          </div>
+        </ion-card-content>
+      </ion-card>
 
       <!-- Work Zone Card -->
-      <div class="info-card">
-        <h2 class="card-title">Zona de Trabajo</h2>
-        <p class="work-zone-description">Áreas de cobertura donde este profesional ofrece sus servicios:</p>
-        <div class="work-zones-container">
-          <span *ngFor="let zone of professional.workZones" class="work-zone-tag">
-            <svg class="location-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21 10C21 17 12 23 12 23S3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.3639 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="#6B7280" stroke-width="2"/>
-              <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#6B7280" stroke-width="2"/>
-            </svg>
-            {{ zone }}
-          </span>
-        </div>
-      </div>
+      <ion-card class="info-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Zona de Trabajo</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="work-zone-description">Áreas de cobertura donde este profesional ofrece sus servicios:</p>
+          <div class="work-zones-container">
+            <ion-chip *ngFor="let zone of professional.workZones" class="work-zone-tag">
+              <ion-icon name="location" slot="start"></ion-icon>
+              {{ zone }}
+            </ion-chip>
+          </div>
+        </ion-card-content>
+      </ion-card>
     </div>
 
     <!-- Right Column -->
     <div class="right-column">
       <!-- Price & Contact Card -->
-      <div class="contact-card">
-        <div class="price-section">
-          <div class="price-amount">${{ professional.pricePerHour }}</div>
-          <div class="price-unit">por hora</div>
-        </div>
-        <button class="contact-button" (click)="contactProfessional()">
-          <svg class="mail-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Contactar
-        </button>
-      </div>
+      <ion-card class="contact-card">
+        <ion-card-content class="contact-content">
+          <div class="price-section">
+            <div class="price-amount">${{ professional.pricePerHour }}</div>
+            <div class="price-unit">por hora</div>
+          </div>
+          <ion-button class="contact-button" (click)="contactProfessional()" fill="solid" color="primary" size="large">
+            <ion-icon name="mail" slot="start"></ion-icon>
+            Contactar
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
 
       <!-- Statistics Card -->
-      <div class="stats-card">
-        <h3 class="stats-title">Estadísticas</h3>
-        <div class="stats-list">
-          <div class="stat-item">
-            <span class="stat-label">Proyectos completados</span>
-            <span class="stat-value">{{ professional.completedProjects }}</span>
+      <ion-card class="stats-card">
+        <ion-card-header>
+          <ion-card-title class="stats-title">Estadísticas</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="stats-list">
+            <div class="stat-item">
+              <span class="stat-label">Proyectos completados</span>
+              <span class="stat-value">{{ professional.completedProjects }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Tasa de respuesta</span>
+              <span class="stat-value">{{ professional.responseRate }}%</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Tiempo de respuesta</span>
+              <span class="stat-value">{{ professional.responseTime }}</span>
+            </div>
           </div>
-          <div class="stat-item">
-            <span class="stat-label">Tasa de respuesta</span>
-            <span class="stat-value">{{ professional.responseRate }}%</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">Tiempo de respuesta</span>
-            <span class="stat-value">{{ professional.responseTime }}</span>
-          </div>
-        </div>
-      </div>
+        </ion-card-content>
+      </ion-card>
 
       <!-- Verified Profile Card -->
-      <div class="verified-card">
-        <div class="verified-header">
-          <svg class="verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <h3 class="verified-title">Perfil Verificado</h3>
-        </div>
-        <p class="verified-description">
-          Este profesional ha completado el proceso de verificación y ha sido validado por nuestro equipo.
-        </p>
-      </div>
+      <ion-card class="verified-card">
+        <ion-card-content class="verified-content">
+          <div class="verified-header">
+            <ion-icon name="checkmark-circle" class="verified-icon"></ion-icon>
+            <h3 class="verified-title">Perfil Verificado</h3>
+          </div>
+          <p class="verified-description">
+            Este profesional ha completado el proceso de verificación y ha sido validado por nuestro equipo.
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </div>
     </div>
   </div>
-</div>
 
-<!-- Loading State -->
-<div class="loading-state" *ngIf="!professional">
-  <div class="loading-spinner"></div>
-  <p>Cargando perfil...</p>
-</div>
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="!professional">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando perfil...</p>
+  </div>
+</ion-content>
 
 <!-- Contact Modal -->
 <app-contact-modal

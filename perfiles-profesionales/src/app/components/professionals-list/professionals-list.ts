@@ -2,11 +2,14 @@ import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { IonCard, IonCardContent, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonChip, IonSpinner } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { checkmarkCircle, star, location, eye } from 'ionicons/icons';
 import { ProfessionalService, Professional } from '../../services/professional';
 
 @Component({
   selector: 'app-professionals-list',
-  imports: [CommonModule],
+  imports: [CommonModule, IonCard, IonCardContent, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonChip, IonSpinner],
   templateUrl: './professionals-list.html',
   styleUrl: './professionals-list.css'
 })
@@ -23,7 +26,9 @@ export class ProfessionalsListComponent implements OnInit, OnDestroy {
   constructor(
     private professionalService: ProfessionalService,
     private router: Router
-  ) {}
+  ) {
+    addIcons({ checkmarkCircle, star, location, eye });
+  }
 
   ngOnInit() {
     this.loadProfessionals();

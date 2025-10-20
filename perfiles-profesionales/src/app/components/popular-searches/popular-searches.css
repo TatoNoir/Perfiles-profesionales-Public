@@ -1,19 +1,28 @@
+/* Ionic Card Customization */
 .popular-searches-section {
-  padding: 4rem 1rem;
-  background-color: #ffffff;
-}
-
-.popular-searches-content {
+  --background: #ffffff;
+  --border-radius: 16px;
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --border-width: 1px;
+  --border-color: #e2e8f0;
+  margin: 2rem 1rem;
   max-width: 1200px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+/* Ionic Card Title Customization */
 .section-title {
+  --color: #2d3748;
   font-size: 2rem;
   font-weight: 700;
-  color: #2d3748;
-  margin: 0 0 2.5rem 0;
+  margin: 0 0 1.5rem 0;
   text-align: left;
+}
+
+/* Ionic Card Content Customization */
+ion-card-content {
+  padding: 0 1.5rem 1.5rem 1.5rem;
 }
 
 .search-buttons-container {
@@ -23,12 +32,17 @@
   justify-content: flex-start;
 }
 
-.search-button {
-  padding: 0.75rem 1.5rem;
-  background-color: #f7fafc;
-  color: #2d3748;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+/* Ionic Chip Customization */
+.search-chip {
+  --background: #f7fafc;
+  --color: #2d3748;
+  --border-width: 1px;
+  --border-color: #e2e8f0;
+  --border-radius: 8px;
+  --padding-start: 0.75rem;
+  --padding-end: 0.75rem;
+  --padding-top: 0.75rem;
+  --padding-bottom: 0.75rem;
   font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
@@ -36,55 +50,69 @@
   white-space: nowrap;
 }
 
-.search-button:hover {
-  background-color: #edf2f7;
-  border-color: #cbd5e0;
+.search-chip:hover {
+  --background: #edf2f7;
+  --border-color: #cbd5e0;
   transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.search-button:active {
+.search-chip:active {
   transform: translateY(0);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .popular-searches-section {
-    padding: 3rem 1rem;
+    margin: 1.5rem 0.75rem;
   }
 
   .section-title {
     font-size: 1.75rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  ion-card-content {
+    padding: 0 1.25rem 1.25rem 1.25rem;
   }
 
   .search-buttons-container {
     gap: 0.75rem;
   }
 
-  .search-button {
-    padding: 0.625rem 1.25rem;
+  .search-chip {
+    --padding-start: 0.625rem;
+    --padding-end: 0.625rem;
+    --padding-top: 0.625rem;
+    --padding-bottom: 0.625rem;
     font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
   .popular-searches-section {
-    padding: 2.5rem 1rem;
+    margin: 1rem 0.5rem;
   }
 
   .section-title {
     font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  ion-card-content {
+    padding: 0 1rem 1rem 1rem;
   }
 
   .search-buttons-container {
     gap: 0.5rem;
   }
 
-  .search-button {
-    padding: 0.5rem 1rem;
+  .search-chip {
+    --padding-start: 0.5rem;
+    --padding-end: 0.5rem;
+    --padding-top: 0.5rem;
+    --padding-bottom: 0.5rem;
     font-size: 0.85rem;
   }
 }

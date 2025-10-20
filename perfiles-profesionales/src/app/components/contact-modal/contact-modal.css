@@ -1,83 +1,24 @@
-/* Modal Backdrop */
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 1rem;
-}
-
-/* Modal Content */
+/* Ionic Modal Customization */
 .modal-content {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --background: white;
+  --border-radius: 16px;
+  --box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   max-width: 500px;
   width: 100%;
   max-height: 90vh;
-  overflow-y: auto;
-  animation: modalSlideIn 0.3s ease-out;
 }
 
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Modal Header */
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2rem 2rem 1rem 2rem;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.modal-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #2d3748;
-  margin: 0;
-}
-
+/* Ionic Button Customization for close button */
 .close-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 8px;
-  color: #6b7280;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.close-button:hover {
-  background-color: #f1f5f9;
-  color: #374151;
-}
-
-.close-icon {
-  width: 20px;
-  height: 20px;
+  --color: #6b7280;
+  --color-hover: #374151;
+  --background-hover: #f3f4f6;
+  --border-radius: 8px;
 }
 
 /* Modal Body */
 .modal-body {
-  padding: 1.5rem 2rem 2rem 2rem;
+  padding: 2rem;
 }
 
 .modal-description {
@@ -85,171 +26,130 @@
   color: #6b7280;
   margin: 0 0 2rem 0;
   line-height: 1.5;
+  text-align: center;
 }
 
 /* Contact Methods */
 .contact-methods {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
+/* Ionic Item Customization */
 .contact-method {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
+  --background: transparent;
+  --border-radius: 12px;
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  --padding-top: 1rem;
+  --padding-bottom: 1rem;
+  margin: 0;
   cursor: pointer;
   transition: all 0.2s ease;
-  background: white;
+  border: 1px solid #e2e8f0;
 }
 
 .contact-method:hover {
-  border-color: #20B2AA;
-  background-color: #f0fdfa;
+  --background: #f8fafc;
   transform: translateY(-1px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Contact Icons */
-.contact-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.contact-icon svg {
-  width: 24px;
-  height: 24px;
-}
-
-/* Icon Colors */
+/* Ionic Icon Customization */
 .email-icon {
-  background-color: #fef3c7;
-  color: #d97706;
+  --color: #3B82F6;
+  font-size: 24px;
 }
 
 .whatsapp-icon {
-  background-color: #dcfce7;
-  color: #16a34a;
+  --color: #25D366;
+  font-size: 24px;
 }
 
 .instagram-icon {
-  background-color: #fce7f3;
-  color: #c026d3;
+  --color: #E4405F;
+  font-size: 24px;
 }
 
 .facebook-icon {
-  background-color: #dbeafe;
-  color: #2563eb;
+  --color: #1877F2;
+  font-size: 24px;
 }
 
 .linkedin-icon {
-  background-color: #e0e7ff;
-  color: #4f46e5;
+  --color: #0A66C2;
+  font-size: 24px;
 }
 
-/* Contact Info */
-.contact-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  flex: 1;
-}
-
-.contact-label {
-  font-size: 1rem;
+/* Ionic Label Customization */
+.contact-method ion-label h3 {
+  font-size: 1.1rem;
   font-weight: 600;
   color: #2d3748;
+  margin: 0 0 0.25rem 0;
 }
 
-.contact-value {
+.contact-method ion-label p {
   font-size: 0.9rem;
   color: #6b7280;
+  margin: 0;
 }
 
 /* Responsive Design */
-@media (max-width: 640px) {
-  .modal-backdrop {
-    padding: 0.5rem;
-  }
-
+@media (max-width: 768px) {
   .modal-content {
-    max-height: 95vh;
-  }
-
-  .modal-header {
-    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    max-width: 95%;
+    margin: 1rem;
   }
 
   .modal-body {
-    padding: 1rem 1.5rem 1.5rem 1.5rem;
+    padding: 1.5rem;
   }
 
-  .modal-title {
-    font-size: 1.25rem;
+  .modal-description {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
   }
 
   .contact-method {
-    padding: 0.875rem;
-    gap: 0.875rem;
+    --padding-start: 0.875rem;
+    --padding-end: 0.875rem;
+    --padding-top: 0.875rem;
+    --padding-bottom: 0.875rem;
   }
 
-  .contact-icon {
-    width: 40px;
-    height: 40px;
+  .contact-method ion-label h3 {
+    font-size: 1rem;
   }
 
-  .contact-icon svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .contact-label {
-    font-size: 0.95rem;
-  }
-
-  .contact-value {
+  .contact-method ion-label p {
     font-size: 0.85rem;
   }
 }
 
 @media (max-width: 480px) {
-  .modal-header {
-    padding: 1.25rem 1.25rem 0.875rem 1.25rem;
-  }
-
   .modal-body {
-    padding: 0.875rem 1.25rem 1.25rem 1.25rem;
-  }
-
-  .modal-title {
-    font-size: 1.1rem;
+    padding: 1rem;
   }
 
   .modal-description {
     font-size: 0.9rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .contact-method {
-    padding: 0.75rem;
-    gap: 0.75rem;
+    --padding-start: 0.75rem;
+    --padding-end: 0.75rem;
+    --padding-top: 0.75rem;
+    --padding-bottom: 0.75rem;
   }
 
-  .contact-icon {
-    width: 36px;
-    height: 36px;
-  }
-
-  .contact-icon svg {
-    width: 18px;
-    height: 18px;
+  .email-icon,
+  .whatsapp-icon,
+  .instagram-icon,
+  .facebook-icon,
+  .linkedin-icon {
+    font-size: 20px;
   }
 }

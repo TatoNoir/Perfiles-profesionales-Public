@@ -4,39 +4,11 @@
   padding: 2rem;
 }
 
-.navigation-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  padding: 0 1rem;
-}
-
+/* Ionic Button Customization for back button */
 .back-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: none;
-  border: none;
-  color: #6b7280;
+  --color: #6b7280;
+  --color-hover: #20B2AA;
   font-size: 0.95rem;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.back-button:hover {
-  color: #20B2AA;
-}
-
-.back-icon {
-  width: 16px;
-  height: 16px;
-}
-
-.current-page {
-  font-size: 0.9rem;
-  color: #9ca3af;
-  font-family: monospace;
 }
 
 .main-content {
@@ -59,17 +31,24 @@
   gap: 1.5rem;
 }
 
-/* Cards */
+/* Ionic Card Customization */
 .profile-card,
 .info-card,
 .contact-card,
 .stats-card,
 .verified-card {
-  background: white;
-  border-radius: 16px;
+  --background: white;
+  --border-radius: 16px;
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --border-width: 1px;
+  --border-color: #e2e8f0;
+  margin: 0 0 1.5rem 0;
+}
+
+.profile-content,
+.contact-content,
+.verified-content {
   padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e2e8f0;
 }
 
 /* Profile Card */
@@ -114,9 +93,20 @@
   margin: 0;
 }
 
+/* Ionic Icon Styling */
 .verified-icon {
-  width: 24px;
-  height: 24px;
+  --color: #10B981;
+  font-size: 24px;
+}
+
+.star-icon {
+  --color: #FCD34D;
+  font-size: 16px;
+}
+
+.location-icon {
+  --color: #6B7280;
+  font-size: 16px;
 }
 
 .profession {
@@ -181,11 +171,17 @@
   gap: 0.75rem;
 }
 
+/* Ionic Chip Customization */
 .skill-tag {
-  background-color: #f1f5f9;
-  color: #475569;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
+  --background: #f1f5f9;
+  --color: #475569;
+  --border-radius: 20px;
+  --border-width: 1px;
+  --border-color: #e2e8f0;
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  --padding-top: 0.5rem;
+  --padding-bottom: 0.5rem;
   font-size: 0.9rem;
   font-weight: 500;
 }
@@ -203,20 +199,22 @@
 }
 
 .work-zone-tag {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: #f1f5f9;
-  color: #475569;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
+  --background: #f1f5f9;
+  --color: #475569;
+  --border-radius: 20px;
+  --border-width: 1px;
+  --border-color: #e2e8f0;
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  --padding-top: 0.5rem;
+  --padding-bottom: 0.5rem;
   font-size: 0.9rem;
   font-weight: 500;
 }
 
 .work-zone-tag .location-icon {
-  width: 14px;
-  height: 14px;
+  --color: #6B7280;
+  font-size: 14px;
 }
 
 /* Contact Card */
@@ -241,31 +239,16 @@
   margin: 0;
 }
 
+/* Ionic Button Customization */
 .contact-button {
-  width: 100%;
-  background-color: #20B2AA;
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 12px;
+  --border-radius: 12px;
+  --padding-start: 2rem;
+  --padding-end: 2rem;
+  --padding-top: 1rem;
+  --padding-bottom: 1rem;
   font-size: 1.1rem;
   font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.contact-button:hover {
-  background-color: #1a9b94;
-  transform: translateY(-2px);
-}
-
-.mail-icon {
-  width: 20px;
-  height: 20px;
+  width: 100%;
 }
 
 /* Stats Card */
@@ -337,19 +320,10 @@
   color: #6b7280;
 }
 
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #e2e8f0;
-  border-top: 4px solid #20B2AA;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+/* Ionic Spinner Customization */
+ion-spinner {
+  --color: #20B2AA;
   margin-bottom: 1rem;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }
 
 /* Responsive Design */
@@ -429,7 +403,10 @@
   }
 
   .contact-button {
-    padding: 0.875rem 1.5rem;
+    --padding-start: 1.5rem;
+    --padding-end: 1.5rem;
+    --padding-top: 0.875rem;
+    --padding-bottom: 0.875rem;
     font-size: 1rem;
   }
 }

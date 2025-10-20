@@ -1,26 +1,40 @@
+/* Ionic Grid Customization */
 .cards-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  --ion-grid-padding: 0;
   max-width: 1200px;
   margin: 0 auto;
 }
 
+.activity-col {
+  padding: 0.75rem;
+}
+
+/* Ionic Card Customization */
 .activity-card {
-  background: white;
-  border-radius: 16px;
-  padding: 2rem 1.5rem;
-  text-align: center;
+  --background: white;
+  --border-radius: 16px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --border-width: 1px;
+  --border-color: #f1f5f9;
+  margin: 0;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f1f5f9;
+  height: 100%;
 }
 
 .activity-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-  border-color: #e2e8f0;
+  --box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  --border-color: #e2e8f0;
+}
+
+.card-content {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .card-icon {
@@ -46,10 +60,29 @@
   border-radius: 20px;
 }
 
+/* Ionic Icon Styling */
+.ion-icon {
+  font-size: 2rem;
+  color: white;
+  z-index: 1;
+  position: relative;
+  display: none; /* Hide by default, show on larger screens */
+}
+
 .icon-emoji {
   font-size: 2.5rem;
   z-index: 1;
   position: relative;
+}
+
+/* Show Ionic icons on larger screens, emojis on mobile */
+@media (min-width: 768px) {
+  .ion-icon {
+    display: block;
+  }
+  .icon-emoji {
+    display: none;
+  }
 }
 
 .card-title {
@@ -69,12 +102,11 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .cards-container {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.25rem;
+  .activity-col {
+    padding: 0.5rem;
   }
 
-  .activity-card {
+  .card-content {
     padding: 1.75rem 1.25rem;
   }
 
@@ -98,12 +130,11 @@
 }
 
 @media (max-width: 480px) {
-  .cards-container {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  .activity-col {
+    padding: 0.25rem;
   }
 
-  .activity-card {
+  .card-content {
     padding: 1.5rem 1rem;
   }
 
@@ -123,11 +154,5 @@
 
   .card-count {
     font-size: 0.85rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .cards-container {
-    grid-template-columns: repeat(6, 1fr);
   }
 }

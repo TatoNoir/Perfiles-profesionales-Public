@@ -2,12 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { arrowBack, checkmarkCircle, star, location, mail } from 'ionicons/icons';
 import { ProfessionalService, Professional } from '../../services/professional';
 import { ContactModalComponent } from '../../components/contact-modal/contact-modal';
 
 @Component({
   selector: 'app-professional-detail',
-  imports: [CommonModule, ContactModalComponent],
+  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner, ContactModalComponent],
   templateUrl: './professional-detail.html',
   styleUrl: './professional-detail.css'
 })
@@ -20,7 +23,9 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private professionalService: ProfessionalService
-  ) {}
+  ) {
+    addIcons({ arrowBack, checkmarkCircle, star, location, mail });
+  }
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe(params => {

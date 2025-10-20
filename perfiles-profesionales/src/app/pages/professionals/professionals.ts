@@ -1,14 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { search } from 'ionicons/icons';
 import { FiltersSidebarComponent } from '../../components/filters-sidebar/filters-sidebar';
 import { ProfessionalsListComponent } from '../../components/professionals-list/professionals-list';
 import { ProfessionalService } from '../../services/professional';
 
 @Component({
   selector: 'app-professionals',
-  imports: [CommonModule, FormsModule, FiltersSidebarComponent, ProfessionalsListComponent],
+  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, FiltersSidebarComponent, ProfessionalsListComponent],
   templateUrl: './professionals.html',
   styleUrl: './professionals.css'
 })
@@ -16,7 +18,9 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   searchQuery = '';
   private subscription: Subscription = new Subscription();
 
-  constructor(private professionalService: ProfessionalService) {}
+  constructor(private professionalService: ProfessionalService) {
+    addIcons({ search });
+  }
 
   ngOnInit() {
     // Inicializar con búsqueda vacía
@@ -34,5 +38,10 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   onSearchInput() {
     // Búsqueda en tiempo real mientras el usuario escribe
     this.professionalService.setSearchQuery(this.searchQuery);
+  }
+
+  onSearchInputEvent(event: any) {
+    this.searchQuery = event.detail.value;
+    this.onSearchInput();
   }
 }

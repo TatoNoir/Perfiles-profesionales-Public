@@ -1,36 +1,42 @@
-<div class="professionals-page">
-  <!-- Header Section -->
-  <header class="page-header">
-    <div class="header-content">
-      <h1 class="page-title">Encuentra tu Profesional</h1>
-      <p class="page-subtitle">
-        Conecta con expertos verificados en desarrollo, diseño, marketing y más
-      </p>
+<ion-content [fullscreen]="true">
+  <!-- Header -->
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title>Encuentra tu Profesional</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-      <!-- Search Bar -->
-      <div class="search-container">
-        <div class="search-input-wrapper">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <input
-            type="text"
+  <div class="professionals-page">
+    <!-- Header Section -->
+    <header class="page-header">
+      <div class="header-content">
+        <h1 class="page-title">Encuentra tu Profesional</h1>
+        <p class="page-subtitle">
+          Conecta con expertos verificados en desarrollo, diseño, marketing y más
+        </p>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+          <ion-searchbar
             class="search-input"
             placeholder="Buscar por nombre, especialidad o habilidad..."
-            [(ngModel)]="searchQuery"
-            (input)="onSearchInput()"
-            (keyup.enter)="onSearch()">
+            [value]="searchQuery"
+            (ionInput)="onSearchInputEvent($event)"
+            (keyup.enter)="onSearch()"
+            show-clear-button="focus"
+            animated="true">
+          </ion-searchbar>
         </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- Main Content -->
-  <main class="main-content">
-    <!-- Sidebar with Filters -->
-    <app-filters-sidebar></app-filters-sidebar>
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Sidebar with Filters -->
+      <app-filters-sidebar></app-filters-sidebar>
 
-    <!-- Professionals List -->
-    <app-professionals-list></app-professionals-list>
-  </main>
-</div>
+      <!-- Professionals List -->
+      <app-professionals-list></app-professionals-list>
+    </main>
+  </div>
+</ion-content>

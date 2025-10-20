@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip } from '@ionic/angular/standalone';
 
 interface PopularSearch {
   id: string;
@@ -9,7 +10,7 @@ interface PopularSearch {
 
 @Component({
   selector: 'app-popular-searches',
-  imports: [CommonModule],
+  imports: [CommonModule, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip],
   templateUrl: './popular-searches.html',
   styleUrl: './popular-searches.css'
 })

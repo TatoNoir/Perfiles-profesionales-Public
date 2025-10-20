@@ -1,12 +1,15 @@
-<section class="popular-searches-section">
-  <div class="popular-searches-content">
-    <h2 class="section-title">Búsquedas Populares</h2>
+<ion-card class="popular-searches-section">
+  <ion-card-header>
+    <ion-card-title class="section-title">Búsquedas Populares</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
     <div class="search-buttons-container">
-      <button *ngFor="let search of popularSearches; trackBy: trackBySearchId"
-              class="search-button"
-              (click)="onSearchClick(search)">
+      <ion-chip
+        *ngFor="let search of popularSearches; trackBy: trackBySearchId"
+        class="search-chip"
+        (click)="onSearchClick(search)">
         {{ search.name }}
-      </button>
+      </ion-chip>
     </div>
-  </div>
-</section>
+  </ion-card-content>
+</ion-card>

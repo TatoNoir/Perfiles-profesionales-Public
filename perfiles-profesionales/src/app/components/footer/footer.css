@@ -25,28 +25,30 @@
   opacity: 0.95;
 }
 
+/* Ionic Button Customization */
 .register-button {
-  padding: 1rem 2rem;
-  background-color: white;
-  color: #1a9b94;
-  border: none;
-  border-radius: 12px;
+  --background: white;
+  --color: #1a9b94;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --padding-start: 2rem;
+  --padding-end: 2rem;
+  --padding-top: 1rem;
+  --padding-bottom: 1rem;
   font-size: 1.1rem;
   font-weight: 600;
-  cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .register-button:hover {
-  background-color: #f8f9fa;
+  --background: #f8f9fa;
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  --box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .register-button:active {
   transform: translateY(0);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive Design */
@@ -66,7 +68,10 @@
   }
 
   .register-button {
-    padding: 0.875rem 1.75rem;
+    --padding-start: 1.75rem;
+    --padding-end: 1.75rem;
+    --padding-top: 0.875rem;
+    --padding-bottom: 0.875rem;
     font-size: 1rem;
   }
 }
@@ -87,7 +92,10 @@
   }
 
   .register-button {
-    padding: 0.75rem 1.5rem;
+    --padding-start: 1.5rem;
+    --padding-end: 1.5rem;
+    --padding-top: 0.75rem;
+    --padding-bottom: 0.75rem;
     font-size: 0.95rem;
   }
 }

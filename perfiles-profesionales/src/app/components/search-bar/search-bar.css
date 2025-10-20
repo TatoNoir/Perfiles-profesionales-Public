@@ -7,67 +7,39 @@
   margin: 0 auto;
 }
 
-.search-input-container {
-  position: relative;
-  flex: 1;
-}
-
-.search-icon {
-  position: absolute;
-  left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  color: #a0aec0;
-  pointer-events: none;
-}
-
+/* Ionic Searchbar Customization */
 .search-input {
-  width: 100%;
-  padding: 1rem 1rem 1rem 3rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  font-size: 1rem;
-  background-color: #ffffff;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  flex: 1;
+  --background: #ffffff;
+  --border-radius: 12px;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --color: #2d3748;
+  --placeholder-color: #a0aec0;
+  --icon-color: #a0aec0;
+  --clear-button-color: #a0aec0;
+  --border-width: 2px;
+  --border-color: #e2e8f0;
+  --border-color-focused: #20B2AA;
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  --padding-top: 1rem;
+  --padding-bottom: 1rem;
 }
 
-.search-input:focus {
-  outline: none;
-  border-color: #20B2AA;
-  box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.1);
+.search-input.ion-focused {
+  --box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.1);
 }
 
-.search-input::placeholder {
-  color: #a0aec0;
-  font-weight: 400;
-}
-
+/* Ionic Button Customization */
 .search-button {
-  padding: 1rem 2rem;
-  background-color: #20B2AA;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  --border-radius: 12px;
+  --box-shadow: 0 2px 4px rgba(32, 178, 170, 0.2);
+  --padding-start: 1.5rem;
+  --padding-end: 1.5rem;
+  --padding-top: 1rem;
+  --padding-bottom: 1rem;
   white-space: nowrap;
-  box-shadow: 0 2px 4px rgba(32, 178, 170, 0.2);
-}
-
-.search-button:hover {
-  background-color: #1a9b94;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(32, 178, 170, 0.3);
-}
-
-.search-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(32, 178, 170, 0.2);
+  font-weight: 600;
 }
 
 /* Responsive Design */
@@ -78,37 +50,37 @@
   }
 
   .search-input {
-    padding: 0.875rem 0.875rem 0.875rem 2.75rem;
+    --padding-start: 0.875rem;
+    --padding-end: 0.875rem;
+    --padding-top: 0.875rem;
+    --padding-bottom: 0.875rem;
     font-size: 0.95rem;
-  }
-
-  .search-icon {
-    left: 0.875rem;
-    width: 18px;
-    height: 18px;
   }
 
   .search-button {
     width: 100%;
-    padding: 0.875rem 1.5rem;
+    --padding-start: 1.25rem;
+    --padding-end: 1.25rem;
+    --padding-top: 0.875rem;
+    --padding-bottom: 0.875rem;
     font-size: 0.95rem;
   }
 }
 
 @media (max-width: 480px) {
   .search-input {
-    padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+    --padding-start: 0.75rem;
+    --padding-end: 0.75rem;
+    --padding-top: 0.75rem;
+    --padding-bottom: 0.75rem;
     font-size: 0.9rem;
   }
 
-  .search-icon {
-    left: 0.75rem;
-    width: 16px;
-    height: 16px;
-  }
-
   .search-button {
-    padding: 0.75rem 1.25rem;
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+    --padding-top: 0.75rem;
+    --padding-bottom: 0.75rem;
     font-size: 0.9rem;
   }
 }

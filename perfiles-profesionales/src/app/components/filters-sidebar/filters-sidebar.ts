@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonRadio, IonRadioGroup, IonLabel, IonItem } from '@ionic/angular/standalone';
 import { ProfessionalService } from '../../services/professional';
 
 @Component({
   selector: 'app-filters-sidebar',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonRadio, IonRadioGroup, IonLabel, IonItem],
   templateUrl: './filters-sidebar.html',
   styleUrl: './filters-sidebar.css'
 })
