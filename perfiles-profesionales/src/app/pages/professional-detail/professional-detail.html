@@ -118,10 +118,10 @@
               <ion-icon name="star" class="section-icon"></ion-icon>
               Valoraciones y Reseñas
             </ion-card-title>
-            <ion-button 
-              class="leave-review-button" 
-              (click)="onLeaveReview()" 
-              fill="outline" 
+            <ion-button
+              class="leave-review-button"
+              (click)="onLeaveReview()"
+              fill="outline"
               size="small">
               Dejar valoración
             </ion-button>
@@ -132,9 +132,9 @@
             <div class="rating-display">
               <div class="rating-number">{{ professional.reviewData?.averageRating || professional.rating }}</div>
               <div class="stars-container">
-                <ion-icon 
-                  *ngFor="let star of [1,2,3,4,5]" 
-                  name="star" 
+                <ion-icon
+                  *ngFor="let star of [1,2,3,4,5]"
+                  name="star"
                   class="star-icon"
                   [class.filled]="star <= Math.floor(professional.reviewData?.averageRating || professional.rating)"
                   [class.half-filled]="star === Math.ceil(professional.reviewData?.averageRating || professional.rating) && (professional.reviewData?.averageRating || professional.rating) % 1 !== 0">
@@ -160,10 +160,10 @@
               <ion-icon name="chatbubble-outline" class="section-icon"></ion-icon>
               Preguntas y Respuestas
             </ion-card-title>
-            <ion-button 
-              class="ask-question-button" 
-              (click)="onAskQuestion()" 
-              fill="outline" 
+            <ion-button
+              class="ask-question-button"
+              (click)="onAskQuestion()"
+              fill="outline"
               size="small">
               Hacer una pregunta
             </ion-button>
