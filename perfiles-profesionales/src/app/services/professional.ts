@@ -15,6 +15,12 @@ export interface Professional {
   description: string;
   pricePerHour: number;
   isVerified: boolean;
+  status: 'available' | 'busy' | 'offline';
+  completedProjects: number;
+  responseRate: number;
+  responseTime: string;
+  workZones: string[];
+  aboutMe: string;
 }
 
 export interface FilterOptions {
@@ -80,7 +86,13 @@ export class ProfessionalService {
         skills: ['React', 'Node.js', 'TypeScript', 'MongoDB', 'AWS'],
         description: 'Desarrolladora Full Stack con más de 8 años de experiencia en aplicaciones web modernas.',
         pricePerHour: 85,
-        isVerified: true
+        isVerified: true,
+        status: 'available',
+        completedProjects: 89,
+        responseRate: 95,
+        responseTime: '1 hora',
+        workZones: ['Madrid', 'Comunidad de Madrid', 'Toledo', 'Guadalajara'],
+        aboutMe: 'Desarrolladora full stack apasionada por crear soluciones tecnológicas innovadoras. Especializada en React, Node.js y arquitecturas cloud. Con más de 5 años de experiencia ayudando a empresas a digitalizar sus procesos.'
       },
       {
         id: '2',
@@ -90,10 +102,16 @@ export class ProfessionalService {
         rating: 4.8,
         reviews: 93,
         location: 'Barcelona, España',
-        skills: ['Figma', 'Adobe XD', 'Prototyping', 'User Research', 'Design Systems'],
+        skills: ['Figma', 'Adobe XD', 'Prototyping', 'Design Systems', 'User Research'],
         description: 'Diseñador UX/UI especializado en crear experiencias digitales intuitivas y atractivas.',
         pricePerHour: 75,
-        isVerified: true
+        isVerified: true,
+        status: 'busy',
+        completedProjects: 116,
+        responseRate: 98,
+        responseTime: '2 horas',
+        workZones: ['Barcelona', 'Cataluña', 'Tarragona', 'Girona'],
+        aboutMe: 'Diseñador UX/UI apasionado por crear experiencias digitales intuitivas y atractivas. Experto en Figma y sistemas de diseño.'
       },
       {
         id: '3',
@@ -106,7 +124,13 @@ export class ProfessionalService {
         skills: ['SEO', 'Google Ads', 'Analytics', 'Social Media', 'Content Marketing'],
         description: 'Consultora de Marketing Digital con experiencia en estrategias de crecimiento online.',
         pricePerHour: 95,
-        isVerified: true
+        isVerified: true,
+        status: 'available',
+        completedProjects: 67,
+        responseRate: 92,
+        responseTime: '3 horas',
+        workZones: ['Valencia', 'Comunidad Valenciana'],
+        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.'
       },
       {
         id: '4',
@@ -119,7 +143,13 @@ export class ProfessionalService {
         skills: ['Fotografía de eventos', 'Retrato', 'Producto', 'Post-producción'],
         description: 'Fotógrafo profesional especializado en eventos corporativos y sesiones de retrato.',
         pricePerHour: 65,
-        isVerified: true
+        isVerified: true,
+        status: 'available',
+        completedProjects: 67,
+        responseRate: 92,
+        responseTime: '3 horas',
+        workZones: ['Valencia', 'Comunidad Valenciana'],
+        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.'
       },
       {
         id: '5',
@@ -132,7 +162,13 @@ export class ProfessionalService {
         skills: ['Diseño arquitectónico', 'Planos', 'Supervisión de obra', 'Sostenibilidad'],
         description: 'Arquitecta con más de 10 años de experiencia en diseño residencial y comercial.',
         pricePerHour: 70,
-        isVerified: true
+        isVerified: true,
+        status: 'available',
+        completedProjects: 67,
+        responseRate: 92,
+        responseTime: '3 horas',
+        workZones: ['Valencia', 'Comunidad Valenciana'],
+        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.'
       },
       {
         id: '6',
@@ -145,7 +181,13 @@ export class ProfessionalService {
         skills: ['Cocina mediterránea', 'Pastelería', 'Catering', 'Gestión de cocina'],
         description: 'Chef ejecutivo especializado en cocina mediterránea con experiencia en restaurantes Michelin.',
         pricePerHour: 80,
-        isVerified: true
+        isVerified: true,
+        status: 'available',
+        completedProjects: 67,
+        responseRate: 92,
+        responseTime: '3 horas',
+        workZones: ['Valencia', 'Comunidad Valenciana'],
+        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.'
       },
       {
         id: '7',
@@ -158,7 +200,13 @@ export class ProfessionalService {
         skills: ['AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Terraform'],
         description: 'Ingeniero DevOps con experiencia en infraestructura cloud y automatización.',
         pricePerHour: 90,
-        isVerified: true
+        isVerified: true,
+        status: 'available',
+        completedProjects: 67,
+        responseRate: 92,
+        responseTime: '3 horas',
+        workZones: ['Valencia', 'Comunidad Valenciana'],
+        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.'
       },
       {
         id: '8',
@@ -171,7 +219,13 @@ export class ProfessionalService {
         skills: ['Python', 'Machine Learning', 'SQL', 'TensorFlow', 'Pandas'],
         description: 'Data Scientist especializada en machine learning y análisis de datos.',
         pricePerHour: 85,
-        isVerified: true
+        isVerified: true,
+        status: 'available',
+        completedProjects: 45,
+        responseRate: 88,
+        responseTime: '4 horas',
+        workZones: ['Bilbao', 'Vizcaya', 'Guipúzcoa', 'Álava'],
+        aboutMe: 'Data Scientist especializada en machine learning y análisis de datos. Experta en Python, TensorFlow y análisis estadístico avanzado.'
       }
     ];
 

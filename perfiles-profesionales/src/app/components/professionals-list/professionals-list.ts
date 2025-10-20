@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProfessionalService, Professional } from '../../services/professional';
 
@@ -19,7 +20,10 @@ export class ProfessionalsListComponent implements OnInit, OnDestroy {
   private currentPage = 0;
   private subscription: Subscription = new Subscription();
 
-  constructor(private professionalService: ProfessionalService) {}
+  constructor(
+    private professionalService: ProfessionalService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadProfessionals();
@@ -79,7 +83,7 @@ export class ProfessionalsListComponent implements OnInit, OnDestroy {
 
   onViewProfile(professional: Professional) {
     console.log('Ver perfil de:', professional.name);
-    // Aquí implementaremos la navegación al perfil
+    this.router.navigate(['/professionals', professional.id]);
   }
 
   getStatusColor(professional: Professional): string {
