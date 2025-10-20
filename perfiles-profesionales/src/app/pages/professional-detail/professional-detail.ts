@@ -7,16 +7,18 @@ import { addIcons } from 'ionicons';
 import { arrowBack, checkmarkCircle, star, location, mail, briefcase, chatbubbleOutline } from 'ionicons/icons';
 import { ProfessionalService, Professional } from '../../services/professional';
 import { ContactModalComponent } from '../../components/contact-modal/contact-modal';
+import { ReviewModalComponent, ReviewForm } from '../../components/review-modal/review-modal';
 
 @Component({
   selector: 'app-professional-detail',
-  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner, ContactModalComponent],
+  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner, ContactModalComponent, ReviewModalComponent],
   templateUrl: './professional-detail.html',
   styleUrl: './professional-detail.css'
 })
 export class ProfessionalDetailComponent implements OnInit, OnDestroy {
   professional: Professional | null = null;
   isContactModalOpen = false;
+  isReviewModalOpen = false;
   private subscription: Subscription = new Subscription();
 
   // Expose Math to template
@@ -84,7 +86,18 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
 
   onLeaveReview() {
     console.log('Dejar valoración para:', this.professional?.name);
-    // Aquí implementaremos la funcionalidad de dejar valoración
+    this.isReviewModalOpen = true;
+  }
+
+  onCloseReviewModal() {
+    this.isReviewModalOpen = false;
+  }
+
+  onSubmitReview(reviewForm: ReviewForm) {
+    console.log('Reseña enviada:', reviewForm);
+    // Aquí implementaremos la lógica para guardar la reseña
+    // Por ahora solo mostramos un mensaje de confirmación
+    alert('¡Reseña enviada exitosamente!');
   }
 
   onAskQuestion() {
