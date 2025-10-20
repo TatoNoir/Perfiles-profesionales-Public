@@ -1,0 +1,12 @@
+<section class="popular-searches-section">
+  <div class="popular-searches-content">
+    <h2 class="section-title">Búsquedas Populares</h2>
+    <div class="search-buttons-container">
+      <button *ngFor="let search of popularSearches; trackBy: trackBySearchId"
+              class="search-button"
+              (click)="onSearchClick(search)">
+        {{ search.name }}
+      </button>
+    </div>
+  </div>
+</section>

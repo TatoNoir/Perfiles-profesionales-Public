@@ -1,0 +1,143 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+export interface Professional {
+  id: string;
+  name: string;
+  profession: string;
+  category: string;
+  rating: number;
+  reviews: number;
+  location: string;
+  avatar?: string;
+  skills: string[];
+  description: string;
+  pricePerHour: number;
+  isVerified: boolean;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProfessionalService {
+  private professionalsSubject = new BehaviorSubject<Professional[]>([]);
+  public professionals$ = this.professionalsSubject.asObservable();
+
+  constructor() {
+    // Datos de ejemplo - en una aplicación real vendrían de una API
+    this.loadSampleData();
+  }
+
+  private loadSampleData() {
+    const sampleData: Professional[] = [
+      {
+        id: '1',
+        name: 'María González',
+        profession: 'Desarrolladora Full Stack',
+        category: 'tecnologia',
+        rating: 4.9,
+        reviews: 127,
+        location: 'Madrid, España',
+        skills: ['React', 'Node.js', 'TypeScript', 'MongoDB', 'AWS'],
+        description: 'Desarrolladora Full Stack con más de 8 años de experiencia en aplicaciones web modernas.',
+        pricePerHour: 85,
+        isVerified: true
+      },
+      {
+        id: '2',
+        name: 'Carlos Rodríguez',
+        profession: 'Diseñador UX/UI',
+        category: 'diseno',
+        rating: 4.8,
+        reviews: 93,
+        location: 'Barcelona, España',
+        skills: ['Figma', 'Adobe XD', 'Prototyping', 'User Research', 'Design Systems'],
+        description: 'Diseñador UX/UI especializado en crear experiencias digitales intuitivas y atractivas.',
+        pricePerHour: 75,
+        isVerified: true
+      },
+      {
+        id: '3',
+        name: 'Ana Martínez',
+        profession: 'Consultora de Marketing Digital',
+        category: 'marketing',
+        rating: 5.0,
+        reviews: 156,
+        location: 'Valencia, España',
+        skills: ['SEO', 'Google Ads', 'Analytics', 'Social Media', 'Content Marketing'],
+        description: 'Consultora de Marketing Digital con experiencia en estrategias de crecimiento online.',
+        pricePerHour: 95,
+        isVerified: true
+      },
+      {
+        id: '4',
+        name: 'Javier López',
+        profession: 'Fotógrafo Profesional',
+        category: 'diseno',
+        rating: 4.7,
+        reviews: 89,
+        location: 'Sevilla, España',
+        skills: ['Fotografía de eventos', 'Retrato', 'Producto', 'Post-producción'],
+        description: 'Fotógrafo profesional especializado en eventos corporativos y sesiones de retrato.',
+        pricePerHour: 65,
+        isVerified: true
+      },
+      {
+        id: '5',
+        name: 'Laura Sánchez',
+        profession: 'Arquitecta',
+        category: 'construccion',
+        rating: 4.8,
+        reviews: 112,
+        location: 'Bilbao, España',
+        skills: ['Diseño arquitectónico', 'Planos', 'Supervisión de obra', 'Sostenibilidad'],
+        description: 'Arquitecta con más de 10 años de experiencia en diseño residencial y comercial.',
+        pricePerHour: 70,
+        isVerified: true
+      },
+      {
+        id: '6',
+        name: 'Miguel Torres',
+        profession: 'Chef Ejecutivo',
+        category: 'gastronomia',
+        rating: 4.9,
+        reviews: 134,
+        location: 'Málaga, España',
+        skills: ['Cocina mediterránea', 'Pastelería', 'Catering', 'Gestión de cocina'],
+        description: 'Chef ejecutivo especializado en cocina mediterránea con experiencia en restaurantes Michelin.',
+        pricePerHour: 80,
+        isVerified: true
+      }
+    ];
+
+    this.professionalsSubject.next(sampleData);
+  }
+
+  getProfessionals(): Observable<Professional[]> {
+    return this.professionals$;
+  }
+
+  getProfessionalsByCategory(category: string): Observable<Professional[]> {
+    return this.professionals$.pipe(
+      map(professionals => professionals.filter(prof => prof.category === category))
+    );
+  }
+
+  searchProfessionals(query: string): Observable<Professional[]> {
+    const lowercaseQuery = query.toLowerCase();
+    return this.professionals$.pipe(
+      map(professionals => professionals.filter(prof =>
+        prof.name.toLowerCase().includes(lowercaseQuery) ||
+        prof.profession.toLowerCase().includes(lowercaseQuery) ||
+        prof.skills.some(skill => skill.toLowerCase().includes(lowercaseQuery))
+      ))
+    );
+  }
+
+  getProfessionalById(id: string): Observable<Professional | undefined> {
+    return this.professionals$.pipe(
+      map(professionals => professionals.find(prof => prof.id === id))
+    );
+  }
+}

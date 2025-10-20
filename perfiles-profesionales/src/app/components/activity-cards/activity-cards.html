@@ -1,0 +1,11 @@
+<div class="cards-container">
+  <div *ngFor="let activity of activities; trackBy: trackByActivityId"
+       class="activity-card"
+       (click)="onCardClick(activity)">
+    <div class="card-icon" [style.background-color]="activity.color">
+      <span class="icon-emoji">{{ activity.icon }}</span>
+    </div>
+    <h3 class="card-title">{{ activity.name }}</h3>
+    <p class="card-count">{{ activity.professionals }} profesionales</p>
+  </div>
+</div>
