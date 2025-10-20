@@ -1,0 +1,37 @@
+<aside class="filters-sidebar">
+  <div class="filters-content">
+    <!-- Filtro de Especialidad -->
+    <div class="filter-section">
+      <h3 class="filter-title">Especialidad</h3>
+      <div class="filter-options">
+        <label *ngFor="let specialty of specialties" class="filter-option">
+          <input
+            type="radio"
+            name="specialty"
+            [value]="specialty.value"
+            [checked]="selectedSpecialty === specialty.value"
+            (change)="onSpecialtyChange(specialty.value)"
+            class="filter-radio">
+          <span class="filter-label">{{ specialty.label }}</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Filtro de Ubicación -->
+    <div class="filter-section">
+      <h3 class="filter-title">Ubicación</h3>
+      <div class="filter-options">
+        <label *ngFor="let location of locations" class="filter-option">
+          <input
+            type="radio"
+            name="location"
+            [value]="location.value"
+            [checked]="selectedLocation === location.value"
+            (change)="onLocationChange(location.value)"
+            class="filter-radio">
+          <span class="filter-label">{{ location.label }}</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</aside>

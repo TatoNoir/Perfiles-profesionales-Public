@@ -1,0 +1,76 @@
+<div class="professionals-list-container">
+  <div class="professionals-header">
+    <span class="professionals-count">{{ professionals.length }} profesionales encontrados</span>
+  </div>
+
+  <div class="professionals-grid">
+    <div *ngFor="let professional of displayedProfessionals; trackBy: trackByProfessionalId"
+         class="professional-card">
+      <div class="card-header">
+        <div class="avatar-container">
+          <div class="avatar">
+            {{ professional.name.charAt(0) }}{{ professional.name.split(' ')[1]?.charAt(0) || '' }}
+          </div>
+          <div class="status-indicator" [style.background-color]="getStatusColor(professional)"></div>
+        </div>
+        <div class="professional-info">
+          <div class="name-container">
+            <h3 class="professional-name">{{ professional.name }}</h3>
+            <svg *ngIf="professional.isVerified"
+                 class="verified-icon"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="profession">{{ professional.profession }}</p>
+        </div>
+      </div>
+
+      <div class="rating-location">
+        <div class="rating">
+          <svg class="star-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#FCD34D" stroke="#FCD34D" stroke-width="1"/>
+          </svg>
+          <span class="rating-text">{{ professional.rating }} ({{ professional.reviews }} reseñas)</span>
+        </div>
+        <div class="location">
+          <svg class="location-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 10C21 17 12 23 12 23S3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.3639 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="#6B7280" stroke-width="2"/>
+            <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#6B7280" stroke-width="2"/>
+          </svg>
+          <span class="location-text">{{ professional.location }}</span>
+        </div>
+      </div>
+
+      <div class="skills-container">
+        <span *ngFor="let skill of professional.skills.slice(0, 3)"
+              class="skill-tag">{{ skill }}</span>
+        <span *ngIf="professional.skills.length > 3"
+              class="skill-tag more-skills">+{{ professional.skills.length - 3 }}</span>
+      </div>
+
+      <div class="card-footer">
+        <div class="price">
+          <span class="price-amount">${{ professional.pricePerHour }}</span>
+          <span class="price-unit">por hora</span>
+        </div>
+        <button class="view-profile-button" (click)="onViewProfile(professional)">
+          Ver Perfil
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="loading-indicator">
+    <div class="loading-spinner"></div>
+    <span>Cargando más profesionales...</span>
+  </div>
+
+  <!-- No more data indicator -->
+  <div *ngIf="!hasMoreData && displayedProfessionals.length > 0" class="no-more-data">
+    <span>No hay más profesionales para mostrar</span>
+  </div>
+</div>

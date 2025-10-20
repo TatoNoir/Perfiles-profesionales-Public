@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 export interface Professional {
   id: string;
@@ -17,12 +17,50 @@ export interface Professional {
   isVerified: boolean;
 }
 
+export interface FilterOptions {
+  specialty: string;
+  location: string;
+  searchQuery: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProfessionalService {
   private professionalsSubject = new BehaviorSubject<Professional[]>([]);
   public professionals$ = this.professionalsSubject.asObservable();
+
+  // Filtros reactivos
+  private specialtyFilter = new BehaviorSubject<string>('all');
+  private locationFilter = new BehaviorSubject<string>('all');
+  private searchQuery = new BehaviorSubject<string>('');
+
+  // Observables para filtros
+  public specialtyFilter$ = this.specialtyFilter.asObservable();
+  public locationFilter$ = this.locationFilter.asObservable();
+  public searchQuery$ = this.searchQuery.asObservable();
+
+  // Profesionales filtrados
+  public filteredProfessionals$ = combineLatest([
+    this.professionals$,
+    this.specialtyFilter$,
+    this.locationFilter$,
+    this.searchQuery$.pipe(debounceTime(300), distinctUntilChanged())
+  ]).pipe(
+    map(([professionals, specialty, location, search]) => {
+      return professionals.filter(prof => {
+        const matchesSpecialty = specialty === 'all' || prof.category === specialty;
+        const matchesLocation = location === 'all' || prof.location.toLowerCase().includes(location.toLowerCase());
+        const matchesSearch = !search ||
+          prof.name.toLowerCase().includes(search.toLowerCase()) ||
+          prof.profession.toLowerCase().includes(search.toLowerCase()) ||
+          prof.skills.some(skill => skill.toLowerCase().includes(search.toLowerCase()));
+
+        return matchesSpecialty && matchesLocation && matchesSearch;
+      });
+    })
+  );
 
   constructor() {
     // Datos de ejemplo - en una aplicación real vendrían de una API
@@ -108,10 +146,58 @@ export class ProfessionalService {
         description: 'Chef ejecutivo especializado en cocina mediterránea con experiencia en restaurantes Michelin.',
         pricePerHour: 80,
         isVerified: true
+      },
+      {
+        id: '7',
+        name: 'Javier López',
+        profession: 'Ingeniero DevOps',
+        category: 'tecnologia',
+        rating: 4.7,
+        reviews: 84,
+        location: 'Sevilla, España',
+        skills: ['AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Terraform'],
+        description: 'Ingeniero DevOps con experiencia en infraestructura cloud y automatización.',
+        pricePerHour: 90,
+        isVerified: true
+      },
+      {
+        id: '8',
+        name: 'Sofia García',
+        profession: 'Data Scientist',
+        category: 'tecnologia',
+        rating: 4.8,
+        reviews: 67,
+        location: 'Bilbao, España',
+        skills: ['Python', 'Machine Learning', 'SQL', 'TensorFlow', 'Pandas'],
+        description: 'Data Scientist especializada en machine learning y análisis de datos.',
+        pricePerHour: 85,
+        isVerified: true
       }
     ];
 
     this.professionalsSubject.next(sampleData);
+  }
+
+  // Métodos para manejar filtros
+  setSpecialtyFilter(specialty: string) {
+    this.specialtyFilter.next(specialty);
+  }
+
+  setLocationFilter(location: string) {
+    this.locationFilter.next(location);
+  }
+
+  setSearchQuery(query: string) {
+    this.searchQuery.next(query);
+  }
+
+  // Obtener opciones de filtros
+  getSpecialties(): string[] {
+    return ['all', 'tecnologia', 'diseno', 'marketing', 'construccion', 'gastronomia', 'eventos'];
+  }
+
+  getLocations(): string[] {
+    return ['all', 'madrid', 'barcelona', 'valencia', 'sevilla', 'bilbao', 'malaga', 'zaragoza'];
   }
 
   getProfessionals(): Observable<Professional[]> {

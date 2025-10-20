@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProfessionalService, Professional } from '../../services/professional';
@@ -14,7 +15,10 @@ export class ProfessionalCardsComponent implements OnInit, OnDestroy {
   latestProfessionals: Professional[] = [];
   private subscription: Subscription = new Subscription();
 
-  constructor(private professionalService: ProfessionalService) {}
+  constructor(
+    private professionalService: ProfessionalService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.subscription = this.professionalService.getProfessionals()
@@ -37,7 +41,7 @@ export class ProfessionalCardsComponent implements OnInit, OnDestroy {
 
   onViewAll() {
     console.log('Ver todos los perfiles');
-    // Aquí implementaremos la navegación a la lista completa
+    this.router.navigate(['/professionals']);
   }
 
   getStatusColor(professional: Professional): string {
