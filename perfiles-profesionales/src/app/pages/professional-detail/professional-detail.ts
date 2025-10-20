@@ -3,15 +3,17 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProfessionalService, Professional } from '../../services/professional';
+import { ContactModalComponent } from '../../components/contact-modal/contact-modal';
 
 @Component({
   selector: 'app-professional-detail',
-  imports: [CommonModule],
+  imports: [CommonModule, ContactModalComponent],
   templateUrl: './professional-detail.html',
   styleUrl: './professional-detail.css'
 })
 export class ProfessionalDetailComponent implements OnInit, OnDestroy {
   professional: Professional | null = null;
+  isContactModalOpen = false;
   private subscription: Subscription = new Subscription();
 
   constructor(
@@ -47,7 +49,11 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
 
   contactProfessional() {
     console.log('Contactar a:', this.professional?.name);
-    // Aquí implementaremos la funcionalidad de contacto
+    this.isContactModalOpen = true;
+  }
+
+  onCloseContactModal() {
+    this.isContactModalOpen = false;
   }
 
   getStatusText(status: string): string {

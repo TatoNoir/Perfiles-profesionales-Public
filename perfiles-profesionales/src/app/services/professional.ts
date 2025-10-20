@@ -21,6 +21,13 @@ export interface Professional {
   responseTime: string;
   workZones: string[];
   aboutMe: string;
+  contactInfo: {
+    email: string;
+    whatsapp: string;
+    instagram: string;
+    facebook: string;
+    linkedin: string;
+  };
 }
 
 export interface FilterOptions {
@@ -92,7 +99,14 @@ export class ProfessionalService {
         responseRate: 95,
         responseTime: '1 hora',
         workZones: ['Madrid', 'Comunidad de Madrid', 'Toledo', 'Guadalajara'],
-        aboutMe: 'Desarrolladora full stack apasionada por crear soluciones tecnológicas innovadoras. Especializada en React, Node.js y arquitecturas cloud. Con más de 5 años de experiencia ayudando a empresas a digitalizar sus procesos.'
+        aboutMe: 'Desarrolladora full stack apasionada por crear soluciones tecnológicas innovadoras. Especializada en React, Node.js y arquitecturas cloud. Con más de 5 años de experiencia ayudando a empresas a digitalizar sus procesos.',
+        contactInfo: {
+          email: 'maria.gonzalez@email.com',
+          whatsapp: '+34612345678',
+          instagram: '@mariadev',
+          facebook: 'maria.gonzalez.dev',
+          linkedin: 'maria-gonzalez-dev'
+        }
       },
       {
         id: '2',
@@ -111,7 +125,14 @@ export class ProfessionalService {
         responseRate: 98,
         responseTime: '2 horas',
         workZones: ['Barcelona', 'Cataluña', 'Tarragona', 'Girona'],
-        aboutMe: 'Diseñador UX/UI apasionado por crear experiencias digitales intuitivas y atractivas. Experto en Figma y sistemas de diseño.'
+        aboutMe: 'Diseñador UX/UI apasionado por crear experiencias digitales intuitivas y atractivas. Experto en Figma y sistemas de diseño.',
+        contactInfo: {
+          email: 'carlos.rodriguez@email.com',
+          whatsapp: '+34623456789',
+          instagram: '@carlosux',
+          facebook: 'carlos.rodriguez.ux',
+          linkedin: 'carlos-rodriguez-ux'
+        }
       },
       {
         id: '3',
@@ -130,7 +151,14 @@ export class ProfessionalService {
         responseRate: 92,
         responseTime: '3 horas',
         workZones: ['Valencia', 'Comunidad Valenciana'],
-        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.'
+        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.',
+        contactInfo: {
+          email: 'ana.martinez@email.com',
+          whatsapp: '+34634567890',
+          instagram: '@anamarketing',
+          facebook: 'ana.martinez.marketing',
+          linkedin: 'ana-martinez-marketing'
+        }
       },
       {
         id: '4',
@@ -149,7 +177,14 @@ export class ProfessionalService {
         responseRate: 92,
         responseTime: '3 horas',
         workZones: ['Valencia', 'Comunidad Valenciana'],
-        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.'
+        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.',
+        contactInfo: {
+          email: 'ana.martinez@email.com',
+          whatsapp: '+34634567890',
+          instagram: '@anamarketing',
+          facebook: 'ana.martinez.marketing',
+          linkedin: 'ana-martinez-marketing'
+        }
       },
       {
         id: '5',
@@ -168,7 +203,14 @@ export class ProfessionalService {
         responseRate: 92,
         responseTime: '3 horas',
         workZones: ['Valencia', 'Comunidad Valenciana'],
-        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.'
+        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.',
+        contactInfo: {
+          email: 'ana.martinez@email.com',
+          whatsapp: '+34634567890',
+          instagram: '@anamarketing',
+          facebook: 'ana.martinez.marketing',
+          linkedin: 'ana-martinez-marketing'
+        }
       },
       {
         id: '6',
@@ -187,7 +229,14 @@ export class ProfessionalService {
         responseRate: 92,
         responseTime: '3 horas',
         workZones: ['Valencia', 'Comunidad Valenciana'],
-        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.'
+        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.',
+        contactInfo: {
+          email: 'ana.martinez@email.com',
+          whatsapp: '+34634567890',
+          instagram: '@anamarketing',
+          facebook: 'ana.martinez.marketing',
+          linkedin: 'ana-martinez-marketing'
+        }
       },
       {
         id: '7',
@@ -206,7 +255,14 @@ export class ProfessionalService {
         responseRate: 92,
         responseTime: '3 horas',
         workZones: ['Valencia', 'Comunidad Valenciana'],
-        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.'
+        aboutMe: 'Consultora de marketing digital con experiencia en SEO, Google Ads y estrategias de crecimiento digital.',
+        contactInfo: {
+          email: 'ana.martinez@email.com',
+          whatsapp: '+34634567890',
+          instagram: '@anamarketing',
+          facebook: 'ana.martinez.marketing',
+          linkedin: 'ana-martinez-marketing'
+        }
       },
       {
         id: '8',
@@ -225,7 +281,14 @@ export class ProfessionalService {
         responseRate: 88,
         responseTime: '4 horas',
         workZones: ['Bilbao', 'Vizcaya', 'Guipúzcoa', 'Álava'],
-        aboutMe: 'Data Scientist especializada en machine learning y análisis de datos. Experta en Python, TensorFlow y análisis estadístico avanzado.'
+        aboutMe: 'Data Scientist especializada en machine learning y análisis de datos. Experta en Python, TensorFlow y análisis estadístico avanzado.',
+        contactInfo: {
+          email: 'sofia.garcia@email.com',
+          whatsapp: '+34645678901',
+          instagram: '@sofiadata',
+          facebook: 'sofia.garcia.data',
+          linkedin: 'sofia-garcia-data'
+        }
       }
     ];
 

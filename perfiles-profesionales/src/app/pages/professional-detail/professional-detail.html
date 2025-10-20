@@ -143,3 +143,10 @@
   <div class="loading-spinner"></div>
   <p>Cargando perfil...</p>
 </div>
+
+<!-- Contact Modal -->
+<app-contact-modal
+  [professional]="professional"
+  [isOpen]="isContactModalOpen"
+  (closeModal)="onCloseContactModal()">
+</app-contact-modal>
