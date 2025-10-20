@@ -28,6 +28,19 @@ export interface Professional {
     facebook: string;
     linkedin: string;
   };
+  experience: {
+    years: number;
+    description: string;
+  };
+  reviewData: {
+    averageRating: number;
+    totalReviews: number;
+    hasReviews: boolean;
+  };
+  qa: {
+    hasQuestions: boolean;
+    totalQuestions: number;
+  };
 }
 
 export interface FilterOptions {
@@ -106,6 +119,19 @@ export class ProfessionalService {
           instagram: '@mariadev',
           facebook: 'maria.gonzalez.dev',
           linkedin: 'maria-gonzalez-dev'
+        },
+        experience: {
+          years: 8,
+          description: 'Especializada en desarrollo full stack con un historial comprobado de proyectos exitosos y clientes satisfechos.'
+        },
+        reviewData: {
+          averageRating: 4.9,
+          totalReviews: 127,
+          hasReviews: true
+        },
+        qa: {
+          hasQuestions: false,
+          totalQuestions: 0
         }
       },
       {
@@ -132,6 +158,19 @@ export class ProfessionalService {
           instagram: '@carlosux',
           facebook: 'carlos.rodriguez.ux',
           linkedin: 'carlos-rodriguez-ux'
+        },
+        experience: {
+          years: 5,
+          description: 'Especializado en diseño UX/UI con un historial comprobado de proyectos exitosos y clientes satisfechos.'
+        },
+        reviewData: {
+          averageRating: 4.8,
+          totalReviews: 93,
+          hasReviews: true
+        },
+        qa: {
+          hasQuestions: true,
+          totalQuestions: 3
         }
       },
       {
@@ -158,6 +197,19 @@ export class ProfessionalService {
           instagram: '@anamarketing',
           facebook: 'ana.martinez.marketing',
           linkedin: 'ana-martinez-marketing'
+        },
+        experience: {
+          years: 6,
+          description: 'Especializada en marketing digital con un historial comprobado de proyectos exitosos y clientes satisfechos.'
+        },
+        reviewData: {
+          averageRating: 5.0,
+          totalReviews: 156,
+          hasReviews: true
+        },
+        qa: {
+          hasQuestions: false,
+          totalQuestions: 0
         }
       },
       {
@@ -184,6 +236,19 @@ export class ProfessionalService {
           instagram: '@anamarketing',
           facebook: 'ana.martinez.marketing',
           linkedin: 'ana-martinez-marketing'
+        },
+        experience: {
+          years: 4,
+          description: 'Especializado en fotografía profesional con un historial comprobado de proyectos exitosos y clientes satisfechos.'
+        },
+        reviewData: {
+          averageRating: 4.7,
+          totalReviews: 89,
+          hasReviews: true
+        },
+        qa: {
+          hasQuestions: true,
+          totalQuestions: 2
         }
       },
       {
@@ -210,6 +275,19 @@ export class ProfessionalService {
           instagram: '@anamarketing',
           facebook: 'ana.martinez.marketing',
           linkedin: 'ana-martinez-marketing'
+        },
+        experience: {
+          years: 7,
+          description: 'Especializada en arquitectura con un historial comprobado de proyectos exitosos y clientes satisfechos.'
+        },
+        reviewData: {
+          averageRating: 4.8,
+          totalReviews: 112,
+          hasReviews: true
+        },
+        qa: {
+          hasQuestions: false,
+          totalQuestions: 0
         }
       },
       {
@@ -236,6 +314,19 @@ export class ProfessionalService {
           instagram: '@anamarketing',
           facebook: 'ana.martinez.marketing',
           linkedin: 'ana-martinez-marketing'
+        },
+        experience: {
+          years: 9,
+          description: 'Especializado en gastronomía con un historial comprobado de proyectos exitosos y clientes satisfechos.'
+        },
+        reviewData: {
+          averageRating: 4.9,
+          totalReviews: 134,
+          hasReviews: true
+        },
+        qa: {
+          hasQuestions: true,
+          totalQuestions: 1
         }
       },
       {
@@ -262,6 +353,19 @@ export class ProfessionalService {
           instagram: '@anamarketing',
           facebook: 'ana.martinez.marketing',
           linkedin: 'ana-martinez-marketing'
+        },
+        experience: {
+          years: 6,
+          description: 'Especializado en DevOps con un historial comprobado de proyectos exitosos y clientes satisfechos.'
+        },
+        reviewData: {
+          averageRating: 4.7,
+          totalReviews: 84,
+          hasReviews: true
+        },
+        qa: {
+          hasQuestions: false,
+          totalQuestions: 0
         }
       },
       {
@@ -288,6 +392,19 @@ export class ProfessionalService {
           instagram: '@sofiadata',
           facebook: 'sofia.garcia.data',
           linkedin: 'sofia-garcia-data'
+        },
+        experience: {
+          years: 5,
+          description: 'Especializada en Data Science con un historial comprobado de proyectos exitosos y clientes satisfechos.'
+        },
+        reviewData: {
+          averageRating: 4.8,
+          totalReviews: 67,
+          hasReviews: true
+        },
+        qa: {
+          hasQuestions: true,
+          totalQuestions: 2
         }
       }
     ];

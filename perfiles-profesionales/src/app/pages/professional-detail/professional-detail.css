@@ -410,3 +410,270 @@ ion-spinner {
     font-size: 1rem;
   }
 }
+
+/* New Sections Styles - Now in left column */
+
+/* Experience Card */
+.experience-card {
+  --background: white;
+  --border-radius: 16px;
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --border-width: 1px;
+  --border-color: #e2e8f0;
+  margin: 0;
+}
+
+.experience-content {
+  padding: 1rem 0;
+}
+
+.experience-years {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.briefcase-icon {
+  --color: #6B7280;
+  font-size: 20px;
+}
+
+.years-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.experience-description {
+  font-size: 0.95rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Reviews Card */
+.reviews-card {
+  --background: white;
+  --border-radius: 16px;
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --border-width: 1px;
+  --border-color: #e2e8f0;
+  margin: 0;
+}
+
+.reviews-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.leave-review-button {
+  --border-radius: 6px;
+  --padding-start: 0.5rem;
+  --padding-end: 0.5rem;
+  --padding-top: 0.375rem;
+  --padding-bottom: 0.375rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.reviews-content {
+  padding: 1rem 0;
+}
+
+.rating-display {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.rating-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.stars-container {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.star-icon {
+  font-size: 20px;
+  --color: #d1d5db;
+}
+
+.star-icon.filled {
+  --color: #fbbf24;
+}
+
+.star-icon.half-filled {
+  --color: #fbbf24;
+}
+
+.reviews-count {
+  font-size: 0.95rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.no-reviews {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.empty-star-icon {
+  font-size: 4rem;
+  --color: #d1d5db;
+  margin-bottom: 1rem;
+}
+
+.no-reviews-text {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Q&A Card */
+.qa-card {
+  --background: white;
+  --border-radius: 16px;
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --border-width: 1px;
+  --border-color: #e2e8f0;
+  margin: 0;
+}
+
+.qa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.ask-question-button {
+  --border-radius: 6px;
+  --padding-start: 0.5rem;
+  --padding-end: 0.5rem;
+  --padding-top: 0.375rem;
+  --padding-bottom: 0.375rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.qa-content {
+  padding: 1rem 0;
+}
+
+.questions-count {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.no-questions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.empty-chat-icon {
+  font-size: 4rem;
+  --color: #d1d5db;
+  margin-bottom: 1rem;
+}
+
+.no-questions-text {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Section Icons */
+.section-icon {
+  --color: #20B2AA;
+  font-size: 20px;
+  margin-right: 0.5rem;
+}
+
+/* Responsive Design for New Sections */
+@media (max-width: 768px) {
+  .reviews-header,
+  .qa-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .leave-review-button,
+  .ask-question-button {
+    align-self: flex-end;
+  }
+
+  .rating-display {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .rating-number {
+    font-size: 1.75rem;
+  }
+
+  .star-icon {
+    font-size: 18px;
+  }
+
+  .empty-star-icon,
+  .empty-chat-icon {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .years-text {
+    font-size: 1rem;
+  }
+
+  .experience-description {
+    font-size: 0.9rem;
+  }
+
+  .rating-number {
+    font-size: 1.5rem;
+  }
+
+  .star-icon {
+    font-size: 16px;
+  }
+
+  .reviews-count,
+  .questions-count,
+  .no-reviews-text,
+  .no-questions-text {
+    font-size: 0.9rem;
+  }
+
+  .empty-star-icon,
+  .empty-chat-icon {
+    font-size: 2.5rem;
+  }
+
+  .leave-review-button,
+  .ask-question-button {
+    font-size: 0.75rem;
+    --padding-start: 0.375rem;
+    --padding-end: 0.375rem;
+    --padding-top: 0.25rem;
+    --padding-bottom: 0.25rem;
+  }
+}

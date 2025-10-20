@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { arrowBack, checkmarkCircle, star, location, mail } from 'ionicons/icons';
+import { arrowBack, checkmarkCircle, star, location, mail, briefcase, chatbubbleOutline } from 'ionicons/icons';
 import { ProfessionalService, Professional } from '../../services/professional';
 import { ContactModalComponent } from '../../components/contact-modal/contact-modal';
 
@@ -19,12 +19,15 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
   isContactModalOpen = false;
   private subscription: Subscription = new Subscription();
 
+  // Expose Math to template
+  Math = Math;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private professionalService: ProfessionalService
   ) {
-    addIcons({ arrowBack, checkmarkCircle, star, location, mail });
+    addIcons({ arrowBack, checkmarkCircle, star, location, mail, briefcase, chatbubbleOutline });
   }
 
   ngOnInit() {
@@ -77,5 +80,15 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
       case 'offline': return '#EF4444';
       default: return '#6B7280';
     }
+  }
+
+  onLeaveReview() {
+    console.log('Dejar valoración para:', this.professional?.name);
+    // Aquí implementaremos la funcionalidad de dejar valoración
+  }
+
+  onAskQuestion() {
+    console.log('Hacer una pregunta a:', this.professional?.name);
+    // Aquí implementaremos la funcionalidad de hacer preguntas
   }
 }

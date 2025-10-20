@@ -88,6 +88,100 @@
           </div>
         </ion-card-content>
       </ion-card>
+
+      <!-- Experience Section -->
+      <ion-card class="experience-card">
+        <ion-card-header>
+          <ion-card-title class="section-title">
+            <ion-icon name="briefcase" class="section-icon"></ion-icon>
+            Experiencia
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="experience-content">
+            <div class="experience-years">
+              <ion-icon name="briefcase" class="briefcase-icon"></ion-icon>
+              <span class="years-text">{{ professional.experience?.years || 5 }}+ años de experiencia</span>
+            </div>
+            <p class="experience-description">
+              {{ professional.experience?.description || 'Especializado en desarrollo mobile con un historial comprobado de proyectos exitosos y clientes satisfechos.' }}
+            </p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Reviews Section -->
+      <ion-card class="reviews-card">
+        <ion-card-header>
+          <div class="reviews-header">
+            <ion-card-title class="section-title">
+              <ion-icon name="star" class="section-icon"></ion-icon>
+              Valoraciones y Reseñas
+            </ion-card-title>
+            <ion-button 
+              class="leave-review-button" 
+              (click)="onLeaveReview()" 
+              fill="outline" 
+              size="small">
+              Dejar valoración
+            </ion-button>
+          </div>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="reviews-content" *ngIf="professional.reviewData?.hasReviews; else noReviews">
+            <div class="rating-display">
+              <div class="rating-number">{{ professional.reviewData?.averageRating || professional.rating }}</div>
+              <div class="stars-container">
+                <ion-icon 
+                  *ngFor="let star of [1,2,3,4,5]" 
+                  name="star" 
+                  class="star-icon"
+                  [class.filled]="star <= Math.floor(professional.reviewData?.averageRating || professional.rating)"
+                  [class.half-filled]="star === Math.ceil(professional.reviewData?.averageRating || professional.rating) && (professional.reviewData?.averageRating || professional.rating) % 1 !== 0">
+                </ion-icon>
+              </div>
+              <div class="reviews-count">({{ professional.reviewData?.totalReviews || professional.reviews }} reseñas)</div>
+            </div>
+          </div>
+          <ng-template #noReviews>
+            <div class="no-reviews">
+              <ion-icon name="star-outline" class="empty-star-icon"></ion-icon>
+              <p class="no-reviews-text">Aún no hay valoraciones. Sé el primero en dejar una reseña.</p>
+            </div>
+          </ng-template>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Q&A Section -->
+      <ion-card class="qa-card">
+        <ion-card-header>
+          <div class="qa-header">
+            <ion-card-title class="section-title">
+              <ion-icon name="chatbubble-outline" class="section-icon"></ion-icon>
+              Preguntas y Respuestas
+            </ion-card-title>
+            <ion-button 
+              class="ask-question-button" 
+              (click)="onAskQuestion()" 
+              fill="outline" 
+              size="small">
+              Hacer una pregunta
+            </ion-button>
+          </div>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="qa-content" *ngIf="professional.qa?.hasQuestions; else noQuestions">
+            <p class="questions-count">{{ professional.qa?.totalQuestions || 0 }} preguntas respondidas</p>
+            <!-- Aquí se mostrarían las preguntas y respuestas -->
+          </div>
+          <ng-template #noQuestions>
+            <div class="no-questions">
+              <ion-icon name="chatbubble-outline" class="empty-chat-icon"></ion-icon>
+              <p class="no-questions-text">Aún no hay preguntas. Sé el primero en preguntar.</p>
+            </div>
+          </ng-template>
+        </ion-card-content>
+      </ion-card>
     </div>
 
     <!-- Right Column -->
