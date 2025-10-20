@@ -260,3 +260,11 @@
   (closeModal)="onCloseReviewModal()"
   (submitReview)="onSubmitReview($event)">
 </app-review-modal>
+
+<!-- Question Modal -->
+<app-question-modal
+  [professional]="professional"
+  [isOpen]="isQuestionModalOpen"
+  (closeModal)="onCloseQuestionModal()"
+  (submitQuestion)="onSubmitQuestion($event)">
+</app-question-modal>

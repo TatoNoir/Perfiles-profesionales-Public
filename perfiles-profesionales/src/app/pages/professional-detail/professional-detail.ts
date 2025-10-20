@@ -8,10 +8,11 @@ import { arrowBack, checkmarkCircle, star, location, mail, briefcase, chatbubble
 import { ProfessionalService, Professional } from '../../services/professional';
 import { ContactModalComponent } from '../../components/contact-modal/contact-modal';
 import { ReviewModalComponent, ReviewForm } from '../../components/review-modal/review-modal';
+import { QuestionModalComponent, QuestionForm } from '../../components/question-modal/question-modal';
 
 @Component({
   selector: 'app-professional-detail',
-  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner, ContactModalComponent, ReviewModalComponent],
+  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner, ContactModalComponent, ReviewModalComponent, QuestionModalComponent],
   templateUrl: './professional-detail.html',
   styleUrl: './professional-detail.css'
 })
@@ -19,6 +20,7 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
   professional: Professional | null = null;
   isContactModalOpen = false;
   isReviewModalOpen = false;
+  isQuestionModalOpen = false;
   private subscription: Subscription = new Subscription();
 
   // Expose Math to template
@@ -102,6 +104,17 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
 
   onAskQuestion() {
     console.log('Hacer una pregunta a:', this.professional?.name);
-    // Aquí implementaremos la funcionalidad de hacer preguntas
+    this.isQuestionModalOpen = true;
+  }
+
+  onCloseQuestionModal() {
+    this.isQuestionModalOpen = false;
+  }
+
+  onSubmitQuestion(questionForm: QuestionForm) {
+    console.log('Pregunta enviada:', questionForm);
+    // Aquí implementaremos la lógica para guardar la pregunta
+    // Por ahora solo mostramos un mensaje de confirmación
+    alert('¡Pregunta enviada exitosamente!');
   }
 }
