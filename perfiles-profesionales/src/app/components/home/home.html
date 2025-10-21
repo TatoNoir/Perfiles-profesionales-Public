@@ -8,33 +8,27 @@
 
   <!-- Hero Section -->
   <div class="hero-section">
-    <ion-card class="hero-card">
-      <ion-card-header>
-        <ion-card-title class="hero-title">
-          Encuentra el Profesional <span class="highlight">Perfecto</span>
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p class="hero-subtitle">Conecta con expertos verificados en tu área.</p>
-        <p class="hero-subtitle">Miles de profesionales listos para ayudarte.</p>
-        <app-search-bar></app-search-bar>
-      </ion-card-content>
-    </ion-card>
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Encuentra el Profesional <span class="highlight">Perfecto</span>
+      </h1>
+      <div class="hero-subtitle">
+        <p>Conecta con expertos verificados en tu área.</p>
+        <p>Miles de profesionales listos para ayudarte.</p>
+      </div>
+      <app-search-bar></app-search-bar>
+    </div>
   </div>
 
   <!-- Activities Section -->
   <div class="activities-section">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title class="activities-title">
-          <ion-icon name="grid" class="activities-icon"></ion-icon>
-          Actividades Más Frecuentes
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <app-activity-cards></app-activity-cards>
-      </ion-card-content>
-    </ion-card>
+    <div class="activities-content">
+      <h2 class="activities-title">
+        <ion-icon name="grid" class="activities-icon"></ion-icon>
+        Actividades Más Frecuentes
+      </h2>
+      <app-activity-cards></app-activity-cards>
+    </div>
   </div>
 
   <!-- Popular Searches Section -->

@@ -2,7 +2,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Contactar a {{ professional?.name }}</ion-title>
+        <ion-title slot="start">Contactar a {{ professional?.name }}</ion-title>
         <ion-button fill="clear" slot="end" (click)="onClose()">
           <ion-icon name="close"></ion-icon>
         </ion-button>
@@ -53,14 +53,6 @@
             </ion-label>
           </ion-item>
 
-          <!-- LinkedIn -->
-          <ion-item class="contact-method" button (click)="onContactMethodClick('linkedin', professional.contactInfo.linkedin)">
-            <ion-icon name="logo-linkedin" slot="start" class="linkedin-icon"></ion-icon>
-            <ion-label>
-              <h3>LinkedIn</h3>
-              <p>{{ professional.contactInfo.linkedin }}</p>
-            </ion-label>
-          </ion-item>
         </div>
       </div>
     </ion-content>

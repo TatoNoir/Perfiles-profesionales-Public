@@ -1,9 +1,9 @@
 /* Modal Customization */
 ion-modal {
   --width: 90%;
-  --max-width: 500px;
+  --max-width: 520px;
   --height: auto;
-  --max-height: 90vh;
+  --max-height: 85vh;
   --border-radius: 16px;
   --box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
@@ -19,8 +19,10 @@ ion-modal ion-toolbar {
   --border-width: 0;
   --padding-start: 1.5rem;
   --padding-end: 1.5rem;
-  --padding-top: 1rem;
-  --padding-bottom: 1rem;
+  --padding-top: 1.25rem;
+  --padding-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
 }
 
 ion-modal ion-title {
@@ -28,7 +30,17 @@ ion-modal ion-title {
   font-weight: 600;
   color: #2d3748;
   text-align: left;
+  margin: 0;
 }
+
+
+ion-modal ion-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3748;
+  text-align: left;
+}
+
 
 /* Content Styling */
 .modal-content {
@@ -45,14 +57,14 @@ ion-modal ion-title {
   max-width: 100%;
   padding: 0;
   background: white;
-  min-height: 200px;
+  min-height: 220px;
 }
 
 .modal-description {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #6b7280;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.5;
+  margin: 0 0 1.25rem 0;
+  line-height: 1.4;
   text-align: left;
   padding: 0 0.5rem;
 }
@@ -121,11 +133,6 @@ ion-modal ion-title {
   margin-right: 1rem;
 }
 
-.linkedin-icon {
-  --color: #0A66C2;
-  font-size: 24px;
-  margin-right: 1rem;
-}
 
 /* Ionic Label Customization */
 .contact-method ion-label h3 {
@@ -149,10 +156,26 @@ ion-modal ion-title {
   ion-modal {
     --width: 95%;
     --max-width: 95%;
+    --max-height: 90vh;
   }
 
   ion-modal ion-title {
-    font-size: 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.2;
+    word-wrap: break-word;
+    hyphens: auto;
+    max-width: calc(100% - 60px);
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
+
+  ion-modal ion-toolbar {
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+    --padding-top: 1rem;
+    --padding-bottom: 1rem;
   }
 
   .modal-content {
@@ -181,8 +204,7 @@ ion-modal ion-title {
   .email-icon,
   .whatsapp-icon,
   .instagram-icon,
-  .facebook-icon,
-  .linkedin-icon {
+  .facebook-icon {
     font-size: 22px;
     margin-right: 0.875rem;
   }
@@ -192,10 +214,26 @@ ion-modal ion-title {
   ion-modal {
     --width: 98%;
     --max-width: 98%;
+    --max-height: 95vh;
   }
 
   ion-modal ion-title {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.3;
+    word-wrap: break-word;
+    hyphens: auto;
+    max-width: calc(100% - 50px);
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
+
+  ion-modal ion-toolbar {
+    --padding-start: 0.75rem;
+    --padding-end: 0.75rem;
+    --padding-top: 0.875rem;
+    --padding-bottom: 0.875rem;
   }
 
   .modal-content {
@@ -216,8 +254,7 @@ ion-modal ion-title {
   .email-icon,
   .whatsapp-icon,
   .instagram-icon,
-  .facebook-icon,
-  .linkedin-icon {
+  .facebook-icon {
     font-size: 20px;
     margin-right: 0.75rem;
   }
