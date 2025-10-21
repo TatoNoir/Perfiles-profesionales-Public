@@ -19,15 +19,11 @@
         <ion-card-content class="profile-content">
           <div class="profile-header">
             <div class="avatar-container">
-              <app-profile-photo-thumbnail
-                [photoUrl]="professional.avatar"
-                [name]="professional.name"
-                size="medium"
-                [isEditable]="true"
-                [showChangeButton]="true"
-                (photoChange)="onPhotoChange($event)"
-                (photoRemove)="onPhotoRemove()">
-              </app-profile-photo-thumbnail>
+        <app-profile-photo-thumbnail
+          [photoUrl]="professional.avatar"
+          [name]="professional.name"
+          size="medium">
+        </app-profile-photo-thumbnail>
             </div>
             <div class="profile-info">
               <div class="name-container">

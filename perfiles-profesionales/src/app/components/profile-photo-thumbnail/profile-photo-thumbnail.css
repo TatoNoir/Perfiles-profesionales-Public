@@ -36,60 +36,6 @@
   font-size: inherit;
 }
 
-.photo-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.photo-container:hover .photo-overlay {
-  opacity: 1;
-}
-
-.change-photo-button,
-.remove-photo-button {
-  --color: white;
-  --background: rgba(255, 255, 255, 0.2);
-  --background-hover: rgba(255, 255, 255, 0.3);
-  --border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  margin: 0;
-}
-
-.remove-photo-button {
-  --background: rgba(239, 68, 68, 0.8);
-  --background-hover: rgba(239, 68, 68, 0.9);
-}
-
-.change-photo-section {
-  margin-top: 0.75rem;
-  text-align: center;
-}
-
-.change-photo-text-button {
-  --border-radius: 20px;
-  --padding-start: 1rem;
-  --padding-end: 1rem;
-  --padding-top: 0.5rem;
-  --padding-bottom: 0.5rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-.file-input {
-  display: none;
-}
-
 /* Size variants */
 .thumbnail-small .photo-container {
   width: 60px;
@@ -129,11 +75,6 @@
     font-size: 2rem;
   }
 
-  .change-photo-button,
-  .remove-photo-button {
-    width: 35px;
-    height: 35px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -155,15 +96,4 @@
     font-size: 1.75rem;
   }
 
-  .change-photo-button,
-  .remove-photo-button {
-    width: 30px;
-    height: 30px;
-  }
-
-  .change-photo-text-button {
-    font-size: 0.8rem;
-    --padding-start: 0.75rem;
-    --padding-end: 0.75rem;
-  }
 }
