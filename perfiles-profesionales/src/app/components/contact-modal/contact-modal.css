@@ -1,146 +1,214 @@
-/* Ionic Modal Customization */
-.modal-content {
-  --background: white;
+/* Modal Customization */
+ion-modal {
+  --width: 90%;
+  --max-width: 500px;
+  --height: auto;
+  --max-height: 90vh;
   --border-radius: 16px;
   --box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  max-width: 500px;
-  width: 100%;
-  max-height: 90vh;
 }
 
-/* Ionic Button Customization for close button */
-.close-button {
-  --color: #6b7280;
-  --color-hover: #374151;
-  --background-hover: #f3f4f6;
-  --border-radius: 8px;
+ion-modal::part(backdrop) {
+  background: rgba(0, 0, 0, 0.5);
 }
 
-/* Modal Body */
+/* Header Styling */
+ion-modal ion-toolbar {
+  --background: white;
+  --color: #2d3748;
+  --border-width: 0;
+  --padding-start: 1.5rem;
+  --padding-end: 1.5rem;
+  --padding-top: 1rem;
+  --padding-bottom: 1rem;
+}
+
+ion-modal ion-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3748;
+  text-align: left;
+}
+
+/* Content Styling */
+.modal-content {
+  --background: white;
+  --padding-top: 0;
+  --padding-bottom: 1.5rem;
+  --padding-start: 1.5rem;
+  --padding-end: 1.5rem;
+  background: white;
+  min-height: 300px;
+}
+
 .modal-body {
-  padding: 2rem;
+  max-width: 100%;
+  padding: 0;
+  background: white;
+  min-height: 200px;
 }
 
 .modal-description {
   font-size: 1rem;
   color: #6b7280;
-  margin: 0 0 2rem 0;
+  margin: 0 0 1.5rem 0;
   line-height: 1.5;
-  text-align: center;
+  text-align: left;
+  padding: 0 0.5rem;
 }
 
 /* Contact Methods */
 .contact-methods {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 /* Ionic Item Customization */
 .contact-method {
   --background: transparent;
-  --border-radius: 12px;
-  --padding-start: 1rem;
-  --padding-end: 1rem;
+  --border-radius: 0;
+  --padding-start: 0;
+  --padding-end: 0;
   --padding-top: 1rem;
   --padding-bottom: 1rem;
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
   margin: 0;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: 1px solid #e2e8f0;
+  border: none;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.contact-method:last-child {
+  border-bottom: none;
 }
 
 .contact-method:hover {
   --background: #f8fafc;
-  transform: translateY(-1px);
-  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: none;
+  --box-shadow: none;
+}
+
+.contact-method:active {
+  transform: none;
+  --box-shadow: none;
 }
 
 /* Ionic Icon Customization */
 .email-icon {
   --color: #3B82F6;
   font-size: 24px;
+  margin-right: 1rem;
 }
 
 .whatsapp-icon {
   --color: #25D366;
   font-size: 24px;
+  margin-right: 1rem;
 }
 
 .instagram-icon {
   --color: #E4405F;
   font-size: 24px;
+  margin-right: 1rem;
 }
 
 .facebook-icon {
   --color: #1877F2;
   font-size: 24px;
+  margin-right: 1rem;
 }
 
 .linkedin-icon {
   --color: #0A66C2;
   font-size: 24px;
+  margin-right: 1rem;
 }
 
 /* Ionic Label Customization */
 .contact-method ion-label h3 {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #2d3748;
   margin: 0 0 0.25rem 0;
+  line-height: 1.2;
 }
 
 .contact-method ion-label p {
   font-size: 0.9rem;
   color: #6b7280;
   margin: 0;
+  word-break: break-all;
+  line-height: 1.3;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .modal-content {
-    max-width: 95%;
-    margin: 1rem;
+  ion-modal {
+    --width: 95%;
+    --max-width: 95%;
   }
 
-  .modal-body {
-    padding: 1.5rem;
+  ion-modal ion-title {
+    font-size: 1.25rem;
+  }
+
+  .modal-content {
+    --padding-start: 1rem;
+    --padding-end: 1rem;
   }
 
   .modal-description {
     font-size: 0.95rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .contact-method {
-    --padding-start: 0.875rem;
-    --padding-end: 0.875rem;
     --padding-top: 0.875rem;
     --padding-bottom: 0.875rem;
   }
 
   .contact-method ion-label h3 {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .contact-method ion-label p {
     font-size: 0.85rem;
   }
+
+  .email-icon,
+  .whatsapp-icon,
+  .instagram-icon,
+  .facebook-icon,
+  .linkedin-icon {
+    font-size: 22px;
+    margin-right: 0.875rem;
+  }
 }
 
 @media (max-width: 480px) {
-  .modal-body {
-    padding: 1rem;
+  ion-modal {
+    --width: 98%;
+    --max-width: 98%;
+  }
+
+  ion-modal ion-title {
+    font-size: 1.1rem;
+  }
+
+  .modal-content {
+    --padding-start: 0.75rem;
+    --padding-end: 0.75rem;
   }
 
   .modal-description {
     font-size: 0.9rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
   }
 
   .contact-method {
-    --padding-start: 0.75rem;
-    --padding-end: 0.75rem;
     --padding-top: 0.75rem;
     --padding-bottom: 0.75rem;
   }
@@ -151,5 +219,14 @@
   .facebook-icon,
   .linkedin-icon {
     font-size: 20px;
+    margin-right: 0.75rem;
+  }
+
+  .contact-method ion-label h3 {
+    font-size: 0.9rem;
+  }
+
+  .contact-method ion-label p {
+    font-size: 0.8rem;
   }
 }

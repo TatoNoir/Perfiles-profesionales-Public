@@ -60,6 +60,9 @@
 
 .avatar-container {
   flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .avatar {
@@ -73,6 +76,15 @@
   color: white;
   font-weight: 600;
   font-size: 1.75rem;
+}
+
+.profile-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .profile-info {
@@ -358,6 +370,11 @@ ion-spinner {
     font-size: 1.5rem;
   }
 
+  .profile-photo {
+    width: 70px;
+    height: 70px;
+  }
+
   .professional-name {
     font-size: 1.75rem;
   }
@@ -388,6 +405,11 @@ ion-spinner {
     width: 60px;
     height: 60px;
     font-size: 1.25rem;
+  }
+
+  .profile-photo {
+    width: 60px;
+    height: 60px;
   }
 
   .professional-name {

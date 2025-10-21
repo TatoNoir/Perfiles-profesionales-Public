@@ -9,10 +9,11 @@ import { ProfessionalService, Professional } from '../../services/professional';
 import { ContactModalComponent } from '../../components/contact-modal/contact-modal';
 import { ReviewModalComponent, ReviewForm } from '../../components/review-modal/review-modal';
 import { QuestionModalComponent, QuestionForm } from '../../components/question-modal/question-modal';
+import { ProfilePhotoThumbnailComponent } from '../../components/profile-photo-thumbnail/profile-photo-thumbnail';
 
 @Component({
   selector: 'app-professional-detail',
-  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner, ContactModalComponent, ReviewModalComponent, QuestionModalComponent],
+  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner, ContactModalComponent, ReviewModalComponent, QuestionModalComponent, ProfilePhotoThumbnailComponent],
   templateUrl: './professional-detail.html',
   styleUrl: './professional-detail.css'
 })
@@ -116,5 +117,38 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
     // Aquí implementaremos la lógica para guardar la pregunta
     // Por ahora solo mostramos un mensaje de confirmación
     alert('¡Pregunta enviada exitosamente!');
+  }
+
+  onImageError(event: any) {
+    console.log('Error al cargar la imagen de perfil:', event);
+    // Si hay error al cargar la imagen, ocultamos la imagen y mostramos el avatar con iniciales
+    const img = event.target as HTMLImageElement;
+    img.style.display = 'none';
+    // El avatar con iniciales se mostrará automáticamente ya que está condicionado con *ngIf="!professional.avatar"
+  }
+
+  onPhotoChange(file: File) {
+    console.log('Nueva foto seleccionada:', file);
+
+    // Crear una URL temporal para mostrar la imagen inmediatamente
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      if (this.professional) {
+        this.professional.avatar = e.target.result;
+      }
+    };
+    reader.readAsDataURL(file);
+
+    // Aquí implementarías la lógica para subir la imagen al servidor
+    // Por ahora solo mostramos un mensaje
+    alert('Foto actualizada exitosamente! (En una implementación real, se subiría al servidor)');
+  }
+
+  onPhotoRemove() {
+    console.log('Eliminar foto de perfil');
+    if (this.professional) {
+      this.professional.avatar = undefined;
+    }
+    alert('Foto eliminada exitosamente!');
   }
 }

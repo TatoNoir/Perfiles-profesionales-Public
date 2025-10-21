@@ -17,10 +17,12 @@ export class ContactModalComponent {
   @Output() closeModal = new EventEmitter<void>();
 
   constructor() {
+    console.log('ContactModalComponent initialized');
     addIcons({ close, mail, logoWhatsapp, logoInstagram, logoFacebook, logoLinkedin });
   }
 
   onClose() {
+    console.log('Closing contact modal');
     this.closeModal.emit();
   }
 
