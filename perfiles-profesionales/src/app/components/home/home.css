@@ -83,6 +83,11 @@
 
   .activities-title {
     font-size: 1.75rem;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
   }
 
   .hero-section {
@@ -106,5 +111,10 @@
 
   .activities-title {
     font-size: 1.5rem;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
   }
 }

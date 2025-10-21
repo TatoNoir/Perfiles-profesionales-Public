@@ -1,90 +1,86 @@
-<ion-card class="latest-profiles-section">
-  <ion-card-header>
-    <div class="section-header">
-      <ion-card-title class="section-title">Últimos Perfiles Agregados</ion-card-title>
-      <ion-button
-        class="view-all-button"
-        (click)="onViewAll()"
-        fill="outline"
-        color="primary">
-        Ver todos
-      </ion-button>
-    </div>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-grid class="professionals-grid">
-      <ion-row>
-        <ion-col
-          *ngFor="let professional of latestProfessionals; trackBy: trackByProfessionalId"
-          size="12"
-          size-md="6"
-          size-lg="4"
-          class="professional-col">
-          <ion-card class="professional-card">
-            <ion-card-content class="card-content">
-              <div class="card-header">
-                <div class="avatar-container">
-                  <div class="avatar">
-                    {{ professional.name.charAt(0) }}{{ professional.name.split(' ')[1]?.charAt(0) || '' }}
-                  </div>
-                  <div class="status-indicator" [style.background-color]="getStatusColor(professional)"></div>
+<div class="latest-profiles-section">
+  <div class="section-header">
+    <h2 class="section-title">Últimos Perfiles Agregados</h2>
+    <ion-button
+      class="view-all-button"
+      (click)="onViewAll()"
+      fill="outline"
+      color="primary">
+      Ver todos
+    </ion-button>
+  </div>
+  <ion-grid class="professionals-grid">
+    <ion-row>
+      <ion-col
+        *ngFor="let professional of latestProfessionals; trackBy: trackByProfessionalId"
+        size="12"
+        size-md="6"
+        size-lg="4"
+        class="professional-col">
+        <ion-card class="professional-card">
+          <ion-card-content class="card-content">
+            <div class="card-header">
+              <div class="avatar-container">
+                <div class="avatar">
+                  {{ professional.name.charAt(0) }}{{ professional.name.split(' ')[1]?.charAt(0) || '' }}
                 </div>
-                <div class="professional-info">
-                  <div class="name-container">
-                    <h3 class="professional-name">{{ professional.name }}</h3>
-                    <ion-icon
-                      *ngIf="professional.isVerified"
-                      name="checkmark-circle"
-                      class="verified-icon">
-                    </ion-icon>
-                  </div>
-                  <p class="profession">{{ professional.profession }}</p>
-                </div>
+                <div class="status-indicator" [style.background-color]="getStatusColor(professional)"></div>
               </div>
+              <div class="professional-info">
+                <div class="name-container">
+                  <h3 class="professional-name">{{ professional.name }}</h3>
+                  <ion-icon
+                    *ngIf="professional.isVerified"
+                    name="checkmark-circle"
+                    class="verified-icon">
+                  </ion-icon>
+                </div>
+                <p class="profession">{{ professional.profession }}</p>
+              </div>
+            </div>
 
-              <div class="rating-location">
-                <div class="rating">
-                  <ion-icon name="star" class="star-icon"></ion-icon>
-                  <span class="rating-text">{{ professional.rating }} ({{ professional.reviews }} reseñas)</span>
-                </div>
-                <div class="location">
-                  <ion-icon name="location" class="location-icon"></ion-icon>
-                  <span class="location-text">{{ professional.location }}</span>
-                </div>
+            <div class="rating-location">
+              <div class="rating">
+                <ion-icon name="star" class="star-icon"></ion-icon>
+                <span class="rating-text">{{ professional.rating }} ({{ professional.reviews }} reseñas)</span>
               </div>
+              <div class="location">
+                <ion-icon name="location" class="location-icon"></ion-icon>
+                <span class="location-text">{{ professional.location }}</span>
+              </div>
+            </div>
 
-              <div class="skills-container">
-                <ion-chip
-                  *ngFor="let skill of professional.skills.slice(0, 3)"
-                  class="skill-tag">
-                  {{ skill }}
-                </ion-chip>
-                <ion-chip
-                  *ngIf="professional.skills.length > 3"
-                  class="skill-tag more-skills">
-                  +{{ professional.skills.length - 3 }}
-                </ion-chip>
-              </div>
+            <div class="skills-container">
+              <ion-chip
+                *ngFor="let skill of professional.skills.slice(0, 3)"
+                class="skill-tag">
+                {{ skill }}
+              </ion-chip>
+              <ion-chip
+                *ngIf="professional.skills.length > 3"
+                class="skill-tag more-skills">
+                +{{ professional.skills.length - 3 }}
+              </ion-chip>
+            </div>
 
-              <div class="card-footer">
-                <div class="price">
-                  <span class="price-amount">${{ professional.pricePerHour }}</span>
-                  <span class="price-unit">por hora</span>
-                </div>
-                <ion-button
-                  class="view-profile-button"
-                  (click)="onViewProfile(professional)"
-                  fill="solid"
-                  color="primary"
-                  size="small">
-                  <ion-icon name="eye" slot="start"></ion-icon>
-                  Ver Perfil
-                </ion-button>
+            <div class="card-footer">
+              <div class="price">
+                <span class="price-amount">${{ professional.pricePerHour }}</span>
+                <span class="price-unit">por hora</span>
               </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card-content>
-</ion-card>
+              <ion-button
+                class="view-profile-button"
+                (click)="onViewProfile(professional)"
+                fill="solid"
+                color="primary"
+                size="small">
+                <ion-icon name="eye" slot="start"></ion-icon>
+                Ver Perfil
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

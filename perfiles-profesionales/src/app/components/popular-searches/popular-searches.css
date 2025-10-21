@@ -1,28 +1,19 @@
-/* Ionic Card Customization */
+/* Section Customization */
 .popular-searches-section {
-  --background: #ffffff;
-  --border-radius: 16px;
-  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  --border-width: 1px;
-  --border-color: #e2e8f0;
   margin: 2rem 1rem;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  padding: 1.5rem;
 }
 
-/* Ionic Card Title Customization */
+/* Section Title Customization */
 .section-title {
-  --color: #2d3748;
+  color: #2d3748;
   font-size: 2rem;
   font-weight: 700;
   margin: 0 0 1.5rem 0;
   text-align: left;
-}
-
-/* Ionic Card Content Customization */
-ion-card-content {
-  padding: 0 1.5rem 1.5rem 1.5rem;
 }
 
 .search-buttons-container {
@@ -34,13 +25,13 @@ ion-card-content {
 
 /* Ionic Chip Customization */
 .search-chip {
-  --background: #f7fafc;
+  --background: #ffffff;
   --color: #2d3748;
   --border-width: 1px;
   --border-color: #e2e8f0;
-  --border-radius: 8px;
-  --padding-start: 0.75rem;
-  --padding-end: 0.75rem;
+  --border-radius: 12px;
+  --padding-start: 1rem;
+  --padding-end: 1rem;
   --padding-top: 0.75rem;
   --padding-bottom: 0.75rem;
   font-size: 0.95rem;
@@ -48,24 +39,27 @@ ion-card-content {
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
 }
 
 .search-chip:hover {
-  --background: #edf2f7;
+  --background: #f8fafc;
   --border-color: #cbd5e0;
-  transform: translateY(-1px);
-  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .search-chip:active {
   transform: translateY(0);
-  --box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .popular-searches-section {
     margin: 1.5rem 0.75rem;
+    padding: 1.25rem;
   }
 
   .section-title {
@@ -73,26 +67,25 @@ ion-card-content {
     margin-bottom: 1.25rem;
   }
 
-  ion-card-content {
-    padding: 0 1.25rem 1.25rem 1.25rem;
-  }
 
   .search-buttons-container {
     gap: 0.75rem;
   }
 
   .search-chip {
-    --padding-start: 0.625rem;
-    --padding-end: 0.625rem;
+    --padding-start: 0.875rem;
+    --padding-end: 0.875rem;
     --padding-top: 0.625rem;
     --padding-bottom: 0.625rem;
     font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 }
 
 @media (max-width: 480px) {
   .popular-searches-section {
     margin: 1rem 0.5rem;
+    padding: 1rem;
   }
 
   .section-title {
@@ -100,19 +93,17 @@ ion-card-content {
     margin-bottom: 1rem;
   }
 
-  ion-card-content {
-    padding: 0 1rem 1rem 1rem;
-  }
 
   .search-buttons-container {
     gap: 0.5rem;
   }
 
   .search-chip {
-    --padding-start: 0.5rem;
-    --padding-end: 0.5rem;
+    --padding-start: 0.75rem;
+    --padding-end: 0.75rem;
     --padding-top: 0.5rem;
     --padding-bottom: 0.5rem;
     font-size: 0.85rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 }
