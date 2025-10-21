@@ -699,3 +699,56 @@ ion-spinner {
     --padding-bottom: 0.25rem;
   }
 }
+
+/* Mobile Price & Contact Section */
+.mobile-price-contact {
+  display: none;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mobile-price-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.mobile-price-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #20B2AA;
+  line-height: 1;
+}
+
+.mobile-price-unit {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+.mobile-contact-button {
+  width: 100%;
+  --border-radius: 12px;
+  --padding-start: 1.5rem;
+  --padding-end: 1.5rem;
+  --padding-top: 1rem;
+  --padding-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Show mobile section only on mobile */
+@media (max-width: 768px) {
+  .mobile-price-contact {
+    display: flex;
+  }
+
+  /* Hide desktop contact card on mobile */
+  .contact-card {
+    display: none;
+  }
+}

@@ -50,6 +50,18 @@
               </div>
             </div>
           </div>
+
+          <!-- Mobile Price & Contact Section -->
+          <div class="mobile-price-contact">
+            <div class="mobile-price-section">
+              <div class="mobile-price-amount">${{ professional.pricePerHour }}</div>
+              <div class="mobile-price-unit">por hora</div>
+            </div>
+            <ion-button class="mobile-contact-button" (click)="contactProfessional()" fill="solid" color="primary" size="large">
+              <ion-icon name="mail" slot="start"></ion-icon>
+              Contactar
+            </ion-button>
+          </div>
         </ion-card-content>
       </ion-card>
 
