@@ -5,7 +5,8 @@ import { Subscription } from 'rxjs';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { arrowBack, checkmarkCircle, star, location, mail, briefcase, chatbubbleOutline } from 'ionicons/icons';
-import { ProfessionalService, Professional } from '../../services/professional';
+import { ProfessionalDetailService } from './services/professional-detail.service';
+import { ProfessionalBasic } from '../../pages/professionals/services/professionals-list.service';
 import { ContactModalComponent } from '../../components/contact-modal/contact-modal';
 import { ReviewModalComponent, ReviewForm } from '../../components/review-modal/review-modal';
 import { QuestionModalComponent, QuestionForm } from '../../components/question-modal/question-modal';
@@ -18,7 +19,7 @@ import { ProfilePhotoThumbnailComponent } from '../../components/profile-photo-t
   styleUrl: './professional-detail.css'
 })
 export class ProfessionalDetailComponent implements OnInit, OnDestroy {
-  professional: Professional | null = null;
+  professional: ProfessionalBasic | null = null;
   isContactModalOpen = false;
   isReviewModalOpen = false;
   isQuestionModalOpen = false;
@@ -30,7 +31,7 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private professionalService: ProfessionalService
+    private professionalDetailService: ProfessionalDetailService
   ) {
     addIcons({ arrowBack, checkmarkCircle, star, location, mail, briefcase, chatbubbleOutline });
   }
@@ -50,7 +51,7 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
 
   private loadProfessional(id: string) {
     this.subscription.add(
-      this.professionalService.getProfessionalById(id).subscribe(professional => {
+      this.professionalDetailService.getProfessionalBasic(id).subscribe(professional => {
         this.professional = professional || null;
       })
     );

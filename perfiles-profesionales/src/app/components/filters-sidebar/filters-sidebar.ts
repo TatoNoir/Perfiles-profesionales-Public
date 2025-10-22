@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonRadio, IonRadioGroup, IonLabel, IonItem } from '@ionic/angular/standalone';
-import { ProfessionalService } from '../../services/professional';
+import { ProfessionalsListService } from '../../pages/professionals/services/professionals-list.service';
 
 @Component({
   selector: 'app-filters-sidebar',
@@ -19,7 +19,7 @@ export class FiltersSidebarComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private professionalService: ProfessionalService) {}
+  constructor(private professionalsListService: ProfessionalsListService) {}
 
   ngOnInit() {
     this.loadFilterOptions();
@@ -56,11 +56,11 @@ export class FiltersSidebarComponent implements OnInit, OnDestroy {
 
   onSpecialtyChange(specialty: string) {
     this.selectedSpecialty = specialty;
-    this.professionalService.setSpecialtyFilter(specialty);
+    this.professionalsListService.setSpecialtyFilter(specialty);
   }
 
   onLocationChange(location: string) {
     this.selectedLocation = location;
-    this.professionalService.setLocationFilter(location);
+    this.professionalsListService.setLocationFilter(location);
   }
 }

@@ -6,7 +6,8 @@ import { map } from 'rxjs/operators';
 import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonChip } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { checkmarkCircle, star, location, eye } from 'ionicons/icons';
-import { ProfessionalService, Professional } from '../../services/professional';
+import { ProfessionalsListService } from '../../pages/professionals/services/professionals-list.service';
+import { ProfessionalBasic } from '../../pages/professionals/services/professionals-list.service';
 
 @Component({
   selector: 'app-professional-cards',
@@ -15,18 +16,18 @@ import { ProfessionalService, Professional } from '../../services/professional';
   styleUrl: './professional-cards.css'
 })
 export class ProfessionalCardsComponent implements OnInit, OnDestroy {
-  latestProfessionals: Professional[] = [];
+  latestProfessionals: ProfessionalBasic[] = [];
   private subscription: Subscription = new Subscription();
 
   constructor(
-    private professionalService: ProfessionalService,
+    private professionalsListService: ProfessionalsListService,
     private router: Router
   ) {
     addIcons({ checkmarkCircle, star, location, eye });
   }
 
   ngOnInit() {
-    this.subscription = this.professionalService.getProfessionals()
+    this.subscription = this.professionalsListService.getProfessionals()
       .pipe(
         map(professionals => professionals.slice(0, 6))
       )
@@ -39,7 +40,7 @@ export class ProfessionalCardsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  onViewProfile(professional: Professional) {
+  onViewProfile(professional: ProfessionalBasic) {
     console.log('Ver perfil de:', professional.name);
     this.router.navigate(['/professionals', professional.id]);
   }
@@ -49,21 +50,21 @@ export class ProfessionalCardsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/professionals']);
   }
 
-  getStatusColor(professional: Professional): string {
+  getStatusColor(professional: ProfessionalBasic): string {
     // Simulamos diferentes estados de conexión
     const statuses = ['#10B981', '#F59E0B', '#EF4444'];
     const index = professional.id.charCodeAt(0) % statuses.length;
     return statuses[index];
   }
 
-  getStatusText(professional: Professional): string {
+  getStatusText(professional: ProfessionalBasic): string {
     const colors = this.getStatusColor(professional);
     if (colors === '#10B981') return 'En línea';
     if (colors === '#F59E0B') return 'Ausente';
     return 'Desconectado';
   }
 
-  trackByProfessionalId(index: number, professional: Professional): string {
+  trackByProfessionalId(index: number, professional: ProfessionalBasic): string {
     return professional.id;
   }
 }

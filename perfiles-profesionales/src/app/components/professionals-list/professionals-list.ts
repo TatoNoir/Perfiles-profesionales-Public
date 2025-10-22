@@ -5,7 +5,8 @@ import { Subscription } from 'rxjs';
 import { IonCard, IonCardContent, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonChip, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { checkmarkCircle, star, location, eye } from 'ionicons/icons';
-import { ProfessionalService, Professional } from '../../services/professional';
+import { ProfessionalsListService } from '../../pages/professionals/services/professionals-list.service';
+import { ProfessionalBasic } from '../../pages/professionals/services/professionals-list.service';
 
 @Component({
   selector: 'app-professionals-list',
@@ -14,8 +15,8 @@ import { ProfessionalService, Professional } from '../../services/professional';
   styleUrl: './professionals-list.css'
 })
 export class ProfessionalsListComponent implements OnInit, OnDestroy {
-  professionals: Professional[] = [];
-  displayedProfessionals: Professional[] = [];
+  professionals: ProfessionalBasic[] = [];
+  displayedProfessionals: ProfessionalBasic[] = [];
   isLoading = false;
   hasMoreData = true;
 
@@ -24,7 +25,7 @@ export class ProfessionalsListComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(
-    private professionalService: ProfessionalService,
+    private professionalsListService: ProfessionalsListService,
     private router: Router
   ) {
     addIcons({ checkmarkCircle, star, location, eye });
@@ -39,7 +40,7 @@ export class ProfessionalsListComponent implements OnInit, OnDestroy {
   }
 
   private loadProfessionals() {
-    this.subscription = this.professionalService.filteredProfessionals$.subscribe(professionals => {
+    this.subscription = this.professionalsListService.filteredProfessionals$.subscribe(professionals => {
       this.professionals = professionals;
       this.resetPagination();
       this.loadMoreProfessionals();
@@ -86,18 +87,18 @@ export class ProfessionalsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  onViewProfile(professional: Professional) {
+  onViewProfile(professional: ProfessionalBasic) {
     console.log('Ver perfil de:', professional.name);
     this.router.navigate(['/professionals', professional.id]);
   }
 
-  getStatusColor(professional: Professional): string {
+  getStatusColor(professional: ProfessionalBasic): string {
     const statuses = ['#10B981', '#F59E0B', '#EF4444'];
     const index = professional.id.charCodeAt(0) % statuses.length;
     return statuses[index];
   }
 
-  trackByProfessionalId(index: number, professional: Professional): string {
+  trackByProfessionalId(index: number, professional: ProfessionalBasic): string {
     return professional.id;
   }
 }

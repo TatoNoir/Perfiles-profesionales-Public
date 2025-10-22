@@ -6,7 +6,7 @@ import { addIcons } from 'ionicons';
 import { search } from 'ionicons/icons';
 import { FiltersSidebarComponent } from '../../components/filters-sidebar/filters-sidebar';
 import { ProfessionalsListComponent } from '../../components/professionals-list/professionals-list';
-import { ProfessionalService } from '../../services/professional';
+import { ProfessionalsListService } from './services/professionals-list.service';
 
 @Component({
   selector: 'app-professionals',
@@ -18,13 +18,13 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   searchQuery = '';
   private subscription: Subscription = new Subscription();
 
-  constructor(private professionalService: ProfessionalService) {
+  constructor(private professionalsListService: ProfessionalsListService) {
     addIcons({ search });
   }
 
   ngOnInit() {
     // Inicializar con búsqueda vacía
-    this.professionalService.setSearchQuery('');
+    this.professionalsListService.setSearchQuery('');
   }
 
   ngOnDestroy() {
@@ -32,12 +32,12 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   }
 
   onSearch() {
-    this.professionalService.setSearchQuery(this.searchQuery);
+    this.professionalsListService.setSearchQuery(this.searchQuery);
   }
 
   onSearchInput() {
     // Búsqueda en tiempo real mientras el usuario escribe
-    this.professionalService.setSearchQuery(this.searchQuery);
+    this.professionalsListService.setSearchQuery(this.searchQuery);
   }
 
   onSearchInputEvent(event: any) {

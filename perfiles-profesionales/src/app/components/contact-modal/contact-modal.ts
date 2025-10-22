@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonModal, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonItem, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { close, mail, logoWhatsapp, logoInstagram, logoFacebook, logoLinkedin } from 'ionicons/icons';
-import { Professional } from '../../services/professional';
+import { Professional } from '../../services/professionals.service';
 
 @Component({
   selector: 'app-contact-modal',

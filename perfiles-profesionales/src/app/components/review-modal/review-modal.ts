@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonModal, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonItem, IonLabel, IonInput, IonTextarea } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { close, star, starOutline } from 'ionicons/icons';
-import { Professional } from '../../services/professional';
+import { Professional } from '../../services/professionals.service';
 
 export interface ReviewForm {
   name: string;
