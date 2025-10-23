@@ -1,0 +1,73 @@
+<ion-modal [isOpen]="isOpen" (didDismiss)="onClose()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title class="modal-title">
+          <ion-icon name="star" class="title-icon"></ion-icon>
+          Valoraciones de {{ professionalName }}
+        </ion-title>
+        <ion-button fill="clear" slot="end" (click)="onClose()" class="close-button">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="modal-content">
+      <div class="modal-body">
+        <!-- Current Rating Display -->
+        <div class="current-rating" *ngIf="hasReviews">
+          <div class="rating-number">{{ averageRating | number:'1.1-1' }}</div>
+          <div class="stars-container">
+            <ion-icon
+              *ngFor="let star of getStarsArray()"
+              [name]="star <= averageRating ? 'star' : 'star-outline'"
+              class="star-icon">
+            </ion-icon>
+          </div>
+          <div class="reviews-count">{{ reviewsCount }} valoraciones</div>
+        </div>
+
+        <!-- Reviews List -->
+        <div class="reviews-section" *ngIf="hasReviews; else noReviews">
+          <div class="reviews-list">
+            <ion-card class="review-card" *ngFor="let review of professionalReviews">
+              <ion-card-content class="review-content">
+                <div class="review-header">
+                  <div class="reviewer-info">
+                    <span class="reviewer-name">{{ review.name }}</span>
+                    <div class="review-stars">
+                      <ion-icon
+                        *ngFor="let star of [1,2,3,4,5]"
+                        [name]="star <= review.value ? 'star' : 'star-outline'"
+                        class="review-star">
+                      </ion-icon>
+                    </div>
+                  </div>
+                  <span class="review-date">{{ review.created_at | date:'dd/MM/yyyy' }}</span>
+                </div>
+                <div class="review-text">
+                  <p class="review-comment">{{ review.comment }}</p>
+                  <div class="review-answer" *ngIf="review.answer">
+                    <div class="answer-header">
+                      <span class="answer-author">{{ professionalName }}</span>
+                    </div>
+                    <p class="answer-text">{{ review.answer }}</p>
+                  </div>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
+
+        <!-- No Reviews State -->
+        <ng-template #noReviews>
+          <div class="no-reviews">
+            <ion-icon name="star-outline" class="empty-star-icon"></ion-icon>
+            <h3 class="no-reviews-title">Aún no hay valoraciones</h3>
+            <p class="no-reviews-text">Sé el primero en dejar una valoración para este profesional.</p>
+          </div>
+        </ng-template>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

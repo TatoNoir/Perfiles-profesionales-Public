@@ -132,13 +132,22 @@
               <ion-icon name="star" class="section-icon"></ion-icon>
               Valoraciones y Reseñas
             </ion-card-title>
-            <ion-button
-              class="leave-review-button"
-              (click)="onLeaveReview()"
-              fill="outline"
-              size="small">
-              Dejar valoración
-            </ion-button>
+            <div class="reviews-buttons">
+              <ion-button
+                class="view-reviews-button"
+                (click)="onViewReviews()"
+                fill="outline"
+                size="small">
+                Ver valoraciones
+              </ion-button>
+              <ion-button
+                class="leave-review-button"
+                (click)="onLeaveReview()"
+                fill="outline"
+                size="small">
+                Dejar valoración
+              </ion-button>
+            </div>
           </div>
         </ion-card-header>
         <ion-card-content>
@@ -339,3 +348,11 @@
   (closeModal)="onCloseQuestionModal()"
   (submitQuestion)="onSubmitQuestion($event)">
 </app-question-modal>
+
+<!-- View Reviews Modal -->
+<app-view-reviews-modal
+  [isOpen]="isViewReviewsModalOpen"
+  [professionalName]="professional?.name || ''"
+  [reviews]="professionalReviews"
+  (modalClosed)="onCloseViewReviewsModal()">
+</app-view-reviews-modal>

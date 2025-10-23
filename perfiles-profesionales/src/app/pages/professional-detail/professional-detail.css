@@ -1060,3 +1060,45 @@ ion-spinner {
     display: none;
   }
 }
+
+/* Reviews Buttons */
+.reviews-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.view-reviews-button,
+.leave-review-button {
+  --border-radius: 8px;
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  --padding-top: 0.5rem;
+  --padding-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.view-reviews-button {
+  --color: #3b82f6;
+  --border-color: #3b82f6;
+}
+
+.leave-review-button {
+  --color: #20B2AA;
+  --border-color: #20B2AA;
+}
+
+/* Responsive buttons */
+@media (max-width: 768px) {
+  .reviews-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .view-reviews-button,
+  .leave-review-button {
+    width: 100%;
+    font-size: 0.8rem;
+  }
+}

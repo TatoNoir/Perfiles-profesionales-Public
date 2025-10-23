@@ -15,10 +15,11 @@ import { ContactModalComponent } from '../../components/contact-modal/contact-mo
 import { ReviewModalComponent, ReviewForm } from '../../components/review-modal/review-modal';
 import { QuestionModalComponent, QuestionForm } from '../../components/question-modal/question-modal';
 import { ProfilePhotoThumbnailComponent } from '../../components/profile-photo-thumbnail/profile-photo-thumbnail';
+import { ViewReviewsModalComponent } from '../../components/view-reviews-modal/view-reviews-modal';
 
 @Component({
   selector: 'app-professional-detail',
-  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner, ContactModalComponent, ReviewModalComponent, QuestionModalComponent, ProfilePhotoThumbnailComponent],
+  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner, ContactModalComponent, ReviewModalComponent, QuestionModalComponent, ProfilePhotoThumbnailComponent, ViewReviewsModalComponent],
   templateUrl: './professional-detail.html',
   styleUrl: './professional-detail.css'
 })
@@ -27,6 +28,7 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
   isContactModalOpen = false;
   isReviewModalOpen = false;
   isQuestionModalOpen = false;
+  isViewReviewsModalOpen = false;
   private subscription: Subscription = new Subscription();
 
   // Reviews properties
@@ -182,6 +184,14 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
 
   onCloseQuestionModal() {
     this.isQuestionModalOpen = false;
+  }
+
+  onViewReviews() {
+    this.isViewReviewsModalOpen = true;
+  }
+
+  onCloseViewReviewsModal() {
+    this.isViewReviewsModalOpen = false;
   }
 
   onSubmitQuestion(questionForm: QuestionForm) {
