@@ -3,7 +3,11 @@ import { CommonModule } from '@angular/common';
 import { IonModal, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonItem, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { close, mail, logoWhatsapp, logoInstagram, logoFacebook, logoLinkedin } from 'ionicons/icons';
-import { Professional } from '../../services/professionals.service';
+import { ProfessionalBasic } from '../../pages/professionals/services/professionals-list.service';
+import { ProfessionalDetail } from '../../pages/professional-detail/services/professional-detail.service';
+
+// Tipo combinado que incluye tanto datos básicos como detallados
+type ProfessionalFull = ProfessionalBasic & ProfessionalDetail;
 
 @Component({
   selector: 'app-contact-modal',
@@ -12,7 +16,7 @@ import { Professional } from '../../services/professionals.service';
   styleUrl: './contact-modal.css'
 })
 export class ContactModalComponent {
-  @Input() professional: Professional | null = null;
+  @Input() professional: ProfessionalFull | null = null;
   @Input() isOpen = false;
   @Output() closeModal = new EventEmitter<void>();
 
