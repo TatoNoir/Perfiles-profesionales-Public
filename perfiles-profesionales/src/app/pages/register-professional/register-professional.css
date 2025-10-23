@@ -340,6 +340,95 @@
   margin-right: 0.5rem;
 }
 
+/* Province and City Sections */
+.province-section,
+.city-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Province Dropdown */
+.provinces-dropdown {
+  position: relative;
+  z-index: 10;
+  margin-top: 0.5rem;
+}
+
+.provinces-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.2s ease-out;
+}
+
+.province-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.province-item:hover {
+  background: #f8fafc;
+}
+
+.province-item:last-child {
+  border-bottom: none;
+}
+
+.province-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+/* City Dropdown */
+.cities-dropdown {
+  position: relative;
+  z-index: 10;
+  margin-top: 0.5rem;
+}
+
+.cities-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.2s ease-out;
+}
+
+.city-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.city-item:hover {
+  background: #f8fafc;
+}
+
+.city-item:last-child {
+  border-bottom: none;
+}
+
+.city-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1f2937;
+}
+
 .form-item {
   --background: transparent;
   --border-width: 0;
@@ -592,6 +681,22 @@
 
   .no-results p {
     font-size: 0.8rem;
+  }
+
+  .provinces-list,
+  .cities-list {
+    max-height: 150px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .province-item,
+  .city-item {
+    padding: 0.75rem;
+  }
+
+  .province-name,
+  .city-name {
+    font-size: 0.9rem;
   }
 
   .photo-upload-area {

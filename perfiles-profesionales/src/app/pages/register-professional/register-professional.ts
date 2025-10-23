@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonSpinner } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonItem, IonLabel, IonInput, IonTextarea, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { close, person, location, camera, checkmark, arrowBack } from 'ionicons/icons';
-import { RegisterService, PersonalData, LocationData, ProfilePhoto, ProfessionalRegistration, ApiActivity } from './services/register.service';
+import { RegisterService, PersonalData, LocationData, ProfilePhoto, ProfessionalRegistration, ApiActivity, GeoState, GeoLocality } from './services/register.service';
 
 @Component({
   selector: 'app-register-professional',
-  imports: [CommonModule, FormsModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonSpinner],
+  imports: [CommonModule, FormsModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonItem, IonLabel, IonInput, IonTextarea, IonSpinner],
   templateUrl: './register-professional.html',
   styleUrl: './register-professional.css'
 })
@@ -32,8 +32,8 @@ export class RegisterProfessionalComponent implements OnInit {
 
   locationData: LocationData = {
     address: '',
-    city: '',
-    province: '',
+    locality_id: 0,
+    state_id: 0,
     workZone: ''
   };
 
@@ -47,32 +47,16 @@ export class RegisterProfessionalComponent implements OnInit {
   activitySearchTerm = '';
   showActivitiesDropdown = false;
 
-  provinces: string[] = [
-    'Buenos Aires',
-    'CABA',
-    'Córdoba',
-    'Santa Fe',
-    'Mendoza',
-    'Tucumán',
-    'Entre Ríos',
-    'Salta',
-    'Misiones',
-    'Chaco',
-    'Corrientes',
-    'Santiago del Estero',
-    'San Juan',
-    'Jujuy',
-    'Río Negro',
-    'Formosa',
-    'Neuquén',
-    'Chubut',
-    'San Luis',
-    'Catamarca',
-    'La Rioja',
-    'La Pampa',
-    'Santa Cruz',
-    'Tierra del Fuego'
-  ];
+  // Geographic data
+  provinces: GeoState[] = [];
+  filteredProvinces: GeoState[] = [];
+  provinceSearchTerm = '';
+  showProvincesDropdown = false;
+
+  cities: GeoLocality[] = [];
+  filteredCities: GeoLocality[] = [];
+  citySearchTerm = '';
+  showCitiesDropdown = false;
 
   constructor(
     private registerService: RegisterService,
@@ -86,6 +70,8 @@ export class RegisterProfessionalComponent implements OnInit {
     this.loadSavedData();
     // Cargar actividades
     this.loadActivities();
+    // Cargar provincias
+    this.loadProvinces();
   }
 
   // Navegación entre pasos
@@ -134,8 +120,8 @@ export class RegisterProfessionalComponent implements OnInit {
   validateLocationData(): boolean {
     return !!(
       this.locationData.address.trim() &&
-      this.locationData.city.trim() &&
-      this.locationData.province.trim() &&
+      this.locationData.locality_id > 0 &&
+      this.locationData.state_id > 0 &&
       this.locationData.workZone.trim()
     );
   }
@@ -360,5 +346,107 @@ export class RegisterProfessionalComponent implements OnInit {
 
   isActivitySelected(activityId: string): boolean {
     return this.personalData.activities.includes(activityId);
+  }
+
+  // Métodos para manejar provincias
+  loadProvinces() {
+    this.registerService.getProvincesByCountry(13).subscribe({
+      next: (provinces) => {
+        this.provinces = provinces;
+        this.filteredProvinces = provinces;
+      },
+      error: (error) => {
+        console.error('Error loading provinces:', error);
+      }
+    });
+  }
+
+  onProvinceSearch(event: any) {
+    this.provinceSearchTerm = event.detail.value;
+    this.filterProvinces();
+    this.showProvincesDropdown = true;
+  }
+
+  onProvinceFocus() {
+    this.showProvincesDropdown = true;
+    this.filterProvinces();
+  }
+
+  onProvinceBlur() {
+    setTimeout(() => {
+      this.showProvincesDropdown = false;
+    }, 200);
+  }
+
+  filterProvinces() {
+    if (!this.provinceSearchTerm.trim()) {
+      this.filteredProvinces = this.provinces;
+    } else {
+      this.filteredProvinces = this.provinces.filter(province =>
+        province.name.toLowerCase().includes(this.provinceSearchTerm.toLowerCase())
+      );
+    }
+  }
+
+  onProvinceSelect(province: GeoState) {
+    this.locationData.state_id = province.id;
+    this.provinceSearchTerm = province.name;
+    this.showProvincesDropdown = false;
+    // Cargar ciudades de la provincia seleccionada
+    this.loadCities(province.id);
+  }
+
+  getSelectedProvince(): GeoState | null {
+    return this.provinces.find(p => p.id === this.locationData.state_id) || null;
+  }
+
+  // Métodos para manejar ciudades
+  loadCities(stateId: number) {
+    this.registerService.getLocalitiesByState(stateId).subscribe({
+      next: (cities) => {
+        this.cities = cities;
+        this.filteredCities = cities;
+      },
+      error: (error) => {
+        console.error('Error loading cities:', error);
+      }
+    });
+  }
+
+  onCitySearch(event: any) {
+    this.citySearchTerm = event.detail.value;
+    this.filterCities();
+    this.showCitiesDropdown = true;
+  }
+
+  onCityFocus() {
+    this.showCitiesDropdown = true;
+    this.filterCities();
+  }
+
+  onCityBlur() {
+    setTimeout(() => {
+      this.showCitiesDropdown = false;
+    }, 200);
+  }
+
+  filterCities() {
+    if (!this.citySearchTerm.trim()) {
+      this.filteredCities = this.cities;
+    } else {
+      this.filteredCities = this.cities.filter(city =>
+        city.name.toLowerCase().includes(this.citySearchTerm.toLowerCase())
+      );
+    }
+  }
+
+  onCitySelect(city: GeoLocality) {
+    this.locationData.locality_id = city.id;
+    this.citySearchTerm = city.name;
+    this.showCitiesDropdown = false;
+  }
+
+  getSelectedCity(): GeoLocality | null {
+    return this.cities.find(c => c.id === this.locationData.locality_id) || null;
   }
 }

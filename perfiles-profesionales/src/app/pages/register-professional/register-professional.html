@@ -189,7 +189,7 @@
 
             <!-- Description -->
             <ion-item class="form-item textarea-item">
-              <ion-label position="stacked">Biografía *</ion-label>
+              <ion-label position="stacked">Descripción *</ion-label>
               <ion-textarea
                 [(ngModel)]="personalData.description"
                 name="description"
@@ -222,30 +222,80 @@
               </ion-input>
             </ion-item>
 
-            <!-- City -->
-            <ion-item class="form-item">
-              <ion-label position="stacked">Ciudad *</ion-label>
-              <ion-input
-                [(ngModel)]="locationData.city"
-                name="city"
-                placeholder="Buenos Aires"
-                required>
-              </ion-input>
-            </ion-item>
-
             <!-- Province -->
-            <ion-item class="form-item">
-              <ion-label position="stacked">Provincia *</ion-label>
-              <ion-select
-                [(ngModel)]="locationData.province"
-                name="province"
-                placeholder="Selecciona provincia"
-                interface="popover">
-                <ion-select-option *ngFor="let province of provinces" [value]="province">
-                  {{ province }}
-                </ion-select-option>
-              </ion-select>
-            </ion-item>
+            <div class="province-section">
+              <ion-label class="field-label">Provincia *</ion-label>
+
+              <!-- Province Search Input -->
+              <ion-item class="form-item search-item">
+                <ion-input
+                  [(ngModel)]="provinceSearchTerm"
+                  (ionInput)="onProvinceSearch($event)"
+                  (ionFocus)="onProvinceFocus()"
+                  (ionBlur)="onProvinceBlur()"
+                  placeholder="Buscar provincia..."
+                  clearInput="true"
+                  name="provinceSearch">
+                </ion-input>
+              </ion-item>
+
+              <!-- Province Dropdown -->
+              <div class="provinces-dropdown"
+                   *ngIf="showProvincesDropdown && (filteredProvinces.length > 0 || provinceSearchTerm)">
+                <!-- Provinces List -->
+                <div class="provinces-list" *ngIf="filteredProvinces.length > 0">
+                  <div
+                    class="province-item"
+                    *ngFor="let province of filteredProvinces"
+                    (click)="onProvinceSelect(province)">
+                    <span class="province-name">{{ province.name }}</span>
+                  </div>
+                </div>
+
+                <!-- No Results -->
+                <div class="no-results" *ngIf="filteredProvinces.length === 0 && provinceSearchTerm">
+                  <p>No se encontraron provincias con ese término.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- City -->
+            <div class="city-section">
+              <ion-label class="field-label">Ciudad *</ion-label>
+
+              <!-- City Search Input -->
+              <ion-item class="form-item search-item">
+                <ion-input
+                  [(ngModel)]="citySearchTerm"
+                  (ionInput)="onCitySearch($event)"
+                  (ionFocus)="onCityFocus()"
+                  (ionBlur)="onCityBlur()"
+                  placeholder="Buscar ciudad..."
+                  clearInput="true"
+                  name="citySearch"
+                  [disabled]="!locationData.state_id">
+                </ion-input>
+              </ion-item>
+
+              <!-- City Dropdown -->
+              <div class="cities-dropdown"
+                   *ngIf="showCitiesDropdown && (filteredCities.length > 0 || citySearchTerm)">
+                <!-- Cities List -->
+                <div class="cities-list" *ngIf="filteredCities.length > 0">
+                  <div
+                    class="city-item"
+                    *ngFor="let city of filteredCities"
+                    (click)="onCitySelect(city)">
+                    <span class="city-name">{{ city.name }}</span>
+                  </div>
+                </div>
+
+                <!-- No Results -->
+                <div class="no-results" *ngIf="filteredCities.length === 0 && citySearchTerm">
+                  <p>No se encontraron ciudades con ese término.</p>
+                </div>
+              </div>
+            </div>
 
             <!-- Work Zone -->
             <ion-item class="form-item textarea-item">

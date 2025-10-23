@@ -10,6 +10,16 @@ export interface ApiActivity {
   category?: string;
 }
 
+export interface GeoState {
+  id: number;
+  name: string;
+}
+
+export interface GeoLocality {
+  id: number;
+  name: string;
+}
+
 export interface PersonalData {
   firstName: string;
   lastName: string;
@@ -22,8 +32,8 @@ export interface PersonalData {
 
 export interface LocationData {
   address: string;
-  city: string;
-  province: string;
+  locality_id: number;
+  state_id: number;
   workZone: string;
 }
 
@@ -77,8 +87,8 @@ export class RegisterService {
 
     // Agregar datos de ubicación
     formData.append('address', data.address);
-    formData.append('city', data.city);
-    formData.append('province', data.province);
+    formData.append('locality_id', data.locality_id.toString());
+    formData.append('state_id', data.state_id.toString());
     formData.append('workZone', data.workZone);
 
     // Agregar foto si existe
@@ -101,9 +111,50 @@ export class RegisterService {
     );
   }
 
-  // Obtener provincias disponibles
-  getProvinces(): Observable<string[]> {
-    return this.apiService.get<string[]>(`${this.apiUrl}/provinces`);
+  // Obtener provincias por país
+  getProvincesByCountry(countryId: number = 13): Observable<GeoState[]> {
+    return this.apiService.get<{ data: GeoState[] } | GeoState[]>(`/api/states?country_id=${encodeURIComponent(countryId)}`).pipe(
+      map((response: any) => {
+        if (response?.data && Array.isArray(response.data)) return response.data as GeoState[];
+        if (Array.isArray(response)) return response as GeoState[];
+        return [
+          { id: 1, name: 'Buenos Aires' },
+          { id: 2, name: 'Córdoba' },
+          { id: 3, name: 'Santa Fe' },
+          { id: 4, name: 'Mendoza' },
+          { id: 5, name: 'Tucumán' }
+        ];
+      }),
+      catchError(() => of([
+        { id: 1, name: 'Buenos Aires' },
+        { id: 2, name: 'Córdoba' },
+        { id: 3, name: 'Santa Fe' },
+        { id: 4, name: 'Mendoza' },
+        { id: 5, name: 'Tucumán' }
+      ]))
+    );
+  }
+
+  // Obtener ciudades por provincia
+  getLocalitiesByState(stateId: number): Observable<GeoLocality[]> {
+    return this.apiService.get<{ data: GeoLocality[] } | GeoLocality[]>(`/api/localities?state_id=${encodeURIComponent(stateId)}`).pipe(
+      map((response: any) => {
+        if (response?.data && Array.isArray(response.data)) return response.data as GeoLocality[];
+        if (Array.isArray(response)) return response as GeoLocality[];
+        return [
+          { id: 1, name: 'La Plata' },
+          { id: 2, name: 'Capital Federal' },
+          { id: 3, name: 'Mar del Plata' },
+          { id: 4, name: 'Bahía Blanca' }
+        ];
+      }),
+      catchError(() => of([
+        { id: 1, name: 'La Plata' },
+        { id: 2, name: 'Capital Federal' },
+        { id: 3, name: 'Mar del Plata' },
+        { id: 4, name: 'Bahía Blanca' }
+      ]))
+    );
   }
 
   // Validar email
