@@ -127,19 +127,65 @@
               </ion-item>
             </div>
 
-            <!-- Specialty -->
-            <ion-item class="form-item">
-              <ion-label position="stacked">Especialidad *</ion-label>
-              <ion-select
-                [(ngModel)]="personalData.specialty"
-                name="specialty"
-                placeholder="Selecciona tu especialidad"
-                interface="popover">
-                <ion-select-option *ngFor="let specialty of specialties" [value]="specialty">
-                  {{ specialty }}
-                </ion-select-option>
-              </ion-select>
-            </ion-item>
+            <!-- Activities -->
+            <div class="activities-section">
+              <ion-label class="field-label">Actividades *</ion-label>
+
+              <!-- Search Input -->
+              <ion-item class="form-item search-item">
+                <ion-input
+                  [(ngModel)]="activitySearchTerm"
+                  (ionInput)="onActivitySearch($event)"
+                  (ionFocus)="onActivityFocus()"
+                  (ionBlur)="onActivityBlur()"
+                  placeholder="Buscar actividades..."
+                  clearInput="true"
+                  name="activitySearch">
+                </ion-input>
+              </ion-item>
+
+              <!-- Selected Activities -->
+              <div class="selected-activities" *ngIf="getSelectedActivities().length > 0">
+                <div class="selected-activity" *ngFor="let activity of getSelectedActivities()">
+                  <span class="activity-name">{{ activity.name }}</span>
+                  <ion-button
+                    fill="clear"
+                    size="small"
+                    (click)="removeActivity(activity.id)"
+                    class="remove-button">
+                    <ion-icon name="close"></ion-icon>
+                  </ion-button>
+                </div>
+              </div>
+
+              <!-- Activities Dropdown -->
+              <div class="activities-dropdown"
+                   *ngIf="showActivitiesDropdown && (filteredActivities.length > 0 || activitySearchTerm)">
+                <!-- Activities List -->
+                <div class="activities-list" *ngIf="filteredActivities.length > 0">
+                  <div
+                    class="activity-item"
+                    *ngFor="let activity of filteredActivities"
+                    (click)="onActivitySelect(activity)"
+                    [class.selected]="isActivitySelected(activity.id)">
+                    <div class="activity-info">
+                      <span class="activity-name">{{ activity.name }}</span>
+                      <span class="activity-description" *ngIf="activity.description">{{ activity.description }}</span>
+                    </div>
+                    <ion-icon
+                      *ngIf="isActivitySelected(activity.id)"
+                      name="checkmark"
+                      class="check-icon">
+                    </ion-icon>
+                  </div>
+                </div>
+
+                <!-- No Results -->
+                <div class="no-results" *ngIf="filteredActivities.length === 0 && activitySearchTerm">
+                  <p>No se encontraron actividades con ese término.</p>
+                </div>
+              </div>
+            </div>
 
             <!-- Description -->
             <ion-item class="form-item textarea-item">

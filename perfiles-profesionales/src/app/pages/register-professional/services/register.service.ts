@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { ApiService } from '../../../services/api.service';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+
+export interface ApiActivity {
+  id: string;
+  name: string;
+  description?: string;
+  category?: string;
+}
 
 export interface PersonalData {
   firstName: string;
@@ -8,7 +16,7 @@ export interface PersonalData {
   email: string;
   areaCode: string;
   phone: string;
-  specialty: string;
+  activities: string[]; // Array de IDs de actividades
   description: string;
 }
 
@@ -35,23 +43,23 @@ export interface ProfessionalRegistration extends PersonalData, LocationData, Pr
 export class RegisterService {
   private apiUrl = 'https://api.perfilesprofesionales.com'; // Cambiar por la URL real
 
-  constructor(private http: HttpClient) {}
+  constructor(private apiService: ApiService,) {}
 
   // Enviar datos personales
   submitPersonalData(data: PersonalData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/professionals/personal-data`, data);
+    return this.apiService.post(`${this.apiUrl}/professionals/personal-data`, data);
   }
 
   // Enviar datos de ubicación
   submitLocationData(data: LocationData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/professionals/location-data`, data);
+    return this.apiService.post(`${this.apiUrl}/professionals/location-data`, data);
   }
 
   // Subir foto de perfil
   uploadProfilePhoto(photo: File): Observable<any> {
     const formData = new FormData();
     formData.append('profilePhoto', photo);
-    return this.http.post(`${this.apiUrl}/professionals/profile-photo`, formData);
+    return this.apiService.post(`${this.apiUrl}/professionals/profile-photo`, formData);
   }
 
   // Enviar registro completo
@@ -62,8 +70,9 @@ export class RegisterService {
     formData.append('firstName', data.firstName);
     formData.append('lastName', data.lastName);
     formData.append('email', data.email);
+    formData.append('areaCode', data.areaCode);
     formData.append('phone', data.phone);
-    formData.append('specialty', data.specialty);
+    formData.append('activities', JSON.stringify(data.activities));
     formData.append('description', data.description);
 
     // Agregar datos de ubicación
@@ -77,22 +86,29 @@ export class RegisterService {
       formData.append('profilePhoto', data.profilePhoto);
     }
 
-    return this.http.post(`${this.apiUrl}/professionals/register`, formData);
+    return this.apiService.post(`${this.apiUrl}/professionals/register`, formData);
   }
 
-  // Obtener especialidades disponibles
-  getSpecialties(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/specialties`);
+  // Obtener actividades disponibles
+  getActivities(): Observable<ApiActivity[]> {
+    return this.apiService.get<{ data: ApiActivity[] }>(`/api/common/activities`).pipe(
+      map(response => response.data),
+      catchError(error => {
+        console.error('Error fetching activities from API:', error);
+        // Fallback: retornar array vacío en caso de error
+        return of([]);
+      })
+    );
   }
 
   // Obtener provincias disponibles
   getProvinces(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/provinces`);
+    return this.apiService.get<string[]>(`${this.apiUrl}/provinces`);
   }
 
   // Validar email
   validateEmail(email: string): Observable<{ valid: boolean; message?: string }> {
-    return this.http.post<{ valid: boolean; message?: string }>(`${this.apiUrl}/professionals/validate-email`, { email });
+    return this.apiService.post<{ valid: boolean; message?: string }>(`${this.apiUrl}/professionals/validate-email`, { email });
   }
 
   // Simular envío (para desarrollo)

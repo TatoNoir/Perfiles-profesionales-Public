@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { close, person, location, camera, checkmark, arrowBack } from 'ionicons/icons';
-import { RegisterService, PersonalData, LocationData, ProfilePhoto, ProfessionalRegistration } from './services/register.service';
+import { RegisterService, PersonalData, LocationData, ProfilePhoto, ProfessionalRegistration, ApiActivity } from './services/register.service';
 
 @Component({
   selector: 'app-register-professional',
@@ -26,7 +26,7 @@ export class RegisterProfessionalComponent implements OnInit {
     email: '',
     areaCode: '',
     phone: '',
-    specialty: '',
+    activities: [],
     description: ''
   };
 
@@ -41,19 +41,11 @@ export class RegisterProfessionalComponent implements OnInit {
     profilePhoto: null
   };
 
-  // Options
-  specialties: string[] = [
-    'Desarrollo Web',
-    'Desarrollo Mobile',
-    'Diseño UX/UI',
-    'Marketing Digital',
-    'Consultoría IT',
-    'Data Science',
-    'DevOps',
-    'Ciberseguridad',
-    'Inteligencia Artificial',
-    'Blockchain'
-  ];
+  // Activities
+  activities: ApiActivity[] = [];
+  filteredActivities: ApiActivity[] = [];
+  activitySearchTerm = '';
+  showActivitiesDropdown = false;
 
   provinces: string[] = [
     'Buenos Aires',
@@ -92,6 +84,8 @@ export class RegisterProfessionalComponent implements OnInit {
   ngOnInit() {
     // Cargar datos si existen en localStorage
     this.loadSavedData();
+    // Cargar actividades
+    this.loadActivities();
   }
 
   // Navegación entre pasos
@@ -131,7 +125,7 @@ export class RegisterProfessionalComponent implements OnInit {
       this.personalData.email.trim() &&
       this.personalData.areaCode.trim() &&
       this.personalData.phone.trim() &&
-      this.personalData.specialty.trim() &&
+      this.personalData.activities.length > 0 &&
       this.personalData.description.trim() &&
       this.isValidEmail(this.personalData.email)
     );
@@ -294,5 +288,77 @@ export class RegisterProfessionalComponent implements OnInit {
       return URL.createObjectURL(this.profilePhoto.profilePhoto);
     }
     return '';
+  }
+
+  // Métodos para manejar actividades
+  loadActivities() {
+    this.registerService.getActivities().subscribe({
+      next: (activities) => {
+        this.activities = activities;
+        this.filteredActivities = activities;
+      },
+      error: (error) => {
+        console.error('Error loading activities:', error);
+        // Fallback: actividades por defecto
+        this.activities = [
+          { id: '1', name: 'Desarrollo Web', description: 'Desarrollo de sitios web y aplicaciones web' },
+          { id: '2', name: 'Desarrollo Mobile', description: 'Desarrollo de aplicaciones móviles' },
+          { id: '3', name: 'Diseño UX/UI', description: 'Diseño de experiencia de usuario e interfaz' },
+          { id: '4', name: 'Marketing Digital', description: 'Estrategias de marketing digital' },
+          { id: '5', name: 'Consultoría IT', description: 'Consultoría en tecnología' }
+        ];
+        this.filteredActivities = this.activities;
+      }
+    });
+  }
+
+  onActivitySearch(event: any) {
+    this.activitySearchTerm = event.detail.value;
+    this.filterActivities();
+    this.showActivitiesDropdown = true;
+  }
+
+  onActivityFocus() {
+    this.showActivitiesDropdown = true;
+    this.filterActivities();
+  }
+
+  onActivityBlur() {
+    // Delay para permitir clicks en los items
+    setTimeout(() => {
+      this.showActivitiesDropdown = false;
+    }, 200);
+  }
+
+  filterActivities() {
+    if (!this.activitySearchTerm.trim()) {
+      this.filteredActivities = this.activities;
+    } else {
+      this.filteredActivities = this.activities.filter(activity =>
+        activity.name.toLowerCase().includes(this.activitySearchTerm.toLowerCase()) ||
+        (activity.description && activity.description.toLowerCase().includes(this.activitySearchTerm.toLowerCase()))
+      );
+    }
+  }
+
+  onActivitySelect(activity: ApiActivity) {
+    if (!this.personalData.activities.includes(activity.id)) {
+      this.personalData.activities.push(activity.id);
+    }
+    this.activitySearchTerm = '';
+    this.filteredActivities = this.activities;
+    this.showActivitiesDropdown = false;
+  }
+
+  removeActivity(activityId: string) {
+    this.personalData.activities = this.personalData.activities.filter(id => id !== activityId);
+  }
+
+  getSelectedActivities(): ApiActivity[] {
+    return this.activities.filter(activity => this.personalData.activities.includes(activity.id));
+  }
+
+  isActivitySelected(activityId: string): boolean {
+    return this.personalData.activities.includes(activityId);
   }
 }
