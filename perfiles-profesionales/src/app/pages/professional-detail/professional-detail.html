@@ -38,7 +38,7 @@
               <div class="rating-location">
                 <div class="rating">
                   <ion-icon name="star" class="star-icon"></ion-icon>
-                  <span class="rating-text">{{ professional.rating }} ({{ professional.reviews }} reseñas)</span>
+                  <span class="rating-text">{{ averageRating | number:'1.1-1' }} ({{ reviewsCount }} reseñas)</span>
                 </div>
                 <div class="location">
                   <ion-icon name="location" class="location-icon"></ion-icon>
