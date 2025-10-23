@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" (ionScroll)="onScroll($event)">
   <!-- Header -->
   <ion-header [translucent]="true">
     <ion-toolbar>
@@ -36,7 +36,14 @@
       <app-filters-sidebar></app-filters-sidebar>
 
       <!-- Professionals List -->
-      <app-professionals-list></app-professionals-list>
+      <app-professionals-list
+        [professionals]="professionals"
+        [displayedProfessionals]="displayedProfessionals"
+        [isLoading]="isLoading"
+        [hasMoreData]="hasMoreData"
+        (loadMore)="loadMoreProfessionals()"
+        (viewProfile)="onViewProfile($event)">
+      </app-professionals-list>
     </main>
   </div>
 </ion-content>

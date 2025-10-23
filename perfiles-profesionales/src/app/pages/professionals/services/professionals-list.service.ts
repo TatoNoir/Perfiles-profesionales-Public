@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, of } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged, catchError } from 'rxjs/operators';
 import { ApiService } from '../../../services/api.service';
+import { DataMapperService } from '../../../services/data-mapper.service';
+import { ApiProfessionalsResponse } from '../../../interfaces/api-response.interface';
 import { BASIC_PROFESSIONALS_DATA } from '../../../data/mock-data';
 
 export interface ProfessionalBasic {
@@ -64,7 +66,10 @@ export class ProfessionalsListService {
     })
   );
 
-  constructor(private apiService: ApiService) {
+  constructor(
+    private apiService: ApiService,
+    private dataMapper: DataMapperService
+  ) {
     this.loadSampleData();
   }
 
@@ -74,10 +79,19 @@ export class ProfessionalsListService {
 
   // Obtener lista de profesionales
   public getProfessionals(): Observable<ProfessionalBasic[]> {
-    return this.apiService.get<ProfessionalBasic[]>('/api/professionals').pipe(
+    return this.apiService.get<ApiProfessionalsResponse>('/api/professionals').pipe(
+      map(apiResponse => {
+        const professionals = this.dataMapper.mapApiResponseToProfessionals(apiResponse);
+
+        // Actualizar el BehaviorSubject con los datos reales
+        this.professionalsSubject.next(professionals);
+        return professionals;
+      }),
       catchError(error => {
-        console.warn('Error al obtener profesionales del endpoint, usando datos mock:', error);
-        return this.professionals$;
+        console.warn('Error al obtener profesionales del API, usando datos mock:', error);
+        // Fallback a datos mock
+        this.professionalsSubject.next(BASIC_PROFESSIONALS_DATA);
+        return of(BASIC_PROFESSIONALS_DATA);
       })
     );
   }

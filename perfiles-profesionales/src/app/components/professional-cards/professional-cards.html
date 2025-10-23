@@ -9,6 +9,7 @@
       Ver todos
     </ion-button>
   </div>
+
   <ion-grid class="professionals-grid">
     <ion-row>
       <ion-col
@@ -24,7 +25,7 @@
                 <div class="avatar">
                   {{ professional.name.charAt(0) }}{{ professional.name.split(' ')[1]?.charAt(0) || '' }}
                 </div>
-                <div class="status-indicator" [style.background-color]="getStatusColor(professional)"></div>
+                <!-- <div class="status-indicator" [style.background-color]="getStatusColor(professional)"></div> -->
               </div>
               <div class="professional-info">
                 <div class="name-container">
@@ -64,10 +65,10 @@
             </div>
 
             <div class="card-footer">
-              <div class="price">
+              <!-- <div class="price">
                 <span class="price-amount">${{ professional.pricePerHour }}</span>
                 <span class="price-unit">por hora</span>
-              </div>
+              </div> -->
               <ion-button
                 class="view-profile-button"
                 (click)="onViewProfile(professional)"

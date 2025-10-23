@@ -1,11 +1,8 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { IonCard, IonCardContent, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonChip, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { checkmarkCircle, star, location, eye } from 'ionicons/icons';
-import { ProfessionalsListService } from '../../pages/professionals/services/professionals-list.service';
 import { ProfessionalBasic } from '../../pages/professionals/services/professionals-list.service';
 
 @Component({
@@ -14,82 +11,21 @@ import { ProfessionalBasic } from '../../pages/professionals/services/profession
   templateUrl: './professionals-list.html',
   styleUrl: './professionals-list.css'
 })
-export class ProfessionalsListComponent implements OnInit, OnDestroy {
-  professionals: ProfessionalBasic[] = [];
-  displayedProfessionals: ProfessionalBasic[] = [];
-  isLoading = false;
-  hasMoreData = true;
+export class ProfessionalsListComponent {
+  @Input() professionals: ProfessionalBasic[] = [];
+  @Input() displayedProfessionals: ProfessionalBasic[] = [];
+  @Input() isLoading = false;
+  @Input() hasMoreData = true;
 
-  private itemsPerPage = 4;
-  private currentPage = 0;
-  private subscription: Subscription = new Subscription();
+  @Output() loadMore = new EventEmitter<void>();
+  @Output() viewProfile = new EventEmitter<ProfessionalBasic>();
 
-  constructor(
-    private professionalsListService: ProfessionalsListService,
-    private router: Router
-  ) {
+  constructor() {
     addIcons({ checkmarkCircle, star, location, eye });
   }
 
-  ngOnInit() {
-    this.loadProfessionals();
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
-  private loadProfessionals() {
-    this.subscription = this.professionalsListService.filteredProfessionals$.subscribe(professionals => {
-      this.professionals = professionals;
-      this.resetPagination();
-      this.loadMoreProfessionals();
-    });
-  }
-
-  private resetPagination() {
-    this.currentPage = 0;
-    this.displayedProfessionals = [];
-    this.hasMoreData = true;
-  }
-
-  private loadMoreProfessionals() {
-    if (this.isLoading || !this.hasMoreData) return;
-
-    this.isLoading = true;
-
-    // Simular carga asíncrona
-    setTimeout(() => {
-      const startIndex = this.currentPage * this.itemsPerPage;
-      const endIndex = startIndex + this.itemsPerPage;
-      const newProfessionals = this.professionals.slice(startIndex, endIndex);
-
-      this.displayedProfessionals = [...this.displayedProfessionals, ...newProfessionals];
-      this.currentPage++;
-
-      // Verificar si hay más datos
-      this.hasMoreData = endIndex < this.professionals.length;
-      this.isLoading = false;
-    }, 500);
-  }
-
-  @HostListener('window:scroll')
-  onScroll() {
-    if (this.isLoading || !this.hasMoreData) return;
-
-    const scrollPosition = window.pageYOffset;
-    const windowSize = window.innerHeight;
-    const bodyHeight = document.body.offsetHeight;
-
-    // Cargar más cuando estemos cerca del final (100px antes)
-    if (scrollPosition + windowSize >= bodyHeight - 100) {
-      this.loadMoreProfessionals();
-    }
-  }
-
   onViewProfile(professional: ProfessionalBasic) {
-    console.log('Ver perfil de:', professional.name);
-    this.router.navigate(['/professionals', professional.id]);
+    this.viewProfile.emit(professional);
   }
 
   getStatusColor(professional: ProfessionalBasic): string {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
@@ -30,29 +30,29 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   // Métodos HTTP básicos
-  get<T>(endpoint: string, params?: HttpParams): Observable<T> {
-    return this.http.get<T>(`${this.baseUrl}${endpoint}`, { params })
-      .pipe(catchError(this.handleError));
+  get<T>(endpoint: string, params?: HttpParams): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}${endpoint}`, { params })
+      .pipe(catchError(this.handleError<any>));
   }
 
-  post<T>(endpoint: string, body: any, headers?: HttpHeaders): Observable<T> {
-    return this.http.post<T>(`${this.baseUrl}${endpoint}`, body, { headers })
-      .pipe(catchError(this.handleError));
+  post<T>(endpoint: string, body: any, headers?: HttpHeaders): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}${endpoint}`, body, { headers })
+      .pipe(catchError(this.handleError<any>));
   }
 
-  put<T>(endpoint: string, body: any, headers?: HttpHeaders): Observable<T> {
-    return this.http.put<T>(`${this.baseUrl}${endpoint}`, body, { headers })
-      .pipe(catchError(this.handleError));
+  put<T>(endpoint: string, body: any, headers?: HttpHeaders): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}${endpoint}`, body, { headers })
+      .pipe(catchError(this.handleError<any>));
   }
 
-  patch<T>(endpoint: string, body: any, headers?: HttpHeaders): Observable<T> {
-    return this.http.patch<T>(`${this.baseUrl}${endpoint}`, body, { headers })
-      .pipe(catchError(this.handleError));
+  patch<T>(endpoint: string, body: any, headers?: HttpHeaders): Observable<any> {
+    return this.http.patch<any>(`${this.baseUrl}${endpoint}`, body, { headers })
+      .pipe(catchError(this.handleError<any>));
   }
 
-  delete<T>(endpoint: string): Observable<T> {
-    return this.http.delete<T>(`${this.baseUrl}${endpoint}`)
-      .pipe(catchError(this.handleError));
+  delete<T>(endpoint: string): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}${endpoint}`)
+      .pipe(catchError(this.handleError<any>));
   }
 
   // Métodos con respuesta tipada
@@ -65,26 +65,26 @@ export class ApiService {
   }
 
   // Métodos con autenticación
-  getWithAuth<T>(endpoint: string, token: string, params?: HttpParams): Observable<T> {
+  getWithAuth<T>(endpoint: string, token: string, params?: HttpParams): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<T>(`${this.baseUrl}${endpoint}`, { headers, params })
-      .pipe(catchError(this.handleError));
+    return this.http.get<any>(`${this.baseUrl}${endpoint}`, { headers, params })
+      .pipe(catchError(this.handleError<any>));
   }
 
-  postWithAuth<T>(endpoint: string, body: any, token: string): Observable<T> {
+  postWithAuth<T>(endpoint: string, body: any, token: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post<T>(`${this.baseUrl}${endpoint}`, body, { headers })
-      .pipe(catchError(this.handleError));
+    return this.http.post<any>(`${this.baseUrl}${endpoint}`, body, { headers })
+      .pipe(catchError(this.handleError<any>));
   }
 
-  putWithAuth<T>(endpoint: string, body: any, token: string): Observable<T> {
+  putWithAuth<T>(endpoint: string, body: any, token: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.put<T>(`${this.baseUrl}${endpoint}`, body, { headers })
-      .pipe(catchError(this.handleError));
+    return this.http.put<any>(`${this.baseUrl}${endpoint}`, body, { headers })
+      .pipe(catchError(this.handleError<any>));
   }
 
   // Upload de archivos
-  uploadFile<T>(endpoint: string, file: File, token?: string): Observable<T> {
+  uploadFile<T>(endpoint: string, file: File, token?: string): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
 
@@ -93,12 +93,12 @@ export class ApiService {
       headers = headers.set('Authorization', `Bearer ${token}`);
     }
 
-    return this.http.post<T>(`${this.baseUrl}${endpoint}`, formData, { headers })
-      .pipe(catchError(this.handleError));
+    return this.http.post<any>(`${this.baseUrl}${endpoint}`, formData, { headers })
+      .pipe(catchError(this.handleError<any>));
   }
 
   // Manejo de errores
-  private handleError(error: any): Observable<never> {
+  private handleError<T>(error: any): Observable<T> {
     let errorMessage = 'Ha ocurrido un error';
 
     if (error.error instanceof ErrorEvent) {
