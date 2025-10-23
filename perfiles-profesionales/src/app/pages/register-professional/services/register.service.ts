@@ -26,12 +26,15 @@ export interface PersonalData {
   email: string;
   areaCode: string;
   phone: string;
+  password: string;
+  confirmPassword: string;
   activities: string[]; // Array de IDs de actividades
   description: string;
 }
 
 export interface LocationData {
-  address: string;
+  street: string;
+  streetNumber: string;
   locality_id: number;
   state_id: number;
   workZone: string;
@@ -82,11 +85,13 @@ export class RegisterService {
     formData.append('email', data.email);
     formData.append('areaCode', data.areaCode);
     formData.append('phone', data.phone);
+    formData.append('password', data.password);
     formData.append('activities', JSON.stringify(data.activities));
     formData.append('description', data.description);
 
     // Agregar datos de ubicación
-    formData.append('address', data.address);
+    formData.append('street', data.street);
+    formData.append('streetNumber', data.streetNumber);
     formData.append('locality_id', data.locality_id.toString());
     formData.append('state_id', data.state_id.toString());
     formData.append('workZone', data.workZone);

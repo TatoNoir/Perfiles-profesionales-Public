@@ -26,12 +26,15 @@ export class RegisterProfessionalComponent implements OnInit {
     email: '',
     areaCode: '',
     phone: '',
+    password: '',
+    confirmPassword: '',
     activities: [],
     description: ''
   };
 
   locationData: LocationData = {
-    address: '',
+    street: '',
+    streetNumber: '',
     locality_id: 0,
     state_id: 0,
     workZone: ''
@@ -111,15 +114,19 @@ export class RegisterProfessionalComponent implements OnInit {
       this.personalData.email.trim() &&
       this.personalData.areaCode.trim() &&
       this.personalData.phone.trim() &&
+      this.personalData.password.trim() &&
+      this.personalData.confirmPassword.trim() &&
       this.personalData.activities.length > 0 &&
       this.personalData.description.trim() &&
-      this.isValidEmail(this.personalData.email)
+      this.isValidEmail(this.personalData.email) &&
+      this.passwordsMatch()
     );
   }
 
   validateLocationData(): boolean {
     return !!(
-      this.locationData.address.trim() &&
+      this.locationData.street.trim() &&
+      this.locationData.streetNumber.trim() &&
       this.locationData.locality_id > 0 &&
       this.locationData.state_id > 0 &&
       this.locationData.workZone.trim()
@@ -134,6 +141,11 @@ export class RegisterProfessionalComponent implements OnInit {
   isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  }
+
+  // Validación de contraseñas
+  passwordsMatch(): boolean {
+    return this.personalData.password === this.personalData.confirmPassword;
   }
 
   // Manejo de archivos

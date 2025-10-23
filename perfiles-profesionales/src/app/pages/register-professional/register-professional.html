@@ -127,6 +127,39 @@
               </ion-item>
             </div>
 
+            <!-- Password Fields -->
+            <div class="password-fields">
+              <!-- Password -->
+              <ion-item class="form-item password-field">
+                <ion-label position="stacked">Contraseña *</ion-label>
+                <ion-input
+                  [(ngModel)]="personalData.password"
+                  name="password"
+                  type="password"
+                  placeholder="Ingresa tu contraseña"
+                  required>
+                </ion-input>
+              </ion-item>
+
+              <!-- Confirm Password -->
+              <ion-item class="form-item confirm-password-field">
+                <ion-label position="stacked">Repita Contraseña *</ion-label>
+                <ion-input
+                  [(ngModel)]="personalData.confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  placeholder="Repite tu contraseña"
+                  required>
+                </ion-input>
+              </ion-item>
+            </div>
+
+            <!-- Password Match Error -->
+            <div *ngIf="personalData.password && personalData.confirmPassword && !passwordsMatch()" class="password-error">
+              <ion-icon name="alert-circle"></ion-icon>
+              <span>Las contraseñas no coinciden</span>
+            </div>
+
             <!-- Activities -->
             <div class="activities-section">
               <ion-label class="field-label">Actividades *</ion-label>
@@ -211,16 +244,31 @@
           </h2>
 
           <form class="registration-form">
-            <!-- Address -->
-            <ion-item class="form-item">
-              <ion-label position="stacked">Dirección *</ion-label>
-              <ion-input
-                [(ngModel)]="locationData.address"
-                name="address"
-                placeholder="Av. Corrientes 1234"
-                required>
-              </ion-input>
-            </ion-item>
+            <!-- Street and Number -->
+            <div class="address-fields">
+              <!-- Street -->
+              <ion-item class="form-item street-field">
+                <ion-label position="stacked">Calle *</ion-label>
+                <ion-input
+                  [(ngModel)]="locationData.street"
+                  name="street"
+                  placeholder="Av. Corrientes"
+                  required>
+                </ion-input>
+              </ion-item>
+
+              <!-- Street Number -->
+              <ion-item class="form-item number-field">
+                <ion-label position="stacked">Altura *</ion-label>
+                <ion-input
+                  [(ngModel)]="locationData.streetNumber"
+                  name="streetNumber"
+                  placeholder="1234"
+                  type="number"
+                  required>
+                </ion-input>
+              </ion-item>
+            </div>
 
             <!-- Province -->
             <div class="province-section">

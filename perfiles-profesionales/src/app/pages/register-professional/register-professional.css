@@ -135,6 +135,56 @@
   flex: 1;
 }
 
+/* Address Fields */
+.address-fields {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.street-field {
+  flex: 1;
+}
+
+.number-field {
+  flex: 0 0 120px;
+}
+
+/* Password Fields */
+.password-fields {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.password-field {
+  flex: 1;
+}
+
+.confirm-password-field {
+  flex: 1;
+}
+
+/* Password Error */
+.password-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ef4444;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+}
+
+.password-error ion-icon {
+  font-size: 1rem;
+  color: #ef4444;
+}
+
 /* Activities Section */
 .activities-section {
   display: flex;
@@ -652,6 +702,20 @@
 
   .phone-area-code {
     flex: 1;
+  }
+
+  .address-fields {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .number-field {
+    flex: 1;
+  }
+
+  .password-fields {
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
   .activities-dropdown {
