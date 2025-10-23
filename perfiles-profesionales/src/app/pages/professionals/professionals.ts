@@ -22,7 +22,7 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   isLoading = false;
   hasMoreData = true;
 
-  private itemsPerPage = 4;
+  private itemsPerPage = 6;
   private currentPage = 0;
   private subscription: Subscription = new Subscription();
 
@@ -88,10 +88,16 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
     const scrollHeight = scrollElement.scrollHeight;
     const clientHeight = scrollElement.clientHeight;
 
-    // Cargar más cuando estemos cerca del final (100px antes)
-    if (scrollTop + clientHeight >= scrollHeight - 100) {
+    // Cargar más cuando estemos cerca del final (200px antes)
+    if (scrollTop + clientHeight >= scrollHeight - 200) {
+      console.log('Scroll infinito activado - cargando más profesionales');
       this.loadMoreProfessionals();
     }
+  }
+
+  onLoadMore() {
+    console.log('Botón cargar más presionado');
+    this.loadMoreProfessionals();
   }
 
   onViewProfile(professional: ProfessionalBasic) {

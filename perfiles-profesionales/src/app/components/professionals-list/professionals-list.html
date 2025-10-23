@@ -77,6 +77,18 @@
     </ion-row>
   </ion-grid>
 
+  <!-- Load More Button -->
+  <div *ngIf="hasMoreData && !isLoading" class="load-more-container">
+    <ion-button
+      (click)="loadMore.emit()"
+      fill="outline"
+      color="primary"
+      size="large"
+      class="load-more-button">
+      Cargar más profesionales
+    </ion-button>
+  </div>
+
   <!-- Loading indicator -->
   <div *ngIf="isLoading" class="loading-indicator">
     <ion-spinner name="crescent"></ion-spinner>
