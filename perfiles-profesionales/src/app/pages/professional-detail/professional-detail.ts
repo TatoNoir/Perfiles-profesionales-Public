@@ -7,6 +7,7 @@ import { addIcons } from 'ionicons';
 import { arrowBack, checkmarkCircle, star, location, mail, briefcase, chatbubbleOutline } from 'ionicons/icons';
 import { ProfessionalDetailService, ProfessionalDetail } from './services/professional-detail.service';
 import { ProfessionalBasic } from '../../pages/professionals/services/professionals-list.service';
+import { Review } from '../../interfaces/api-response.interface';
 
 // Tipo combinado que incluye tanto datos básicos como detallados
 type ProfessionalFull = ProfessionalBasic & ProfessionalDetail;
@@ -27,6 +28,16 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
   isReviewModalOpen = false;
   isQuestionModalOpen = false;
   private subscription: Subscription = new Subscription();
+
+  // Reviews properties
+  professionalReviews: Review[] = [];
+  averageRating = 0;
+  reviewsCount = 0;
+
+  // Questions properties
+  professionalQuestions: any[] = [];
+  displayedQuestions: any[] = [];
+  questionsCount = 0;
 
   // Expose Math to template
   Math = Math;
@@ -52,19 +63,70 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private loadProfessional(id: string) {
-    // Cargar datos detallados del profesional
-    this.subscription.add(
-      this.professionalDetailService.getProfessionalDetail(id).subscribe(detailData => {
-        if (detailData) {
-          // Los datos detallados ya incluyen toda la información necesaria
-          this.professional = detailData as ProfessionalFull;
-        } else {
-          this.professional = null;
+      private loadProfessional(id: string) {
+        // Cargar datos detallados del profesional
+        this.subscription.add(
+          this.professionalDetailService.getProfessionalDetail(id).subscribe(detailData => {
+            if (detailData) {
+              // Los datos detallados ya incluyen toda la información necesaria
+              this.professional = detailData as ProfessionalFull;
+
+              // Cargar reviews del profesional
+              this.loadReviews();
+
+              // Cargar preguntas del profesional
+              this.loadQuestions();
+            } else {
+              this.professional = null;
+            }
+          })
+        );
+      }
+
+      private loadReviews() {
+        if (this.professional && (this.professional as any).reviewsList) {
+          this.professionalReviews = (this.professional as any).reviewsList;
+          this.calculateRatingStats();
         }
-      })
-    );
-  }
+      }
+
+      private loadQuestions() {
+        if (this.professional && (this.professional as any).questions) {
+          this.professionalQuestions = (this.professional as any).questions;
+          this.questionsCount = this.professionalQuestions.length;
+          // Mostrar solo las primeras 2 preguntas
+          this.displayedQuestions = this.professionalQuestions.slice(0, 2);
+        }
+      }
+
+      private calculateRatingStats() {
+        if (this.professionalReviews.length === 0) {
+          this.averageRating = 0;
+          this.reviewsCount = 0;
+          return;
+        }
+
+        const totalRating = this.professionalReviews.reduce((sum, review) => sum + review.value, 0);
+        this.averageRating = totalRating / this.professionalReviews.length;
+        this.reviewsCount = this.professionalReviews.length;
+      }
+
+      get hasReviews(): boolean {
+        return this.professionalReviews.length > 0;
+      }
+
+      get hasQuestions(): boolean {
+        return this.professionalQuestions.length > 0;
+      }
+
+      get hasMoreQuestions(): boolean {
+        return this.questionsCount > 2;
+      }
+
+      showMoreQuestions() {
+        // Abrir la modal de preguntas para ver todas
+        this.onAskQuestion();
+      }
 
   goBack() {
     this.router.navigate(['/professionals']);

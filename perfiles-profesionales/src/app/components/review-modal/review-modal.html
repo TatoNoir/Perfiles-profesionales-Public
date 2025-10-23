@@ -16,17 +16,46 @@
       <div class="modal-body">
         <!-- Current Rating Display -->
         <div class="current-rating">
-          <div class="rating-number">{{ professional.reviewData?.averageRating || professional.rating }}</div>
+          <div class="rating-number">{{ averageRating }}</div>
           <div class="stars-container">
             <ion-icon
               *ngFor="let star of getStarsArray()"
-              name="star"
-              class="star-icon"
-              [class.filled]="star <= Math.floor(professional.reviewData?.averageRating || professional.rating)"
-              [class.half-filled]="star === Math.ceil(professional.reviewData?.averageRating || professional.rating) && (professional.reviewData?.averageRating || professional.rating) % 1 !== 0">
+              [name]="star <= averageRating ? 'star' : 'star-outline'"
+              class="star-icon">
             </ion-icon>
           </div>
-          <div class="reviews-count">({{ professional.reviewData?.totalReviews || professional.reviews }} reseñas)</div>
+          <div class="reviews-count">{{ reviewsCount }} valoraciones</div>
+        </div>
+
+        <!-- Existing Reviews -->
+        <div class="existing-reviews" *ngIf="hasReviews">
+          <h3 class="reviews-title">Valoraciones</h3>
+          <div class="reviews-list">
+            <div class="review-item" *ngFor="let review of professionalReviews">
+              <div class="review-header">
+                <div class="reviewer-info">
+                  <span class="reviewer-name">{{ review.name }}</span>
+                  <div class="review-stars">
+                    <ion-icon
+                      *ngFor="let star of [1,2,3,4,5]"
+                      [name]="star <= review.value ? 'star' : 'star-outline'"
+                      class="review-star">
+                    </ion-icon>
+                  </div>
+                </div>
+                <span class="review-date">{{ review.created_at | date:'dd/MM/yyyy' }}</span>
+              </div>
+              <div class="review-content">
+                <p class="review-comment">{{ review.comment }}</p>
+                <div class="review-answer" *ngIf="review.answer">
+                  <div class="answer-header">
+                    <span class="answer-author">{{ professional?.name }}</span>
+                  </div>
+                  <p class="answer-text">{{ review.answer }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Review Form -->
@@ -38,6 +67,18 @@
               [(ngModel)]="reviewForm.name"
               name="name"
               placeholder="Ingresa tu nombre"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <!-- Email Field -->
+          <ion-item class="form-item">
+            <ion-label position="stacked">Tu email</ion-label>
+            <ion-input
+              [(ngModel)]="reviewForm.email"
+              name="email"
+              type="email"
+              placeholder="tu@email.com"
               required>
             </ion-input>
           </ion-item>
@@ -95,11 +136,29 @@
             fill="solid"
             color="primary"
             size="large"
-            [disabled]="!isFormValid()">
-            <ion-icon name="star" slot="start"></ion-icon>
-            Publicar valoración
+            [disabled]="!isFormValid() || isSubmitting">
+            <ion-spinner *ngIf="isSubmitting" slot="start" name="crescent"></ion-spinner>
+            <ion-icon *ngIf="!isSubmitting" name="send" slot="start"></ion-icon>
+            {{ isSubmitting ? 'Enviando...' : 'Publicar valoración' }}
           </ion-button>
         </form>
+
+        <!-- Error Message -->
+        <div *ngIf="showErrorMessage" class="error-message">
+          <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+          <h3 class="error-title">Error al enviar valoración</h3>
+          <p class="error-text">{{ errorMessage }}</p>
+        </div>
+
+        <!-- Success Message -->
+        <div *ngIf="showSuccessMessage" class="success-message">
+          <ion-icon name="checkmark-circle" class="success-icon"></ion-icon>
+          <h3 class="success-title">¡Valoración enviada!</h3>
+          <p class="success-text">{{ successMessage }}</p>
+          <p class="success-date" *ngIf="sentAt">
+            Enviado el {{ sentAt | date:'dd/MM/yyyy HH:mm' }}
+          </p>
+        </div>
       </div>
     </ion-content>
   </ng-template>

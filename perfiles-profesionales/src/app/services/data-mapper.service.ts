@@ -187,7 +187,11 @@ export class DataMapperService {
       qa: {
         hasQuestions: questions.length > 0,
         totalQuestions: questions.length
-      }
+      },
+      // Incluir las reviews directamente
+      reviewsList: reviews,
+      // Incluir las preguntas directamente
+      questions: questions
     };
   }
 }
