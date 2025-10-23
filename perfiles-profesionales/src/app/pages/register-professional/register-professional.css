@@ -1,0 +1,410 @@
+.register-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 2rem 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Progress Steps */
+.progress-container {
+  margin-bottom: 2rem;
+}
+
+.progress-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 1rem 0;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.step-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+  background: #d1d5db;
+  border: 3px solid #d1d5db;
+  transition: all 0.3s ease;
+  margin-bottom: 0.5rem;
+}
+
+.step.active .step-circle {
+  background: #20B2AA;
+  border-color: #20B2AA;
+  box-shadow: 0 0 0 4px rgba(32, 178, 170, 0.2);
+}
+
+.step.completed .step-circle {
+  background: #10B981;
+  border-color: #10B981;
+}
+
+.step-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.step.active .step-label {
+  color: #20B2AA;
+  font-weight: 600;
+}
+
+.step.completed .step-label {
+  color: #10B981;
+  font-weight: 600;
+}
+
+.step-line {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  right: 25px;
+  height: 3px;
+  background: #d1d5db;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.step-line.completed {
+  background: #10B981;
+}
+
+/* Step Content */
+.step-content {
+  margin-bottom: 2rem;
+}
+
+.step-card {
+  --background: white;
+  --border-radius: 16px;
+  --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin: 0;
+}
+
+.step-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 1.5rem 0;
+}
+
+.step-title ion-icon {
+  color: #20B2AA;
+  font-size: 1.75rem;
+}
+
+/* Form Styles */
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Phone Fields */
+.phone-fields {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.phone-area-code {
+  flex: 0 0 120px;
+}
+
+.phone-number {
+  flex: 1;
+}
+
+.form-item {
+  --background: transparent;
+  --border-width: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-end: 0;
+}
+
+.form-item ion-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.form-item ion-input,
+.form-item ion-textarea,
+.form-item ion-select {
+  --background: #f8fafc;
+  --border-radius: 8px;
+  --border-width: 1px;
+  --border-color: #e2e8f0;
+  --border-color-focused: #20B2AA;
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  --padding-top: 0.75rem;
+  --padding-bottom: 0.75rem;
+  --color: #1f2937;
+  --placeholder-color: #9ca3af;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-item ion-input.ion-focused,
+.form-item ion-textarea.ion-focused,
+.form-item ion-select.ion-focused {
+  --border-color: #20B2AA;
+  --box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.1);
+}
+
+.textarea-item ion-textarea {
+  --min-height: 120px;
+}
+
+.help-text {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0.5rem 0 0 0;
+  font-style: italic;
+}
+
+/* Photo Upload Section */
+.photo-upload-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.photo-upload-area {
+  width: 200px;
+  height: 200px;
+  border: 3px dashed #d1d5db;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f8fafc;
+}
+
+.photo-upload-area:hover {
+  border-color: #20B2AA;
+  background: rgba(32, 178, 170, 0.05);
+}
+
+.upload-icon {
+  font-size: 3rem;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+}
+
+.upload-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #6b7280;
+  margin: 0;
+}
+
+.upload-instructions {
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-align: center;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.photo-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.photo-preview img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #20B2AA;
+}
+
+.photo-name {
+  font-size: 0.875rem;
+  color: #20B2AA;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Navigation Buttons */
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.nav-button {
+  --border-radius: 12px;
+  --padding-start: 1.5rem;
+  --padding-end: 1.5rem;
+  --padding-top: 0.75rem;
+  --padding-bottom: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  min-width: 140px;
+}
+
+.nav-button:disabled {
+  --opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Success Message */
+.success-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.success-icon {
+  font-size: 4rem;
+  color: #10B981;
+  margin-bottom: 1rem;
+}
+
+.success-message h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+}
+
+.success-message p {
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .register-page {
+    padding: 1rem 0.5rem;
+  }
+
+  .progress-steps {
+    padding: 0.5rem 0;
+  }
+
+  .step-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+  }
+
+  .step-label {
+    font-size: 0.75rem;
+  }
+
+  .step-title {
+    font-size: 1.25rem;
+  }
+
+  .registration-form {
+    gap: 1rem;
+  }
+
+  .form-item ion-input,
+  .form-item ion-textarea,
+  .form-item ion-select {
+    --padding-start: 0.75rem;
+    --padding-end: 0.75rem;
+    --padding-top: 0.5rem;
+    --padding-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .phone-fields {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .phone-area-code {
+    flex: 1;
+  }
+
+  .photo-upload-area {
+    width: 150px;
+    height: 150px;
+  }
+
+  .upload-icon {
+    font-size: 2rem;
+  }
+
+  .navigation-buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .nav-button {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .success-message {
+    padding: 2rem 1rem;
+  }
+
+  .success-icon {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .step-circle {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .step-label {
+    font-size: 0.7rem;
+  }
+
+  .photo-upload-area {
+    width: 120px;
+    height: 120px;
+  }
+
+  .upload-icon {
+    font-size: 1.5rem;
+  }
+}

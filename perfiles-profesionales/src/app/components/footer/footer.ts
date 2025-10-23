@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonButton } from '@ionic/angular/standalone';
 
 @Component({
@@ -9,7 +10,9 @@ import { IonButton } from '@ionic/angular/standalone';
 })
 export class FooterComponent {
 
+  constructor(private router: Router) {}
+
   onRegisterClick() {
-    // Aquí implementaremos la navegación al registro
+    this.router.navigate(['/register-professional']);
   }
 }
