@@ -16,10 +16,11 @@ import { ReviewModalComponent, ReviewForm } from '../../components/review-modal/
 import { QuestionModalComponent, QuestionForm } from '../../components/question-modal/question-modal';
 import { ProfilePhotoThumbnailComponent } from '../../components/profile-photo-thumbnail/profile-photo-thumbnail';
 import { ViewReviewsModalComponent } from '../../components/view-reviews-modal/view-reviews-modal';
+import { ViewQuestionsModalComponent } from '../../components/view-questions-modal/view-questions-modal';
 
 @Component({
   selector: 'app-professional-detail',
-  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner, ContactModalComponent, ReviewModalComponent, QuestionModalComponent, ProfilePhotoThumbnailComponent, ViewReviewsModalComponent],
+  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner, ContactModalComponent, ReviewModalComponent, QuestionModalComponent, ProfilePhotoThumbnailComponent, ViewReviewsModalComponent, ViewQuestionsModalComponent],
   templateUrl: './professional-detail.html',
   styleUrl: './professional-detail.css'
 })
@@ -29,6 +30,7 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
   isReviewModalOpen = false;
   isQuestionModalOpen = false;
   isViewReviewsModalOpen = false;
+  isViewQuestionsModalOpen = false;
   private subscription: Subscription = new Subscription();
 
   // Reviews properties
@@ -192,6 +194,14 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
 
   onCloseViewReviewsModal() {
     this.isViewReviewsModalOpen = false;
+  }
+
+  onViewQuestions() {
+    this.isViewQuestionsModalOpen = true;
+  }
+
+  onCloseViewQuestionsModal() {
+    this.isViewQuestionsModalOpen = false;
   }
 
   onSubmitQuestion(questionForm: QuestionForm) {

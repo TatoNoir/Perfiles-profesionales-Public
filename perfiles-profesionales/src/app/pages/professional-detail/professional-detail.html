@@ -209,19 +209,26 @@
               <ion-icon name="chatbubble-outline" class="section-icon"></ion-icon>
               Preguntas y Respuestas
             </ion-card-title>
-            <ion-button
-              class="ask-question-button"
-              (click)="onAskQuestion()"
-              fill="outline"
-              size="small">
-              Hacer una pregunta
-            </ion-button>
+            <div class="qa-buttons">
+              <ion-button
+                class="view-questions-button"
+                (click)="onViewQuestions()"
+                fill="outline"
+                size="small">
+                Ver preguntas ({{ questionsCount }})
+              </ion-button>
+              <ion-button
+                class="ask-question-button"
+                (click)="onAskQuestion()"
+                fill="outline"
+                size="small">
+                Hacer una pregunta
+              </ion-button>
+            </div>
           </div>
         </ion-card-header>
         <ion-card-content>
           <div class="qa-content" *ngIf="hasQuestions; else noQuestions">
-            <p class="questions-count">{{ questionsCount }} preguntas respondidas</p>
-
             <!-- Questions List -->
             <div class="questions-list">
               <div class="question-item" *ngFor="let question of displayedQuestions">
@@ -243,16 +250,6 @@
               </div>
             </div>
 
-            <!-- Ver más button -->
-            <div class="see-more-section" *ngIf="hasMoreQuestions">
-              <ion-button
-                class="see-more-button"
-                (click)="showMoreQuestions()"
-                fill="outline"
-                size="small">
-                Ver más preguntas
-              </ion-button>
-            </div>
           </div>
           <ng-template #noQuestions>
             <div class="no-questions">
@@ -356,3 +353,11 @@
   [reviews]="professionalReviews"
   (modalClosed)="onCloseViewReviewsModal()">
 </app-view-reviews-modal>
+
+<!-- View Questions Modal -->
+<app-view-questions-modal
+  [isOpen]="isViewQuestionsModalOpen"
+  [professionalName]="professional?.name || ''"
+  [questions]="professionalQuestions"
+  (modalClosed)="onCloseViewQuestionsModal()">
+</app-view-questions-modal>

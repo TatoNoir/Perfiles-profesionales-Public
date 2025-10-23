@@ -2,7 +2,7 @@
 ion-modal {
   --width: 90%;
   --max-width: 600px;
-  --height: 90%;
+  --max-height: 75vh;
   --border-radius: 16px;
   --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
@@ -60,7 +60,8 @@ ion-modal ion-toolbar {
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
+  padding: 1rem 0;
 }
 
 /* Success Message Styling */
@@ -104,7 +105,7 @@ ion-modal ion-toolbar {
 .question-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .form-item {
@@ -151,13 +152,13 @@ ion-modal ion-toolbar {
 /* Submit Button */
 .submit-button {
   --border-radius: 12px;
-  --padding-start: 2rem;
-  --padding-end: 2rem;
-  --padding-top: 1rem;
-  --padding-bottom: 1rem;
-  font-size: 1.1rem;
+  --padding-start: 1.5rem;
+  --padding-end: 1.5rem;
+  --padding-top: 0.75rem;
+  --padding-bottom: 0.75rem;
+  font-size: 1rem;
   font-weight: 600;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   width: 100%;
 }
 
