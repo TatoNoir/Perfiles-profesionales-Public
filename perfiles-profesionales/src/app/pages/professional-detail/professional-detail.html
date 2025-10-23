@@ -45,14 +45,14 @@
                   <span class="location-text">{{ professional.location }}</span>
                 </div>
               </div>
-              <div class="status-tag" [style.background-color]="getStatusColor(professional.status)">
+              <!-- <div class="status-tag" [style.background-color]="getStatusColor(professional.status)">
                 {{ getStatusText(professional.status) }}
-              </div>
+              </div> -->
             </div>
           </div>
 
           <!-- Mobile Price & Contact Section -->
-          <div class="mobile-price-contact">
+          <!-- <div class="mobile-price-contact">
             <div class="mobile-price-section">
               <div class="mobile-price-amount">${{ professional.pricePerHour }}</div>
               <div class="mobile-price-unit">por hora</div>
@@ -61,7 +61,7 @@
               <ion-icon name="mail" slot="start"></ion-icon>
               Contactar
             </ion-button>
-          </div>
+          </div> -->
         </ion-card-content>
       </ion-card>
 
@@ -113,10 +113,10 @@
         </ion-card-header>
         <ion-card-content>
           <div class="experience-content">
-            <div class="experience-years">
+            <!-- <div class="experience-years">
               <ion-icon name="briefcase" class="briefcase-icon"></ion-icon>
               <span class="years-text">{{ professional.experience?.years || 5 }}+ años de experiencia</span>
-            </div>
+            </div> -->
             <p class="experience-description">
               {{ professional.experience?.description || 'Especializado en desarrollo mobile con un historial comprobado de proyectos exitosos y clientes satisfechos.' }}
             </p>
@@ -200,13 +200,13 @@
 
     <!-- Right Column -->
     <div class="right-column">
-      <!-- Price & Contact Card -->
+      <!-- Contact Card -->
       <ion-card class="contact-card">
         <ion-card-content class="contact-content">
-          <div class="price-section">
+          <!-- <div class="price-section">
             <div class="price-amount">${{ professional.pricePerHour }}</div>
             <div class="price-unit">por hora</div>
-          </div>
+          </div> -->
           <ion-button class="contact-button" (click)="contactProfessional()" fill="solid" color="primary" size="large">
             <ion-icon name="mail" slot="start"></ion-icon>
             Contactar
@@ -215,7 +215,7 @@
       </ion-card>
 
       <!-- Statistics Card -->
-      <ion-card class="stats-card">
+      <!-- <ion-card class="stats-card">
         <ion-card-header>
           <ion-card-title class="stats-title">Estadísticas</ion-card-title>
         </ion-card-header>
@@ -235,10 +235,10 @@
             </div>
           </div>
         </ion-card-content>
-      </ion-card>
+      </ion-card> -->
 
       <!-- Verified Profile Card -->
-      <ion-card class="verified-card">
+      <!-- <ion-card class="verified-card">
         <ion-card-content class="verified-content">
           <div class="verified-header">
             <ion-icon name="checkmark-circle" class="verified-icon"></ion-icon>
@@ -248,7 +248,7 @@
             Este profesional ha completado el proceso de verificación y ha sido validado por nuestro equipo.
           </p>
         </ion-card-content>
-      </ion-card>
+      </ion-card> -->
     </div>
     </div>
   </div>

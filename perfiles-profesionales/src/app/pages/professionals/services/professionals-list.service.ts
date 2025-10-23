@@ -70,7 +70,8 @@ export class ProfessionalsListService {
     private apiService: ApiService,
     private dataMapper: DataMapperService
   ) {
-    this.loadSampleData();
+    // Comentado temporalmente para usar solo datos del API
+    // this.loadSampleData();
   }
 
   private loadSampleData() {

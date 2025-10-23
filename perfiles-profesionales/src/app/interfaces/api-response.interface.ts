@@ -64,7 +64,7 @@ export interface Locality {
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
-  state: State;
+  state?: State; // Opcional porque no siempre viene en el API
 }
 
 export interface State {

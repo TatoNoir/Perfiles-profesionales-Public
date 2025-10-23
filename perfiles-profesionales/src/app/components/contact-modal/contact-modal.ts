@@ -21,18 +21,14 @@ export class ContactModalComponent {
   @Output() closeModal = new EventEmitter<void>();
 
   constructor() {
-    console.log('ContactModalComponent initialized');
     addIcons({ close, mail, logoWhatsapp, logoInstagram, logoFacebook, logoLinkedin });
   }
 
   onClose() {
-    console.log('Closing contact modal');
     this.closeModal.emit();
   }
 
   onContactMethodClick(method: string, value: string) {
-    console.log(`Contactar por ${method}:`, value);
-
     switch (method) {
       case 'email':
         window.open(`mailto:${value}`, '_blank');

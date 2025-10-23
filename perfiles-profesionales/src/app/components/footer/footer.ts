@@ -10,7 +10,6 @@ import { IonButton } from '@ionic/angular/standalone';
 export class FooterComponent {
 
   onRegisterClick() {
-    console.log('Registrarse como profesional');
     // Aquí implementaremos la navegación al registro
   }
 }

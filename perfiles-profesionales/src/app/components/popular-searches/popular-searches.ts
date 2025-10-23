@@ -27,7 +27,6 @@ export class PopularSearchesComponent {
   ];
 
   onSearchClick(search: PopularSearch) {
-    console.log('Búsqueda popular seleccionada:', search.name);
     // Aquí implementaremos la navegación a la búsqueda
   }
 

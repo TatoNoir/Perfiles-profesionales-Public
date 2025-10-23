@@ -76,7 +76,6 @@ export class ActivityCardsComponent {
   }
 
   onCardClick(activity: ActivityCard) {
-    console.log('Categoría seleccionada:', activity.name);
     // Aquí implementaremos la navegación a la página de categoría
   }
 

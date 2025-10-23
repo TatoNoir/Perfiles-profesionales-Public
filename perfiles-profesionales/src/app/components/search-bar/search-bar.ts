@@ -18,7 +18,6 @@ export class SearchBarComponent {
 
   onSearch() {
     if (this.searchQuery.trim()) {
-      console.log('Buscando:', this.searchQuery);
       // Aquí implementaremos la lógica de búsqueda
     }
   }

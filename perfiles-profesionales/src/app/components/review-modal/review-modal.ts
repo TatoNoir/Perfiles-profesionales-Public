@@ -4,7 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { IonModal, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonItem, IonLabel, IonInput, IonTextarea } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { close, star, starOutline } from 'ionicons/icons';
-import { Professional } from '../../services/professionals.service';
+import { ProfessionalBasic } from '../../pages/professionals/services/professionals-list.service';
+import { ProfessionalDetail } from '../../pages/professional-detail/services/professional-detail.service';
+
+// Tipo combinado que incluye tanto datos básicos como detallados
+type ProfessionalFull = ProfessionalBasic & ProfessionalDetail;
 
 export interface ReviewForm {
   name: string;
@@ -21,7 +25,7 @@ export interface ReviewForm {
   styleUrl: './review-modal.css'
 })
 export class ReviewModalComponent {
-  @Input() professional: Professional | null = null;
+  @Input() professional: ProfessionalFull | null = null;
   @Input() isOpen = false;
   @Output() closeModal = new EventEmitter<void>();
   @Output() submitReview = new EventEmitter<ReviewForm>();

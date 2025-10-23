@@ -25,7 +25,6 @@ export class ProfilePhotoThumbnailComponent {
   }
 
   onImageError(event: any) {
-    console.log('Error al cargar la imagen de perfil:', event);
     // Si hay error al cargar la imagen, ocultamos la imagen
     const img = event.target as HTMLImageElement;
     img.style.display = 'none';

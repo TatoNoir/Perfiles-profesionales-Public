@@ -5,8 +5,11 @@ import { Subscription } from 'rxjs';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { arrowBack, checkmarkCircle, star, location, mail, briefcase, chatbubbleOutline } from 'ionicons/icons';
-import { ProfessionalDetailService } from './services/professional-detail.service';
+import { ProfessionalDetailService, ProfessionalDetail } from './services/professional-detail.service';
 import { ProfessionalBasic } from '../../pages/professionals/services/professionals-list.service';
+
+// Tipo combinado que incluye tanto datos básicos como detallados
+type ProfessionalFull = ProfessionalBasic & ProfessionalDetail;
 import { ContactModalComponent } from '../../components/contact-modal/contact-modal';
 import { ReviewModalComponent, ReviewForm } from '../../components/review-modal/review-modal';
 import { QuestionModalComponent, QuestionForm } from '../../components/question-modal/question-modal';
@@ -19,7 +22,7 @@ import { ProfilePhotoThumbnailComponent } from '../../components/profile-photo-t
   styleUrl: './professional-detail.css'
 })
 export class ProfessionalDetailComponent implements OnInit, OnDestroy {
-  professional: ProfessionalBasic | null = null;
+  professional: ProfessionalFull | null = null;
   isContactModalOpen = false;
   isReviewModalOpen = false;
   isQuestionModalOpen = false;
@@ -50,9 +53,15 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
   }
 
   private loadProfessional(id: string) {
+    // Cargar datos detallados del profesional
     this.subscription.add(
-      this.professionalDetailService.getProfessionalBasic(id).subscribe(professional => {
-        this.professional = professional || null;
+      this.professionalDetailService.getProfessionalDetail(id).subscribe(detailData => {
+        if (detailData) {
+          // Los datos detallados ya incluyen toda la información necesaria
+          this.professional = detailData as ProfessionalFull;
+        } else {
+          this.professional = null;
+        }
       })
     );
   }
@@ -62,7 +71,6 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
   }
 
   contactProfessional() {
-    console.log('Contactar a:', this.professional?.name);
     this.isContactModalOpen = true;
   }
 
@@ -89,7 +97,6 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
   }
 
   onLeaveReview() {
-    console.log('Dejar valoración para:', this.professional?.name);
     this.isReviewModalOpen = true;
   }
 
@@ -98,14 +105,12 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
   }
 
   onSubmitReview(reviewForm: ReviewForm) {
-    console.log('Reseña enviada:', reviewForm);
     // Aquí implementaremos la lógica para guardar la reseña
     // Por ahora solo mostramos un mensaje de confirmación
     alert('¡Reseña enviada exitosamente!');
   }
 
   onAskQuestion() {
-    console.log('Hacer una pregunta a:', this.professional?.name);
     this.isQuestionModalOpen = true;
   }
 
@@ -114,7 +119,6 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
   }
 
   onSubmitQuestion(questionForm: QuestionForm) {
-    console.log('Pregunta enviada:', questionForm);
     // Aquí implementaremos la lógica para guardar la pregunta
     // Por ahora solo mostramos un mensaje de confirmación
     alert('¡Pregunta enviada exitosamente!');

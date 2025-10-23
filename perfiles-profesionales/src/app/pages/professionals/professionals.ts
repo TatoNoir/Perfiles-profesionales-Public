@@ -95,7 +95,6 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   }
 
   onViewProfile(professional: ProfessionalBasic) {
-    console.log('Ver perfil de:', professional.name);
     this.router.navigate(['/professionals', professional.id]);
   }
 

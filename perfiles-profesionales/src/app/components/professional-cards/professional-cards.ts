@@ -44,12 +44,10 @@ export class ProfessionalCardsComponent implements OnInit, OnDestroy {
   }
 
   onViewProfile(professional: ProfessionalBasic) {
-    console.log('Ver perfil de:', professional.name);
     this.router.navigate(['/professionals', professional.id]);
   }
 
   onViewAll() {
-    console.log('Ver todos los perfiles');
     this.router.navigate(['/professionals']);
   }
 

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { ApiService } from '../../../services/api.service';
-import { DETAIL_PROFESSIONALS_DATA } from '../../../../data/mock-data';
+import { DataMapperService } from '../../../services/data-mapper.service';
+import { ApiProfessionalDetailResponse } from '../../../interfaces/api-response.interface';
+import { DETAIL_PROFESSIONALS_DATA } from '../../../data/mock-data';
 
 export interface ProfessionalDetail {
   id: string;
@@ -38,19 +40,23 @@ export interface ProfessionalDetail {
   providedIn: 'root'
 })
 export class ProfessionalDetailService {
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private dataMapper: DataMapperService
+  ) {}
 
   // Obtener detalles de un profesional
   public getProfessionalDetail(id: string): Observable<ProfessionalDetail | undefined> {
-    return this.apiService.get<ProfessionalDetail>(`/api/professionals/${id}/detail`).pipe(
+    return this.apiService.get<ApiProfessionalDetailResponse>(`/api/professionals/${id}`).pipe(
+      map(apiResponse => {
+        const professionalFull = this.dataMapper.mapApiDetailResponseToProfessionalFull(apiResponse);
+        return professionalFull;
+      }),
       catchError(error => {
         console.warn('Error al obtener detalles del profesional del endpoint, usando datos mock:', error);
         // Fallback a datos mock
         const mockDetail = DETAIL_PROFESSIONALS_DATA.find((detail: any) => detail.id === id);
-        return new Observable(observer => {
-          observer.next(mockDetail);
-          observer.complete();
-        });
+        return of(mockDetail);
       })
     );
   }
