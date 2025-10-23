@@ -4,7 +4,6 @@ import { catchError, map } from 'rxjs/operators';
 import { ApiService } from '../../../services/api.service';
 import { DataMapperService } from '../../../services/data-mapper.service';
 import { ApiProfessionalDetailResponse } from '../../../interfaces/api-response.interface';
-import { DETAIL_PROFESSIONALS_DATA } from '../../../data/mock-data';
 
 export interface ProfessionalDetail {
   id: string;
@@ -53,10 +52,8 @@ export class ProfessionalDetailService {
         return professionalFull;
       }),
       catchError(error => {
-        console.warn('Error al obtener detalles del profesional del endpoint, usando datos mock:', error);
-        // Fallback a datos mock
-        const mockDetail = DETAIL_PROFESSIONALS_DATA.find((detail: any) => detail.id === id);
-        return of(mockDetail);
+        console.warn('Error al obtener detalles del profesional del endpoint:', error);
+        return of(undefined);
       })
     );
   }
@@ -74,6 +71,7 @@ export class ProfessionalDetailService {
     );
   }
 
+  /*
   // Obtener estadísticas del profesional
   public getProfessionalStats(id: string): Observable<any> {
     return this.apiService.get<any>(`/api/professionals/${id}/stats`).pipe(
@@ -129,4 +127,6 @@ export class ProfessionalDetailService {
       })
     );
   }
+
+  */
 }

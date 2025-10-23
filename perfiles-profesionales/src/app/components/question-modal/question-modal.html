@@ -14,8 +14,19 @@
 
     <ion-content class="modal-content" *ngIf="professional">
       <div class="modal-body">
+        <!-- Success Message -->
+        <div *ngIf="showSuccessMessage" class="success-message">
+          <ion-icon name="checkmark-circle" class="success-icon"></ion-icon>
+          <h3 class="success-title">¡Enviado!</h3>
+          <p class="success-text">{{ successMessage }}</p>
+          <p class="success-date" *ngIf="sentAt">
+            Enviado el {{ sentAt | date:'dd/MM/yyyy HH:mm' }}
+          </p>
+        </div>
+
+
         <!-- Question Form -->
-        <form class="question-form" (ngSubmit)="onSubmit()">
+        <form class="question-form" (ngSubmit)="onSubmit()" *ngIf="!showSuccessMessage">
           <!-- Name Field -->
           <ion-item class="form-item">
             <ion-label position="stacked">Tu nombre</ion-label>
@@ -27,12 +38,24 @@
             </ion-input>
           </ion-item>
 
-          <!-- Question Field -->
+          <!-- Email Field -->
+          <ion-item class="form-item">
+            <ion-label position="stacked">Tu email</ion-label>
+            <ion-input
+              [(ngModel)]="questionForm.email"
+              name="email"
+              type="email"
+              placeholder="tu@email.com"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <!-- Message Field -->
           <ion-item class="form-item textarea-item">
-            <ion-label position="stacked">Tu pregunta</ion-label>
+            <ion-label position="stacked">Tu mensaje</ion-label>
             <ion-textarea
-              [(ngModel)]="questionForm.question"
-              name="question"
+              [(ngModel)]="questionForm.message"
+              name="message"
               [placeholder]="getQuestionPlaceholder()"
               rows="4"
               required>
@@ -46,26 +69,35 @@
             fill="solid"
             color="primary"
             size="large"
-            [disabled]="!isFormValid()">
-            <ion-icon name="send" slot="start"></ion-icon>
-            Enviar pregunta
+            [disabled]="!isFormValid() || isSubmitting">
+            <ion-spinner *ngIf="isSubmitting" slot="start" name="crescent"></ion-spinner>
+            <ion-icon *ngIf="!isSubmitting" name="send" slot="start"></ion-icon>
+            {{ isSubmitting ? 'Enviando...' : 'Enviar mensaje' }}
           </ion-button>
         </form>
 
         <!-- Existing Questions Section -->
-        <div class="questions-section">
-          <div *ngIf="hasQuestions; else noQuestions" class="questions-list">
+        <div class="questions-section" *ngIf="!showSuccessMessage">
+          <!-- Loading State -->
+          <div *ngIf="isLoading" class="loading-questions">
+            <ion-spinner name="crescent"></ion-spinner>
+            <p>Cargando preguntas...</p>
+          </div>
+
+          <!-- Questions List -->
+          <div *ngIf="!isLoading && hasQuestions; else noQuestions" class="questions-list">
             <h3 class="questions-title">Preguntas y Respuestas</h3>
             <div class="question-item" *ngFor="let question of existingQuestions">
               <div class="question-header">
-                <span class="question-author">{{ question.name }}</span>
-                <span class="question-date">{{ question.date | date:'dd/MM/yyyy' }}</span>
+                <span class="question-author">Usuario</span>
+                <span class="question-date">{{ question.created_at | date:'dd/MM/yyyy' }}</span>
               </div>
               <div class="question-content">
                 <p class="question-text">{{ question.question }}</p>
                 <div class="answer-section" *ngIf="question.answer">
                   <div class="answer-header">
                     <span class="answer-author">{{ professional?.name }}</span>
+                    <span class="answer-date" *ngIf="question.updated_at">{{ question.updated_at | date:'dd/MM/yyyy' }}</span>
                   </div>
                   <p class="answer-text">{{ question.answer }}</p>
                 </div>
@@ -74,7 +106,7 @@
           </div>
 
           <ng-template #noQuestions>
-            <div class="no-questions">
+            <div class="no-questions" *ngIf="!isLoading">
               <ion-icon name="chatbubble-outline" class="empty-chat-icon"></ion-icon>
               <p class="no-questions-text">Aún no hay preguntas. Sé el primero en preguntar.</p>
             </div>

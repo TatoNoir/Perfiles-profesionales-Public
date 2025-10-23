@@ -78,6 +78,8 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
     this.isContactModalOpen = false;
   }
 
+  /*
+
   getStatusText(status: string): string {
     switch (status) {
       case 'available': return 'Disponible';
@@ -95,6 +97,8 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
       default: return '#6B7280';
     }
   }
+
+  */
 
   onLeaveReview() {
     this.isReviewModalOpen = true;

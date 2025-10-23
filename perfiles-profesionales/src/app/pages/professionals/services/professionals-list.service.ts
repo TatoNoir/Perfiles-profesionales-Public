@@ -4,7 +4,6 @@ import { map, debounceTime, distinctUntilChanged, catchError } from 'rxjs/operat
 import { ApiService } from '../../../services/api.service';
 import { DataMapperService } from '../../../services/data-mapper.service';
 import { ApiProfessionalsResponse } from '../../../interfaces/api-response.interface';
-import { BASIC_PROFESSIONALS_DATA } from '../../../data/mock-data';
 
 export interface ProfessionalBasic {
   id: string;
@@ -75,7 +74,7 @@ export class ProfessionalsListService {
   }
 
   private loadSampleData() {
-    this.professionalsSubject.next(BASIC_PROFESSIONALS_DATA);
+    // Ya no cargamos datos de muestra, solo datos del API
   }
 
   // Obtener lista de profesionales
@@ -89,10 +88,8 @@ export class ProfessionalsListService {
         return professionals;
       }),
       catchError(error => {
-        console.warn('Error al obtener profesionales del API, usando datos mock:', error);
-        // Fallback a datos mock
-        this.professionalsSubject.next(BASIC_PROFESSIONALS_DATA);
-        return of(BASIC_PROFESSIONALS_DATA);
+        console.warn('Error al obtener profesionales del API:', error);
+        return of([]);
       })
     );
   }

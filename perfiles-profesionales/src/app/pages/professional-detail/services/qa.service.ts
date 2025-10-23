@@ -17,15 +17,23 @@ export interface Question {
 }
 
 export interface QuestionForm {
+  email: string;
   name: string;
-  question: string;
-  category: string;
+  message: string;
+  user_id: number;
 }
 
 export interface QuestionResponse {
-  success: boolean;
   message: string;
-  question?: Question;
+  data: {
+    email: string;
+    name: string;
+    message: string;
+    user_id: number;
+    updated_at: string;
+    created_at: string;
+    id: number;
+  };
 }
 
 export interface QaStats {
@@ -61,15 +69,23 @@ export class QaService {
     );
   }
 
-  // Crear nueva pregunta
-  public createQuestion(professionalId: string, questionData: QuestionForm): Observable<QuestionResponse> {
-    return this.apiService.post<QuestionResponse>(`/api/professionals/${professionalId}/questions`, questionData).pipe(
+  // Enviar nueva pregunta
+  public sendQuestion(questionData: QuestionForm): Observable<QuestionResponse> {
+    return this.apiService.post<QuestionResponse>('/api/common/questions', questionData).pipe(
       catchError(error => {
-        console.error('Error al crear pregunta:', error);
+        console.error('Error al enviar pregunta:', error);
         return new Observable(observer => {
           observer.next({
-            success: false,
-            message: 'Error al crear la pregunta'
+            message: 'Error al enviar la pregunta',
+            data: {
+              email: '',
+              name: '',
+              message: '',
+              user_id: 0,
+              updated_at: '',
+              created_at: '',
+              id: 0
+            }
           });
           observer.complete();
         });
