@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonItem, IonLabel, IonInput, IonTextarea, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { close, person, location, camera, checkmark, arrowBack } from 'ionicons/icons';
-import { RegisterService, PersonalData, LocationData, ProfilePhoto, ProfessionalRegistration, ApiActivity, GeoState, GeoLocality } from './services/register.service';
+import { RegisterService, PersonalData, LocationData, ProfilePhoto, ProfessionalRegistration, ApiActivity, GeoState, GeoLocality, ZipCode } from './services/register.service';
 
 @Component({
   selector: 'app-register-professional',
@@ -35,8 +35,11 @@ export class RegisterProfessionalComponent implements OnInit {
   locationData: LocationData = {
     street: '',
     streetNumber: '',
+    floor: '',
+    apartment: '',
     locality_id: 0,
     state_id: 0,
+    zip_code_id: 0,
     workZone: ''
   };
 
@@ -60,6 +63,12 @@ export class RegisterProfessionalComponent implements OnInit {
   filteredCities: GeoLocality[] = [];
   citySearchTerm = '';
   showCitiesDropdown = false;
+
+  // Zip codes
+  zipCodes: ZipCode[] = [];
+  filteredZipCodes: ZipCode[] = [];
+  zipCodeSearchTerm = '';
+  showZipCodesDropdown = false;
 
   constructor(
     private registerService: RegisterService,
@@ -126,9 +135,10 @@ export class RegisterProfessionalComponent implements OnInit {
   validateLocationData(): boolean {
     return !!(
       this.locationData.street.trim() &&
-      this.locationData.streetNumber.trim() &&
+      this.locationData.streetNumber.toString().trim() &&
       this.locationData.locality_id > 0 &&
       this.locationData.state_id > 0 &&
+      this.locationData.zip_code_id > 0 &&
       this.locationData.workZone.trim()
     );
   }
@@ -408,9 +418,6 @@ export class RegisterProfessionalComponent implements OnInit {
     this.loadCities(province.id);
   }
 
-  getSelectedProvince(): GeoState | null {
-    return this.provinces.find(p => p.id === this.locationData.state_id) || null;
-  }
 
   // Métodos para manejar ciudades
   loadCities(stateId: number) {
@@ -456,9 +463,49 @@ export class RegisterProfessionalComponent implements OnInit {
     this.locationData.locality_id = city.id;
     this.citySearchTerm = city.name;
     this.showCitiesDropdown = false;
+    // Cargar zip codes de la ciudad seleccionada
+    this.loadZipCodes(city);
   }
 
-  getSelectedCity(): GeoLocality | null {
-    return this.cities.find(c => c.id === this.locationData.locality_id) || null;
+
+  // Métodos para manejar zip codes
+  loadZipCodes(city: GeoLocality) {
+    this.zipCodes = city.zip_codes || [];
+    this.filteredZipCodes = this.zipCodes;
   }
+
+  onZipCodeSearch(event: any) {
+    this.zipCodeSearchTerm = event.detail.value;
+    this.filterZipCodes();
+    this.showZipCodesDropdown = true;
+  }
+
+  onZipCodeFocus() {
+    this.showZipCodesDropdown = true;
+    this.filterZipCodes();
+  }
+
+  onZipCodeBlur() {
+    setTimeout(() => {
+      this.showZipCodesDropdown = false;
+    }, 200);
+  }
+
+  filterZipCodes() {
+    if (!this.zipCodeSearchTerm.trim()) {
+      this.filteredZipCodes = this.zipCodes;
+    } else {
+      this.filteredZipCodes = this.zipCodes.filter(zipCode =>
+        zipCode.name.toLowerCase().includes(this.zipCodeSearchTerm.toLowerCase()) ||
+        zipCode.code.toLowerCase().includes(this.zipCodeSearchTerm.toLowerCase())
+      );
+    }
+  }
+
+  onZipCodeSelect(zipCode: ZipCode) {
+    this.locationData.zip_code_id = zipCode.id;
+    this.zipCodeSearchTerm = `${zipCode.name} (${zipCode.code})`;
+    this.showZipCodesDropdown = false;
+  }
+
 }

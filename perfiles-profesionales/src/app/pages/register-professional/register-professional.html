@@ -270,6 +270,30 @@
               </ion-item>
             </div>
 
+            <!-- Floor and Apartment (Optional) -->
+            <div class="address-optional-fields">
+              <!-- Floor -->
+              <ion-item class="form-item floor-field">
+                <ion-label position="stacked">Piso (opcional)</ion-label>
+                <ion-input
+                  [(ngModel)]="locationData.floor"
+                  name="floor"
+                  placeholder="1"
+                  type="number">
+                </ion-input>
+              </ion-item>
+
+              <!-- Apartment -->
+              <ion-item class="form-item apartment-field">
+                <ion-label position="stacked">Departamento (opcional)</ion-label>
+                <ion-input
+                  [(ngModel)]="locationData.apartment"
+                  name="apartment"
+                  placeholder="A">
+                </ion-input>
+              </ion-item>
+            </div>
+
             <!-- Province -->
             <div class="province-section">
               <ion-label class="field-label">Provincia *</ion-label>
@@ -341,6 +365,44 @@
                 <!-- No Results -->
                 <div class="no-results" *ngIf="filteredCities.length === 0 && citySearchTerm">
                   <p>No se encontraron ciudades con ese término.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Zip Code -->
+            <div class="zip-code-section">
+              <ion-label class="field-label">Código Postal *</ion-label>
+
+              <!-- Zip Code Search Input -->
+              <ion-item class="form-item search-item">
+                <ion-input
+                  [(ngModel)]="zipCodeSearchTerm"
+                  (ionInput)="onZipCodeSearch($event)"
+                  (ionFocus)="onZipCodeFocus()"
+                  (ionBlur)="onZipCodeBlur()"
+                  placeholder="Buscar código postal..."
+                  clearInput="true"
+                  name="zipCodeSearch"
+                  [disabled]="!locationData.locality_id">
+                </ion-input>
+              </ion-item>
+
+              <!-- Zip Code Dropdown -->
+              <div class="zip-codes-dropdown"
+                   *ngIf="showZipCodesDropdown && (filteredZipCodes.length > 0 || zipCodeSearchTerm)">
+                <!-- Zip Codes List -->
+                <div class="zip-codes-list" *ngIf="filteredZipCodes.length > 0">
+                  <div
+                    class="zip-code-item"
+                    *ngFor="let zipCode of filteredZipCodes"
+                    (click)="onZipCodeSelect(zipCode)">
+                    <span class="zip-code-name">{{ zipCode.name }} ({{ zipCode.code }})</span>
+                  </div>
+                </div>
+
+                <!-- No Results -->
+                <div class="no-results" *ngIf="filteredZipCodes.length === 0 && zipCodeSearchTerm">
+                  <p>No se encontraron códigos postales con ese término.</p>
                 </div>
               </div>
             </div>

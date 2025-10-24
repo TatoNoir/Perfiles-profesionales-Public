@@ -15,9 +15,19 @@ export interface GeoState {
   name: string;
 }
 
+export interface ZipCode {
+  id: number;
+  name: string;
+  code: string;
+  locality_id: number;
+}
+
 export interface GeoLocality {
   id: number;
   name: string;
+  short_code: string;
+  state_id: number;
+  zip_codes: ZipCode[];
 }
 
 export interface PersonalData {
@@ -35,8 +45,11 @@ export interface PersonalData {
 export interface LocationData {
   street: string;
   streetNumber: string;
+  floor?: string;
+  apartment?: string;
   locality_id: number;
   state_id: number;
+  zip_code_id: number;
   workZone: string;
 }
 
@@ -79,29 +92,44 @@ export class RegisterService {
   submitCompleteRegistration(data: ProfessionalRegistration): Observable<any> {
     const formData = new FormData();
 
-    // Agregar datos personales
-    formData.append('firstName', data.firstName);
-    formData.append('lastName', data.lastName);
+    // Agregar datos personales según el endpoint
+    formData.append('first_name', data.firstName);
+    formData.append('last_name', data.lastName);
     formData.append('email', data.email);
-    formData.append('areaCode', data.areaCode);
-    formData.append('phone', data.phone);
+    formData.append('country_phone', '+54'); // Fijo para Argentina
+    formData.append('area_code', data.areaCode);
+    formData.append('phone_number', data.phone);
     formData.append('password', data.password);
-    formData.append('activities', JSON.stringify(data.activities));
     formData.append('description', data.description);
 
     // Agregar datos de ubicación
+    formData.append('address', `${data.street} ${data.streetNumber}`); // Dirección completa
     formData.append('street', data.street);
-    formData.append('streetNumber', data.streetNumber);
+    formData.append('street_number', data.streetNumber);
+
+    // Campos opcionales
+    if (data.floor) {
+      formData.append('floor', data.floor);
+    }
+    if (data.apartment) {
+      formData.append('apartment', data.apartment);
+    }
+
     formData.append('locality_id', data.locality_id.toString());
-    formData.append('state_id', data.state_id.toString());
-    formData.append('workZone', data.workZone);
+    formData.append('user_type_id', '2'); // Fijo para profesionales
+    formData.append('zone', data.workZone);
+
+    // Agregar actividades como array
+    data.activities.forEach((activityId, index) => {
+      formData.append(`activities[${index}]`, activityId);
+    });
 
     // Agregar foto si existe
     if (data.profilePhoto) {
-      formData.append('profilePhoto', data.profilePhoto);
+      formData.append('photo', data.profilePhoto);
     }
 
-    return this.apiService.post(`${this.apiUrl}/professionals/register`, formData);
+    return this.apiService.post('/api/register', formData);
   }
 
   // Obtener actividades disponibles
@@ -147,17 +175,45 @@ export class RegisterService {
         if (response?.data && Array.isArray(response.data)) return response.data as GeoLocality[];
         if (Array.isArray(response)) return response as GeoLocality[];
         return [
-          { id: 1, name: 'La Plata' },
-          { id: 2, name: 'Capital Federal' },
-          { id: 3, name: 'Mar del Plata' },
-          { id: 4, name: 'Bahía Blanca' }
+          {
+            id: 1,
+            name: 'La Plata',
+            short_code: 'la-plata',
+            state_id: stateId,
+            zip_codes: [
+              { id: 1, name: '1900', code: 'B1900', locality_id: 1 }
+            ]
+          },
+          {
+            id: 2,
+            name: 'Capital Federal',
+            short_code: 'capital-federal',
+            state_id: stateId,
+            zip_codes: [
+              { id: 2, name: '1000', code: 'C1000', locality_id: 2 }
+            ]
+          }
         ];
       }),
       catchError(() => of([
-        { id: 1, name: 'La Plata' },
-        { id: 2, name: 'Capital Federal' },
-        { id: 3, name: 'Mar del Plata' },
-        { id: 4, name: 'Bahía Blanca' }
+        {
+          id: 1,
+          name: 'La Plata',
+          short_code: 'la-plata',
+          state_id: stateId,
+          zip_codes: [
+            { id: 1, name: '1900', code: 'B1900', locality_id: 1 }
+          ]
+        },
+        {
+          id: 2,
+          name: 'Capital Federal',
+          short_code: 'capital-federal',
+          state_id: stateId,
+          zip_codes: [
+            { id: 2, name: '1000', code: 'C1000', locality_id: 2 }
+          ]
+        }
       ]))
     );
   }
