@@ -58,35 +58,104 @@
         <ion-card-title class="filter-title">Provincia</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-select
-          [value]="selectedProvince"
-          (ionChange)="onProvinceChange($event.detail.value)"
-          placeholder="Seleccionar provincia"
-          class="filter-select">
-          <ion-select-option value="all">Todas las provincias</ion-select-option>
-          <ion-select-option *ngFor="let province of provinces" [value]="province.id.toString()">
-            {{ province.name }}
-          </ion-select-option>
-        </ion-select>
+        <!-- Buscador de provincias (Desktop) -->
+        <div class="province-search-container">
+          <input
+            type="text"
+            placeholder="Buscar provincias..."
+            [value]="provinceSearchTerm"
+            (input)="onProvinceSearch($event)"
+            class="province-search-input">
+        </div>
+
+        <!-- Lista de provincias con scroll (Desktop) -->
+        <div class="provinces-list-container">
+          <div class="provinces-list">
+            <div
+              class="province-item"
+              [class.selected]="selectedProvince === 'all'"
+              (click)="onProvinceChange('all')">
+              <span class="province-name">Todas las provincias</span>
+            </div>
+            <div
+              *ngFor="let province of filteredProvinces"
+              class="province-item"
+              [class.selected]="selectedProvince === province.id.toString()"
+              (click)="onProvinceChange(province.id.toString())">
+              <span class="province-name">{{ province.name }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Select móvil (Mobile) -->
+        <div class="province-select-mobile">
+          <ion-select
+            [value]="selectedProvince"
+            (ionChange)="onProvinceChange($event.detail.value)"
+            placeholder="Seleccionar provincia"
+            class="filter-select">
+            <ion-select-option value="all">Todas las provincias</ion-select-option>
+            <ion-select-option *ngFor="let province of provinces" [value]="province.id.toString()">
+              {{ province.name }}
+            </ion-select-option>
+          </ion-select>
+        </div>
       </ion-card-content>
     </ion-card>
 
     <!-- Filtro de Ciudad -->
-    <ion-card class="filter-section" *ngIf="cities.length > 0">
+    <ion-card class="filter-section">
       <ion-card-header>
         <ion-card-title class="filter-title">Ciudad</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-select
-          [value]="selectedCity"
-          (ionChange)="onCityChange($event.detail.value)"
-          placeholder="Seleccionar ciudad"
-          class="filter-select">
-          <ion-select-option value="all">Todas las ciudades</ion-select-option>
-          <ion-select-option *ngFor="let city of cities" [value]="city.id.toString()">
-            {{ city.name }}
-          </ion-select-option>
-        </ion-select>
+        <!-- Mensaje cuando no hay provincia seleccionada -->
+        <div *ngIf="selectedProvince === 'all'" class="city-message">
+          <p class="city-message-text">Seleccione una provincia para cargar las ciudades</p>
+        </div>
+
+        <!-- Buscador de ciudades (Desktop) -->
+        <div *ngIf="selectedProvince !== 'all'" class="city-search-container">
+          <input
+            type="text"
+            placeholder="Buscar ciudades..."
+            [value]="citySearchTerm"
+            (input)="onCitySearch($event)"
+            class="city-search-input">
+        </div>
+
+        <!-- Lista de ciudades con scroll (Desktop) -->
+        <div *ngIf="selectedProvince !== 'all'" class="cities-list-container">
+          <div class="cities-list">
+            <div
+              class="city-item"
+              [class.selected]="selectedCity === 'all'"
+              (click)="onCityChange('all')">
+              <span class="city-name">Todas las ciudades</span>
+            </div>
+            <div
+              *ngFor="let city of filteredCities"
+              class="city-item"
+              [class.selected]="selectedCity === city.id.toString()"
+              (click)="onCityChange(city.id.toString())">
+              <span class="city-name">{{ city.name }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Select móvil (Mobile) -->
+        <div *ngIf="selectedProvince !== 'all'" class="city-select-mobile">
+          <ion-select
+            [value]="selectedCity"
+            (ionChange)="onCityChange($event.detail.value)"
+            placeholder="Seleccionar ciudad"
+            class="filter-select">
+            <ion-select-option value="all">Todas las ciudades</ion-select-option>
+            <ion-select-option *ngFor="let city of cities" [value]="city.id.toString()">
+              {{ city.name }}
+            </ion-select-option>
+          </ion-select>
+        </div>
       </ion-card-content>
     </ion-card>
   </div>

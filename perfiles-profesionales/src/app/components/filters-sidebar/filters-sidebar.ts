@@ -20,11 +20,15 @@ export class FiltersSidebarComponent implements OnInit, OnDestroy {
 
   // Provincias del backend
   provinces: GeoState[] = [];
+  filteredProvinces: GeoState[] = [];
   selectedProvince = 'all';
+  provinceSearchTerm = '';
 
   // Ciudades del backend
   cities: GeoLocality[] = [];
+  filteredCities: GeoLocality[] = [];
   selectedCity = 'all';
+  citySearchTerm = '';
 
   private subscription: Subscription = new Subscription();
 
@@ -54,6 +58,7 @@ export class FiltersSidebarComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.sharedDataService.getProvincesByCountry().subscribe(provinces => {
         this.provinces = provinces;
+        this.filteredProvinces = provinces;
       })
     );
   }
@@ -79,21 +84,54 @@ export class FiltersSidebarComponent implements OnInit, OnDestroy {
     }
   }
 
+  onProvinceSearch(event: any) {
+    this.provinceSearchTerm = event.target.value;
+    this.filterProvinces();
+  }
+
+  private filterProvinces() {
+    if (!this.provinceSearchTerm.trim()) {
+      this.filteredProvinces = this.provinces;
+    } else {
+      this.filteredProvinces = this.provinces.filter(province =>
+        province.name.toLowerCase().includes(this.provinceSearchTerm.toLowerCase())
+      );
+    }
+  }
+
   onProvinceChange(province: string) {
     this.selectedProvince = province;
     this.selectedCity = 'all'; // Reset city when province changes
     this.cities = []; // Clear cities
+    this.filteredCities = []; // Clear filtered cities
+    this.citySearchTerm = ''; // Clear city search
 
     if (province !== 'all') {
       const provinceId = parseInt(province);
       this.subscription.add(
         this.sharedDataService.getLocalitiesByState(provinceId).subscribe(cities => {
           this.cities = cities;
+          this.filteredCities = cities;
         })
       );
     }
 
     this.professionalsListService.setLocationFilter(province);
+  }
+
+  onCitySearch(event: any) {
+    this.citySearchTerm = event.target.value;
+    this.filterCities();
+  }
+
+  private filterCities() {
+    if (!this.citySearchTerm.trim()) {
+      this.filteredCities = this.cities;
+    } else {
+      this.filteredCities = this.cities.filter(city =>
+        city.name.toLowerCase().includes(this.citySearchTerm.toLowerCase())
+      );
+    }
   }
 
   onCityChange(city: string) {
