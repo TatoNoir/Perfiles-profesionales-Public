@@ -1,42 +1,92 @@
 <aside class="filters-sidebar">
   <div class="filters-content">
-    <!-- Filtro de Especialidad -->
+    <!-- Filtro de Actividades -->
     <ion-card class="filter-section">
       <ion-card-header>
-        <ion-card-title class="filter-title">Especialidad</ion-card-title>
+        <ion-card-title class="filter-title">Actividades</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-radio-group
-          [value]="selectedSpecialty"
-          (ionChange)="onSpecialtyChange($event.detail.value)">
-          <ion-item *ngFor="let specialty of specialties" class="filter-option">
-            <ion-radio
-              slot="start"
-              [value]="specialty.value">
-            </ion-radio>
-            <ion-label class="filter-label">{{ specialty.label }}</ion-label>
-          </ion-item>
-        </ion-radio-group>
+        <!-- Buscador de actividades (Desktop) -->
+        <div class="activity-search-container">
+          <input
+            type="text"
+            placeholder="Buscar actividades..."
+            [value]="activitySearchTerm"
+            (input)="onActivitySearch($event)"
+            class="activity-search-input">
+        </div>
+
+        <!-- Lista de actividades con scroll (Desktop) -->
+        <div class="activities-list-container">
+          <div class="activities-list">
+            <div
+              class="activity-item"
+              [class.selected]="selectedActivity === 'all'"
+              (click)="onActivityChange('all')">
+              <span class="activity-name">Todas las actividades</span>
+            </div>
+            <div
+              *ngFor="let activity of filteredActivities"
+              class="activity-item"
+              [class.selected]="selectedActivity === activity.id"
+              (click)="onActivityChange(activity.id)">
+              <span class="activity-name">{{ activity.name }}</span>
+              <span class="activity-description" *ngIf="activity.description">{{ activity.description }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Select móvil (Mobile) -->
+        <div class="activity-select-mobile">
+          <ion-select
+            [value]="selectedActivity"
+            (ionChange)="onActivityChange($event.detail.value)"
+            placeholder="Seleccionar actividad"
+            class="filter-select">
+            <ion-select-option value="all">Todas las actividades</ion-select-option>
+            <ion-select-option *ngFor="let activity of activities" [value]="activity.id">
+              {{ activity.name }}
+            </ion-select-option>
+          </ion-select>
+        </div>
       </ion-card-content>
     </ion-card>
 
-    <!-- Filtro de Ubicación -->
+    <!-- Filtro de Provincia -->
     <ion-card class="filter-section">
       <ion-card-header>
-        <ion-card-title class="filter-title">Ubicación</ion-card-title>
+        <ion-card-title class="filter-title">Provincia</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-radio-group
-          [value]="selectedLocation"
-          (ionChange)="onLocationChange($event.detail.value)">
-          <ion-item *ngFor="let location of locations" class="filter-option">
-            <ion-radio
-              slot="start"
-              [value]="location.value">
-            </ion-radio>
-            <ion-label class="filter-label">{{ location.label }}</ion-label>
-          </ion-item>
-        </ion-radio-group>
+        <ion-select
+          [value]="selectedProvince"
+          (ionChange)="onProvinceChange($event.detail.value)"
+          placeholder="Seleccionar provincia"
+          class="filter-select">
+          <ion-select-option value="all">Todas las provincias</ion-select-option>
+          <ion-select-option *ngFor="let province of provinces" [value]="province.id.toString()">
+            {{ province.name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Filtro de Ciudad -->
+    <ion-card class="filter-section" *ngIf="cities.length > 0">
+      <ion-card-header>
+        <ion-card-title class="filter-title">Ciudad</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-select
+          [value]="selectedCity"
+          (ionChange)="onCityChange($event.detail.value)"
+          placeholder="Seleccionar ciudad"
+          class="filter-select">
+          <ion-select-option value="all">Todas las ciudades</ion-select-option>
+          <ion-select-option *ngFor="let city of cities" [value]="city.id.toString()">
+            {{ city.name }}
+          </ion-select-option>
+        </ion-select>
       </ion-card-content>
     </ion-card>
   </div>

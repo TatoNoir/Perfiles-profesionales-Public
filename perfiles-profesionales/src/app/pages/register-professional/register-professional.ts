@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonItem, IonLabel, IonInput, IonTextarea, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { close, person, location, camera, checkmark, arrowBack } from 'ionicons/icons';
-import { RegisterService, PersonalData, LocationData, ProfilePhoto, ProfessionalRegistration, ApiActivity, GeoState, GeoLocality, ZipCode } from './services/register.service';
+import { RegisterService, PersonalData, LocationData, ProfilePhoto, ProfessionalRegistration } from './services/register.service';
+import { ApiActivity, GeoState, GeoLocality, ZipCode } from '../../services/shared-data.service';
 
 @Component({
   selector: 'app-register-professional',
