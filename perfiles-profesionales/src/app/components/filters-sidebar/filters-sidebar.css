@@ -3,16 +3,17 @@
   background-color: #ffffff;
   border-right: 1px solid #e2e8f0;
   padding: 1.5rem 1rem;
-  height: fit-content;
+  height: 100vh;
   max-height: 100vh;
   position: sticky;
   top: 0;
+  overflow-y: auto;
 }
 
 .filters-content {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 /* Ionic Card Customization */
@@ -35,7 +36,7 @@
 
 /* Ionic Card Content Customization */
 ion-card-content {
-  padding: 0.75rem;
+  padding: 0.5rem;
 }
 
 /* Ionic Radio Group Customization */
@@ -108,12 +109,12 @@ ion-radio {
 
 /* Activity Search Container */
 .activity-search-container {
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .activity-search-input {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.5rem;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   font-size: 0.95rem;
@@ -133,7 +134,7 @@ ion-radio {
 
 /* Activities List Container */
 .activities-list-container {
-  max-height: 300px;
+  max-height: 200px;
   overflow-y: auto;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
@@ -146,7 +147,7 @@ ion-radio {
 }
 
 .activity-item {
-  padding: 0.75rem;
+  padding: 0.5rem;
   cursor: pointer;
   border-bottom: 1px solid #f7fafc;
   transition: background-color 0.2s ease;
@@ -191,12 +192,12 @@ ion-radio {
 
 /* Province Search Container */
 .province-search-container {
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .province-search-input {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.5rem;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   font-size: 0.95rem;
@@ -216,7 +217,7 @@ ion-radio {
 
 /* Provinces List Container */
 .provinces-list-container {
-  max-height: 300px;
+  max-height: 200px;
   overflow-y: auto;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
@@ -229,7 +230,7 @@ ion-radio {
 }
 
 .province-item {
-  padding: 0.75rem;
+  padding: 0.5rem;
   cursor: pointer;
   border-bottom: 1px solid #f7fafc;
   transition: background-color 0.2s ease;
@@ -280,12 +281,12 @@ ion-radio {
 
 /* City Search Container */
 .city-search-container {
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .city-search-input {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.5rem;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   font-size: 0.95rem;
@@ -305,7 +306,7 @@ ion-radio {
 
 /* Cities List Container */
 .cities-list-container {
-  max-height: 300px;
+  max-height: 200px;
   overflow-y: auto;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
@@ -318,7 +319,7 @@ ion-radio {
 }
 
 .city-item {
-  padding: 0.75rem;
+  padding: 0.5rem;
   cursor: pointer;
   border-bottom: 1px solid #f7fafc;
   transition: background-color 0.2s ease;
