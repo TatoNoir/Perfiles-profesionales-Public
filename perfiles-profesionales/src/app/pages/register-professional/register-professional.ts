@@ -144,7 +144,8 @@ export class RegisterProfessionalComponent implements OnInit {
   }
 
   validateProfilePhoto(): boolean {
-    return this.profilePhoto.profilePhoto !== null;
+    // La foto es opcional, siempre retorna true
+    return true;
   }
 
   // Validación de email
@@ -196,8 +197,8 @@ export class RegisterProfessionalComponent implements OnInit {
         ...this.profilePhoto
       };
 
-      // Simular envío (cambiar por el servicio real)
-      const result = await this.registerService.simulateRegistration(registrationData).toPromise();
+      // Envío real al endpoint
+      const result = await this.registerService.submitCompleteRegistration(registrationData).toPromise();
 
       this.showSuccessMessage = true;
       this.clearSavedData();

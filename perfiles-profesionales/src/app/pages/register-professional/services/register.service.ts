@@ -223,22 +223,4 @@ export class RegisterService {
     return this.apiService.post<{ valid: boolean; message?: string }>(`${this.apiUrl}/professionals/validate-email`, { email });
   }
 
-  // Simular envío (para desarrollo)
-  simulateRegistration(data: ProfessionalRegistration): Observable<any> {
-    return new Observable(observer => {
-      setTimeout(() => {
-        observer.next({
-          success: true,
-          message: 'Registro enviado exitosamente',
-          data: {
-            id: 'temp_' + Date.now(),
-            ...data,
-            createdAt: new Date(),
-            status: 'pending'
-          }
-        });
-        observer.complete();
-      }, 2000);
-    });
-  }
 }
