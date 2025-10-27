@@ -35,11 +35,15 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // Verificar si hay parámetros de consulta para filtrar por actividad
+    // Verificar si hay parámetros de consulta para filtrar por actividad o búsqueda
     this.route.queryParams.subscribe(params => {
       if (params['activity']) {
         console.log('🎯 Filtrando por actividad:', params['activity']);
         this.professionalsListService.setSpecialtyFilter(params['activity']);
+      } else if (params['search']) {
+        console.log('🔍 Búsqueda desde home:', params['search']);
+        this.searchQuery = params['search'];
+        this.professionalsListService.setSearchQuery(params['search']);
       } else {
         // Inicializar con búsqueda vacía
         this.professionalsListService.setSearchQuery('');

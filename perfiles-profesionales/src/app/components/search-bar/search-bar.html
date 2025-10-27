@@ -6,14 +6,16 @@
     (ionInput)="onSearchInput($event)"
     (keyup.enter)="onSearch()"
     show-clear-button="focus"
-    animated="true">
+    animated="true"
+    [disabled]="isLoading">
   </ion-searchbar>
   <ion-button
     class="search-button"
     (click)="onSearch()"
     fill="solid"
-    color="primary">
+    color="primary"
+    [disabled]="isLoading || !searchQuery.trim()">
     <ion-icon name="search" slot="start"></ion-icon>
-    Buscar
+    {{ isLoading ? 'Buscando...' : 'Buscar' }}
   </ion-button>
 </div>
