@@ -28,8 +28,8 @@
             <div
               *ngFor="let activity of filteredActivities"
               class="activity-item"
-              [class.selected]="selectedActivity === activity.id"
-              (click)="onActivityChange(activity.id)">
+              [class.selected]="selectedActivity === activity.name"
+              (click)="onActivityChange(activity.name)">
               <span class="activity-name">{{ activity.name }}</span>
               <span class="activity-description" *ngIf="activity.description">{{ activity.description }}</span>
             </div>
@@ -44,7 +44,7 @@
             placeholder="Seleccionar actividad"
             class="filter-select">
             <ion-select-option value="all">Todas las actividades</ion-select-option>
-            <ion-select-option *ngFor="let activity of activities" [value]="activity.id">
+            <ion-select-option *ngFor="let activity of activities" [value]="activity.name">
               {{ activity.name }}
             </ion-select-option>
           </ion-select>

@@ -54,7 +54,7 @@
     <!-- Main Content -->
     <main class="main-content">
       <!-- Sidebar with Filters -->
-      <app-filters-sidebar></app-filters-sidebar>
+      <app-filters-sidebar (activitySelected)="onActivitySelected($event)"></app-filters-sidebar>
 
       <!-- Professionals List -->
       <app-professionals-list

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
@@ -12,6 +12,8 @@ import { SharedDataService, ApiActivity, GeoState, GeoLocality } from '../../ser
   styleUrl: './filters-sidebar.css'
 })
 export class FiltersSidebarComponent implements OnInit, OnDestroy {
+  @Output() activitySelected = new EventEmitter<string>();
+
   // Actividades del backend
   activities: ApiActivity[] = [];
   filteredActivities: ApiActivity[] = [];
@@ -65,7 +67,9 @@ export class FiltersSidebarComponent implements OnInit, OnDestroy {
 
   onActivityChange(activity: string) {
     this.selectedActivity = activity;
-    this.professionalsListService.setSpecialtyFilter(activity);
+    console.log('🎯 Actividad seleccionada en sidebar:', activity);
+    // Emitir evento al componente padre para hacer búsqueda real en backend
+    this.activitySelected.emit(activity);
   }
 
   onActivitySearch(event: any) {

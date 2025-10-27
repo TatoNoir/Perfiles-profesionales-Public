@@ -156,6 +156,17 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
     this.loadProfessionals();
   }
 
+  onActivitySelected(activity: string) {
+    console.log('🎯 Actividad seleccionada desde sidebar:', activity);
+    if (activity && activity !== 'all') {
+      this.searchQuery = activity;
+      this.searchByActivity(activity);
+    } else {
+      // Si se selecciona "all", mostrar todos
+      this.onShowAll();
+    }
+  }
+
   onSearchInput() {
     // Búsqueda en tiempo real mientras el usuario escribe
     this.professionalsListService.setSearchQuery(this.searchQuery);
