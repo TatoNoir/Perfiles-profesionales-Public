@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { search } from 'ionicons/icons';
+import { search, refresh } from 'ionicons/icons';
 import { FiltersSidebarComponent } from '../../components/filters-sidebar/filters-sidebar';
 import { ProfessionalsListComponent } from '../../components/professionals-list/professionals-list';
 import { ProfessionalsListService, ProfessionalBasic } from './services/professionals-list.service';
@@ -22,6 +22,7 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   isLoading = false;
   hasMoreData = true;
   isSearching = false;
+  hasActiveSearch = false;
 
   private itemsPerPage = 6;
   private currentPage = 0;
@@ -32,7 +33,7 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    addIcons({ search });
+    addIcons({ search, refresh });
   }
 
   ngOnInit() {
@@ -139,12 +140,20 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
         this.resetPagination();
         this.loadMoreProfessionals();
         this.isSearching = false;
+        this.hasActiveSearch = true; // Marcar que hay búsqueda activa
       },
       error: (error) => {
         console.error('❌ Error al buscar profesionales:', error);
         this.isSearching = false;
       }
     });
+  }
+
+  onShowAll() {
+    console.log('📋 Mostrando todos los profesionales');
+    this.searchQuery = '';
+    this.hasActiveSearch = false;
+    this.loadProfessionals();
   }
 
   onSearchInput() {
