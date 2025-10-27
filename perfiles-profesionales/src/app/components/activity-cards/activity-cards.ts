@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { construct, calendar, restaurant, laptop, brush, phonePortrait } from 'ionicons/icons';
@@ -71,12 +72,18 @@ export class ActivityCardsComponent {
     }
   ];
 
-  constructor() {
+  constructor(private router: Router) {
     addIcons({ construct, calendar, restaurant, laptop, brush, phonePortrait });
   }
 
   onCardClick(activity: ActivityCard) {
-    // Aquí implementaremos la navegación a la página de categoría
+    // Navegar a la página de profesionales con filtro de actividad
+    this.router.navigate(['/professionals'], {
+      queryParams: {
+        activity: activity.id,
+        activity_name: activity.name
+      }
+    });
   }
 
   trackByActivityId(index: number, activity: ActivityCard): string {

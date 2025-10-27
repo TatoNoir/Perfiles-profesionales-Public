@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -28,14 +28,24 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
 
   constructor(
     private professionalsListService: ProfessionalsListService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     addIcons({ search });
   }
 
   ngOnInit() {
-    // Inicializar con búsqueda vacía
-    this.professionalsListService.setSearchQuery('');
+    // Verificar si hay parámetros de consulta para filtrar por actividad
+    this.route.queryParams.subscribe(params => {
+      if (params['activity']) {
+        console.log('🎯 Filtrando por actividad:', params['activity']);
+        this.professionalsListService.setSpecialtyFilter(params['activity']);
+      } else {
+        // Inicializar con búsqueda vacía
+        this.professionalsListService.setSearchQuery('');
+      }
+    });
+
     this.loadProfessionals();
   }
 
