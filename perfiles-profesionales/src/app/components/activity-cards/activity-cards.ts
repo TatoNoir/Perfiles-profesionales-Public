@@ -31,8 +31,8 @@ export class ActivityCardsComponent {
       ionIcon: 'construct'
     },
     {
-      id: 'eventos',
-      name: 'Eventos',
+      id: 'cerrajero',
+      name: 'Cerrajero',
       professionals: 189,
       icon: '🎉',
       color: '#FF6B6B',
@@ -81,7 +81,6 @@ export class ActivityCardsComponent {
     this.router.navigate(['/professionals'], {
       queryParams: {
         activity: activity.id,
-        activity_name: activity.name
       }
     });
   }
