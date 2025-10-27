@@ -40,18 +40,20 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(params => {
       if (params['activity']) {
         console.log('🎯 Filtrando por actividad:', params['activity']);
+        this.searchQuery = params['activity'];
         this.professionalsListService.setSpecialtyFilter(params['activity']);
+        // No cargar lista completa, solo aplicar filtro
       } else if (params['search']) {
         console.log('🔍 Búsqueda desde home:', params['search']);
         this.searchQuery = params['search'];
-        this.professionalsListService.setSearchQuery(params['search']);
+        // Hacer búsqueda por actividad directamente
+        this.searchByActivity(params['search']);
       } else {
-        // Inicializar con búsqueda vacía
-        this.professionalsListService.setSearchQuery('');
+        // Solo cargar lista completa si no hay parámetros de búsqueda
+        console.log('📋 Cargando lista completa de profesionales');
+        this.loadProfessionals();
       }
     });
-
-    this.loadProfessionals();
   }
 
   ngOnDestroy() {
@@ -121,24 +123,28 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
 
   onSearch() {
     if (this.searchQuery.trim()) {
-      this.isSearching = true;
-      console.log('🔍 Buscando profesionales por actividad:', this.searchQuery);
-
-      // Llamar al endpoint del backend para buscar por actividad
-      this.professionalsListService.searchProfessionalsByActivity(this.searchQuery.trim()).subscribe({
-        next: (professionals) => {
-          console.log('✅ Profesionales encontrados:', professionals);
-          this.professionals = professionals;
-          this.resetPagination();
-          this.loadMoreProfessionals();
-          this.isSearching = false;
-        },
-        error: (error) => {
-          console.error('❌ Error al buscar profesionales:', error);
-          this.isSearching = false;
-        }
-      });
+      this.searchByActivity(this.searchQuery.trim());
     }
+  }
+
+  private searchByActivity(activityTerm: string) {
+    this.isSearching = true;
+    console.log('🔍 Buscando profesionales por actividad:', activityTerm);
+
+    // Llamar al endpoint del backend para buscar por actividad
+    this.professionalsListService.searchProfessionalsByActivity(activityTerm).subscribe({
+      next: (professionals) => {
+        console.log('✅ Profesionales encontrados:', professionals);
+        this.professionals = professionals;
+        this.resetPagination();
+        this.loadMoreProfessionals();
+        this.isSearching = false;
+      },
+      error: (error) => {
+        console.error('❌ Error al buscar profesionales:', error);
+        this.isSearching = false;
+      }
+    });
   }
 
   onSearchInput() {
