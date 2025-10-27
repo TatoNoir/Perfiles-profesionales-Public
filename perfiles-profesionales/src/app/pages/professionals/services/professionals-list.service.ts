@@ -77,6 +77,33 @@ export class ProfessionalsListService {
     // Ya no cargamos datos de muestra, solo datos del API
   }
 
+  // Buscar profesionales por actividad
+  public searchProfessionalsByActivity(activityTerm: string): Observable<ProfessionalBasic[]> {
+    const params = this.apiService.createParams({
+      activity: activityTerm
+    });
+
+    console.log('🔍 Buscando profesionales por actividad:', activityTerm);
+    console.log('📤 Parámetros enviados:', params);
+    console.log('🌐 URL completa:', `/api/professionals?activity=${activityTerm}`);
+
+    return this.apiService.get<ApiProfessionalsResponse>('/api/professionals', params).pipe(
+      map(apiResponse => {
+        console.log('✅ Respuesta del API para búsqueda por actividad:', apiResponse);
+        const professionals = this.dataMapper.mapApiResponseToProfessionals(apiResponse);
+        console.log('👥 Profesionales encontrados:', professionals);
+        // Actualizar el BehaviorSubject con los datos filtrados
+        this.professionalsSubject.next(professionals);
+        return professionals;
+      }),
+      catchError(error => {
+        console.error('❌ Error al buscar profesionales por actividad:', error);
+        console.error('🔍 Detalles del error:', error.message);
+        return of([]);
+      })
+    );
+  }
+
   // Obtener lista de profesionales
   public getProfessionals(): Observable<ProfessionalBasic[]> {
     return this.apiService.get<ApiProfessionalsResponse>('/api/professionals').pipe(

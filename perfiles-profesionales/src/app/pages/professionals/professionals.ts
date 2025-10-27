@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { search } from 'ionicons/icons';
 import { FiltersSidebarComponent } from '../../components/filters-sidebar/filters-sidebar';
@@ -11,7 +11,7 @@ import { ProfessionalsListService, ProfessionalBasic } from './services/professi
 
 @Component({
   selector: 'app-professionals',
-  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, FiltersSidebarComponent, ProfessionalsListComponent],
+  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon, FiltersSidebarComponent, ProfessionalsListComponent],
   templateUrl: './professionals.html',
   styleUrl: './professionals.css'
 })
@@ -21,6 +21,7 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   displayedProfessionals: ProfessionalBasic[] = [];
   isLoading = false;
   hasMoreData = true;
+  isSearching = false;
 
   private itemsPerPage = 6;
   private currentPage = 0;
@@ -119,7 +120,25 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   }
 
   onSearch() {
-    this.professionalsListService.setSearchQuery(this.searchQuery);
+    if (this.searchQuery.trim()) {
+      this.isSearching = true;
+      console.log('🔍 Buscando profesionales por actividad:', this.searchQuery);
+
+      // Llamar al endpoint del backend para buscar por actividad
+      this.professionalsListService.searchProfessionalsByActivity(this.searchQuery.trim()).subscribe({
+        next: (professionals) => {
+          console.log('✅ Profesionales encontrados:', professionals);
+          this.professionals = professionals;
+          this.resetPagination();
+          this.loadMoreProfessionals();
+          this.isSearching = false;
+        },
+        error: (error) => {
+          console.error('❌ Error al buscar profesionales:', error);
+          this.isSearching = false;
+        }
+      });
+    }
   }
 
   onSearchInput() {

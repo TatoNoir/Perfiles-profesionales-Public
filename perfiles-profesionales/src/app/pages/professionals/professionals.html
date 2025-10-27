@@ -24,8 +24,18 @@
             (ionInput)="onSearchInputEvent($event)"
             (keyup.enter)="onSearch()"
             show-clear-button="focus"
-            animated="true">
+            animated="true"
+            [disabled]="isSearching">
           </ion-searchbar>
+          <ion-button
+            class="search-button"
+            (click)="onSearch()"
+            fill="solid"
+            color="primary"
+            [disabled]="isSearching || !searchQuery.trim()">
+            <ion-icon name="search" slot="start"></ion-icon>
+            {{ isSearching ? 'Buscando...' : 'Buscar' }}
+          </ion-button>
         </div>
       </div>
     </header>
