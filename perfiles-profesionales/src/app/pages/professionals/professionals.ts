@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -11,7 +11,7 @@ import { ProfessionalsListService, ProfessionalBasic } from './services/professi
 
 @Component({
   selector: 'app-professionals',
-  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon, FiltersSidebarComponent, ProfessionalsListComponent],
+  imports: [CommonModule, RouterModule, IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon, FiltersSidebarComponent, ProfessionalsListComponent],
   templateUrl: './professionals.html',
   styleUrl: './professionals.css'
 })

@@ -3,6 +3,21 @@
   background-color: #ffffff;
 }
 
+/* Home Link Styling */
+.home-link {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.home-link:hover {
+  opacity: 0.8;
+}
+
+.home-link:active {
+  opacity: 0.6;
+}
+
 .page-header {
   background: linear-gradient(135deg, #20B2AA 0%, #48CAE4 100%);
   padding: 3rem 2rem;
