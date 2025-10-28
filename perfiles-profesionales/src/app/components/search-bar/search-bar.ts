@@ -29,7 +29,6 @@ export class SearchBarComponent {
   onSearch() {
     if (this.searchQuery.trim()) {
       this.isLoading = true;
-      console.log('🔍 Buscando profesionales por actividad:', this.searchQuery);
 
       // Llamar al endpoint del backend
       const params = this.apiService.createParams({
@@ -38,9 +37,7 @@ export class SearchBarComponent {
 
       this.apiService.get<ApiProfessionalsResponse>('/api/professionals', params).subscribe({
         next: (apiResponse) => {
-          console.log('✅ Respuesta del API para búsqueda:', apiResponse);
           const professionals = this.dataMapper.mapApiResponseToProfessionals(apiResponse);
-          console.log('👥 Profesionales encontrados:', professionals);
 
           // Navegar a la página de profesionales con los resultados
           this.router.navigate(['/professionals'], {
@@ -54,7 +51,6 @@ export class SearchBarComponent {
         },
         error: (error) => {
           console.error('❌ Error al buscar profesionales:', error);
-          console.error('🔍 Detalles del error:', error.message);
 
           // En caso de error, navegar de todas formas pero sin resultados
           this.router.navigate(['/professionals'], {

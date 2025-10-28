@@ -23,8 +23,8 @@ interface ActivityCard {
 export class ActivityCardsComponent {
   activities: ActivityCard[] = [
     {
-      id: 'construccion',
-      name: 'Construcción',
+      id: 'albañil',
+      name: 'Albañil',
       professionals: 234,
       icon: '🏗️',
       color: '#FFD700',
@@ -39,24 +39,24 @@ export class ActivityCardsComponent {
       ionIcon: 'calendar'
     },
     {
-      id: 'gastronomia',
-      name: 'Gastronomía',
+      id: 'herrero',
+      name: 'Herrero',
       professionals: 156,
       icon: '👨‍🍳',
       color: '#4ECDC4',
       ionIcon: 'restaurant'
     },
     {
-      id: 'tecnologia',
-      name: 'Tecnología',
+      id: 'electricista',
+      name: 'Electricista',
       professionals: 312,
       icon: '💻',
       color: '#45B7D1',
       ionIcon: 'laptop'
     },
     {
-      id: 'diseno',
-      name: 'Diseño',
+      id: 'carpintero',
+      name: 'Carpintero',
       professionals: 198,
       icon: '🎨',
       color: '#96CEB4',

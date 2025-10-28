@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { arrowBack, checkmarkCircle, star, location, mail, briefcase, chatbubbleOutline } from 'ionicons/icons';
+import { arrowBack, checkmarkCircle, star, starHalf, starOutline, location, mail, briefcase, chatbubbleOutline } from 'ionicons/icons';
 import { ProfessionalDetailService, ProfessionalDetail } from './services/professional-detail.service';
 import { ProfessionalBasic } from '../../pages/professionals/services/professionals-list.service';
 import { Review } from '../../interfaces/api-response.interface';
@@ -51,7 +51,7 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private professionalDetailService: ProfessionalDetailService
   ) {
-    addIcons({ arrowBack, checkmarkCircle, star, location, mail, briefcase, chatbubbleOutline });
+    addIcons({ arrowBack, checkmarkCircle, star, starHalf, starOutline, location, mail, briefcase, chatbubbleOutline });
   }
 
   ngOnInit() {
@@ -208,6 +208,29 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
     // Aquí implementaremos la lógica para guardar la pregunta
     // Por ahora solo mostramos un mensaje de confirmación
     alert('¡Pregunta enviada exitosamente!');
+  }
+
+  getStarsArray(rating: number): string[] {
+    const stars: string[] = [];
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+
+    // Agregar estrellas llenas
+    for (let i = 0; i < fullStars; i++) {
+      stars.push('full');
+    }
+
+    // Agregar media estrella si es necesario
+    if (hasHalfStar) {
+      stars.push('half');
+    }
+
+    // Completar con estrellas vacías hasta 5
+    while (stars.length < 5) {
+      stars.push('empty');
+    }
+
+    return stars;
   }
 
 }

@@ -40,18 +40,15 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
     // Verificar si hay parámetros de consulta para filtrar por actividad o búsqueda
     this.route.queryParams.subscribe(params => {
       if (params['activity']) {
-        console.log('🎯 Búsqueda por actividad desde home:', params['activity']);
         this.searchQuery = params['activity'];
         // Hacer búsqueda por actividad en el backend
         this.searchByActivity(params['activity']);
       } else if (params['search']) {
-        console.log('🔍 Búsqueda desde home:', params['search']);
         this.searchQuery = params['search'];
         // Hacer búsqueda por actividad directamente
         this.searchByActivity(params['search']);
       } else {
         // Solo cargar lista completa si no hay parámetros de búsqueda
-        console.log('📋 Cargando lista completa de profesionales');
         this.loadProfessionals();
       }
     });
@@ -106,15 +103,13 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
     const scrollHeight = scrollElement.scrollHeight;
     const clientHeight = scrollElement.clientHeight;
 
-    // Cargar más cuando estemos cerca del final (200px antes)
-    if (scrollTop + clientHeight >= scrollHeight - 200) {
-      console.log('Scroll infinito activado - cargando más profesionales');
-      this.loadMoreProfessionals();
-    }
+      // Cargar más cuando estemos cerca del final (200px antes)
+      if (scrollTop + clientHeight >= scrollHeight - 200) {
+        this.loadMoreProfessionals();
+      }
   }
 
   onLoadMore() {
-    console.log('Botón cargar más presionado');
     this.loadMoreProfessionals();
   }
 
@@ -130,12 +125,10 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
 
   private searchByActivity(activityTerm: string) {
     this.isSearching = true;
-    console.log('🔍 Buscando profesionales por actividad:', activityTerm);
 
     // Llamar al endpoint del backend para buscar por actividad
     this.professionalsListService.searchProfessionalsByActivity(activityTerm).subscribe({
       next: (professionals) => {
-        console.log('✅ Profesionales encontrados:', professionals);
         this.professionals = professionals;
         this.resetPagination();
         this.loadMoreProfessionals();
@@ -150,14 +143,12 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   }
 
   onShowAll() {
-    console.log('📋 Mostrando todos los profesionales');
     this.searchQuery = '';
     this.hasActiveSearch = false;
     this.loadProfessionals();
   }
 
   onActivitySelected(activity: string) {
-    console.log('🎯 Actividad seleccionada desde sidebar:', activity);
     if (activity && activity !== 'all') {
       this.searchQuery = activity;
       this.searchByActivity(activity);
@@ -167,13 +158,8 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSearchInput() {
-    // Búsqueda en tiempo real mientras el usuario escribe
-    this.professionalsListService.setSearchQuery(this.searchQuery);
-  }
-
   onSearchInputEvent(event: any) {
     this.searchQuery = event.detail.value;
-    this.onSearchInput();
+    // this.professionalsListService.setSearchQuery(this.searchQuery); // Desactivado para búsqueda manual con botón
   }
 }

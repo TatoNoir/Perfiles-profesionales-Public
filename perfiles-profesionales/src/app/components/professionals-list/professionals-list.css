@@ -25,6 +25,42 @@
   padding: 0.75rem;
 }
 
+/* Layout mejorado para pocos resultados */
+.professionals-grid.few-results {
+  /* Solo centrar el contenido, no interferir con el grid */
+  text-align: center;
+}
+
+.professionals-grid.few-results ion-row {
+  /* Mantener el comportamiento normal del grid */
+  justify-content: center;
+}
+
+/* Para un solo resultado, centrarlo completamente */
+.professionals-grid.single-result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+.professionals-grid.single-result ion-row {
+  width: 100%;
+  max-width: 500px;
+  justify-content: center;
+}
+
+.professionals-grid.single-result .professional-col {
+  max-width: 100%;
+  width: 100%;
+}
+
+/* Override para un solo resultado - hacer que ocupe más espacio */
+.professionals-grid.single-result ion-col {
+  --ion-grid-column-size-md: 8;
+  --ion-grid-column-size-lg: 6;
+}
+
 /* Ionic Card Customization */
 .professional-card {
   --background: white;
@@ -113,9 +149,28 @@
   flex-shrink: 0;
 }
 
+.stars-container {
+  display: flex;
+  gap: 0.125rem;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
 .star-icon {
-  --color: #FCD34D;
-  font-size: 16px;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+
+.star-icon.filled {
+  color: #fbbf24;
+}
+
+.star-icon.half-filled {
+  color: #fbbf24;
+}
+
+.star-icon.empty {
+  color: #d1d5db;
 }
 
 .location-icon {
@@ -236,6 +291,21 @@ ion-spinner {
     padding: 0.5rem;
   }
 
+  /* Ajustes para móvil con pocos resultados */
+  .professionals-grid.single-result {
+    min-height: 50vh;
+  }
+
+  .professionals-grid.single-result .professional-col {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .professionals-grid.few-results .professional-col {
+    max-width: 100%;
+    padding: 0.75rem;
+  }
+
   .card-content {
     padding: 1.25rem;
   }
@@ -336,4 +406,31 @@ ion-spinner {
   background-color: #f8fafc;
   border-radius: 12px;
   margin: 1rem 0;
+}
+
+/* Mejoras adicionales para pocos resultados */
+.professionals-grid.single-result .professional-card {
+  --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  transform: scale(1.02);
+}
+
+.professionals-grid.few-results .professional-card {
+  --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Mejorar el contador cuando hay pocos resultados */
+.professionals-header.few-results {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.professionals-header.single-result {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.professionals-header.single-result .professionals-count {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #20B2AA;
 }

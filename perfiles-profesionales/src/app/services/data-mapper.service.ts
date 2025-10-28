@@ -28,6 +28,7 @@ export class DataMapperService {
 
     // Obtener la ubicación
     const location = apiUser.locality?.name || 'Ubicación no disponible';
+    const province = apiUser.locality?.state?.name || undefined;
 
     // Convertir rating a número
     const rating = parseFloat(apiUser.reviews_avg_value) || 0;
@@ -40,6 +41,7 @@ export class DataMapperService {
       rating: rating,
       reviews: apiUser.reviews_count,
       location: location,
+      province: province,
       avatar: apiUser.profile_picture || undefined,
       pricePerHour: 0, // Comentado por ahora
       isVerified: false, // Comentado por ahora
@@ -137,6 +139,7 @@ export class DataMapperService {
       activity.tags ? activity.tags.split(',').map(tag => tag.trim()) : []
     );
     const location = apiUserDetail.locality?.name || 'Ubicación no disponible';
+    const province = apiUserDetail.locality?.state?.name || undefined;
     const rating = parseFloat(apiUserDetail.reviews_avg_value) || 0;
 
     // Obtener datos detallados
@@ -156,6 +159,8 @@ export class DataMapperService {
       rating: rating,
       reviews: apiUserDetail.reviews_count,
       location: location,
+      // Provincia (si viene en el API dentro de locality.state)
+      province: province,
       avatar: apiUserDetail.profile_picture || undefined,
       pricePerHour: 0,
       isVerified: false,

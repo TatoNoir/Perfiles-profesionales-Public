@@ -12,19 +12,14 @@ export interface ProfessionalBasic {
   category: string;
   rating: number;
   reviews: number;
-  location: string;
+    location: string;
+    province?: string;
   avatar?: string;
   pricePerHour: number;
   isVerified: boolean;
   status: 'available' | 'busy' | 'offline';
   description: string;
   skills: string[];
-}
-
-export interface FilterOptions {
-  specialty: string;
-  location: string;
-  searchQuery: string;
 }
 
 @Injectable({
@@ -83,22 +78,15 @@ export class ProfessionalsListService {
       activity: activityTerm
     });
 
-    console.log('🔍 Buscando profesionales por actividad:', activityTerm);
-    console.log('📤 Parámetros enviados:', params);
-    console.log('🌐 URL completa:', `/api/professionals?activity=${activityTerm}`);
-
     return this.apiService.get<ApiProfessionalsResponse>('/api/professionals', params).pipe(
       map(apiResponse => {
-        console.log('✅ Respuesta del API para búsqueda por actividad:', apiResponse);
         const professionals = this.dataMapper.mapApiResponseToProfessionals(apiResponse);
-        console.log('👥 Profesionales encontrados:', professionals);
         // Actualizar el BehaviorSubject con los datos filtrados
         this.professionalsSubject.next(professionals);
         return professionals;
       }),
       catchError(error => {
         console.error('❌ Error al buscar profesionales por actividad:', error);
-        console.error('🔍 Detalles del error:', error.message);
         return of([]);
       })
     );
@@ -121,87 +109,8 @@ export class ProfessionalsListService {
     );
   }
 
-  // Obtener profesionales con filtros
-  public getProfessionalsWithFilters(filters: FilterOptions): Observable<ProfessionalBasic[]> {
-    const params = this.apiService.createParams({
-      category: filters.specialty !== 'all' ? filters.specialty : undefined,
-      location: filters.location !== 'all' ? filters.location : undefined,
-      search: filters.searchQuery || undefined
-    });
-
-    return this.apiService.get<ProfessionalBasic[]>('/api/professionals', params).pipe(
-      catchError(error => {
-        console.warn('Error al obtener profesionales filtrados, usando datos mock:', error);
-        return this.filteredProfessionals$;
-      })
-    );
-  }
-
-  // Actualizar filtros
-  public updateFilters(filters: Partial<FilterOptions>): void {
-    if (filters.specialty !== undefined) {
-      this.specialtyFilter.next(filters.specialty);
-    }
-    if (filters.location !== undefined) {
-      this.locationFilter.next(filters.location);
-    }
-    if (filters.searchQuery !== undefined) {
-      this.searchQuery.next(filters.searchQuery);
-    }
-  }
-
   // Métodos específicos para filtros
-  public setSpecialtyFilter(specialty: string): void {
-    this.specialtyFilter.next(specialty);
-  }
-
   public setLocationFilter(location: string): void {
     this.locationFilter.next(location);
-  }
-
-  public setSearchQuery(query: string): void {
-    this.searchQuery.next(query);
-  }
-
-  // Obtener categorías disponibles
-  public getCategories(): Observable<string[]> {
-    return this.apiService.get<string[]>('/api/categories').pipe(
-      catchError(error => {
-        console.warn('Error al obtener categorías, usando datos mock:', error);
-        return new Observable(observer => {
-          observer.next(['tecnologia', 'diseno', 'marketing', 'finanzas', 'salud', 'legal']);
-          observer.complete();
-        });
-      })
-    );
-  }
-
-  // Obtener ubicaciones disponibles
-  public getLocations(): Observable<string[]> {
-    return this.apiService.get<string[]>('/api/locations').pipe(
-      catchError(error => {
-        console.warn('Error al obtener ubicaciones, usando datos mock:', error);
-        return new Observable(observer => {
-          observer.next(['Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Bilbao', 'Málaga']);
-          observer.complete();
-        });
-      })
-    );
-  }
-
-  // Limpiar filtros
-  public clearFilters(): void {
-    this.specialtyFilter.next('all');
-    this.locationFilter.next('all');
-    this.searchQuery.next('');
-  }
-
-  // Obtener estado actual de filtros
-  public getCurrentFilters(): FilterOptions {
-    return {
-      specialty: this.specialtyFilter.value,
-      location: this.locationFilter.value,
-      searchQuery: this.searchQuery.value
-    };
   }
 }

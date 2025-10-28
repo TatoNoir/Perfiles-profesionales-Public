@@ -90,22 +90,30 @@
 }
 
 .clear-button {
-  --border-radius: 8px;
-  --padding-start: 0.875rem;
-  --padding-end: 0.875rem;
+  --border-radius: 10px;
+  --padding-start: 1rem;
+  --padding-end: 1rem;
   --padding-top: 0.75rem;
   --padding-bottom: 0.75rem;
-  font-size: 0.85rem;
-  font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: 700;
   white-space: nowrap;
   flex-shrink: 0;
-  --border-color: rgba(255, 255, 255, 0.3);
-  --color: rgba(255, 255, 255, 0.9);
+  /* Botón sólido con contraste alto: fondo blanco, texto verde */
+  --background: #ffffff;
+  --color: #0f766e;
+  --border-color: transparent;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .clear-button:hover {
-  --background: rgba(255, 255, 255, 0.1);
-  --border-color: rgba(255, 255, 255, 0.5);
+  --background: #f3f4f6;
+  --color: #0b5e57;
+}
+
+.clear-button:active {
+  --background: #e5e7eb;
+  --color: #083f3a;
 }
 
 .main-content {

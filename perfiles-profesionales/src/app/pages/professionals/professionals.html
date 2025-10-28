@@ -38,12 +38,12 @@
             <ion-icon name="search" slot="start"></ion-icon>
             {{ isSearching ? 'Buscando...' : 'Buscar' }}
           </ion-button>
-          <ion-button
-            *ngIf="hasActiveSearch"
-            class="clear-button"
-            (click)="onShowAll()"
-            fill="outline"
-            color="medium">
+            <ion-button
+              *ngIf="hasActiveSearch"
+              class="clear-button"
+              (click)="onShowAll()"
+              fill="solid"
+              color="light">
             <ion-icon name="refresh" slot="start"></ion-icon>
             Mostrar todos
           </ion-button>

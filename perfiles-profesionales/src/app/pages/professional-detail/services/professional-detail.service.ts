@@ -10,6 +10,7 @@ export interface ProfessionalDetail {
   skills: string[];
   aboutMe: string;
   workZones: string[];
+  province?: string;
   completedProjects: number;
   responseRate: number;
   responseTime: string;

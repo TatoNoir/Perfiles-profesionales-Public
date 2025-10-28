@@ -521,19 +521,24 @@ ion-spinner {
 .stars-container {
   display: flex;
   gap: 0.25rem;
+  align-items: center;
 }
 
 .star-icon {
-  font-size: 20px;
-  --color: #d1d5db;
+  font-size: 1.25rem;
+  transition: color 0.2s ease;
 }
 
 .star-icon.filled {
-  --color: #fbbf24;
+  color: #fbbf24;
 }
 
 .star-icon.half-filled {
-  --color: #fbbf24;
+  color: #fbbf24;
+}
+
+.star-icon.empty {
+  color: #d1d5db;
 }
 
 .reviews-count {
@@ -605,16 +610,26 @@ ion-spinner {
 .review-stars {
   display: flex;
   gap: 0.125rem;
+  align-items: center;
 }
 
 .review-star {
-  font-size: 16px;
-  --color: #d1d5db;
+  font-size: 1rem;
+  transition: color 0.2s ease;
 }
 
-.review-star[name="star"] {
-  --color: #fbbf24;
+.review-star.filled {
+  color: #fbbf24;
 }
+
+.review-star.half-filled {
+  color: #fbbf24;
+}
+
+.review-star.empty {
+  color: #d1d5db;
+}
+
 
 .review-date {
   font-size: 0.85rem;

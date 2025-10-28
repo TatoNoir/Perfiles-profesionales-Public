@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonCard, IonCardContent, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonChip, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { checkmarkCircle, star, location, eye } from 'ionicons/icons';
+import { checkmarkCircle, star, starHalf, starOutline, location, eye } from 'ionicons/icons';
 import { ProfessionalBasic } from '../../pages/professionals/services/professionals-list.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class ProfessionalsListComponent {
   @Output() viewProfile = new EventEmitter<ProfessionalBasic>();
 
   constructor() {
-    addIcons({ checkmarkCircle, star, location, eye });
+    addIcons({ checkmarkCircle, star, starHalf, starOutline, location, eye });
   }
 
   onViewProfile(professional: ProfessionalBasic) {
@@ -36,5 +36,28 @@ export class ProfessionalsListComponent {
 
   trackByProfessionalId(index: number, professional: ProfessionalBasic): string {
     return professional.id;
+  }
+
+  getStarsArray(rating: number): string[] {
+    const stars: string[] = [];
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+
+    // Agregar estrellas llenas
+    for (let i = 0; i < fullStars; i++) {
+      stars.push('full');
+    }
+
+    // Agregar media estrella si es necesario
+    if (hasHalfStar) {
+      stars.push('half');
+    }
+
+    // Completar con estrellas vacías hasta 5
+    while (stars.length < 5) {
+      stars.push('empty');
+    }
+
+    return stars;
   }
 }

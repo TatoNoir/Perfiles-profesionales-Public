@@ -1,14 +1,21 @@
 <div class="professionals-list-container">
-  <div class="professionals-header">
+  <div
+    class="professionals-header"
+    [class.single-result]="displayedProfessionals.length === 1"
+    [class.few-results]="displayedProfessionals.length > 1 && displayedProfessionals.length <= 3">
     <span class="professionals-count">{{ professionals.length }} profesionales encontrados</span>
   </div>
 
-  <ion-grid class="professionals-grid">
+  <ion-grid
+    class="professionals-grid"
+    [class.single-result]="displayedProfessionals.length === 1"
+    [class.few-results]="displayedProfessionals.length > 1 && displayedProfessionals.length <= 3">
     <ion-row>
       <ion-col
         *ngFor="let professional of displayedProfessionals; trackBy: trackByProfessionalId"
         size="12"
         size-md="6"
+        size-lg="6"
         class="professional-col">
         <ion-card class="professional-card">
           <ion-card-content class="card-content">
@@ -34,12 +41,23 @@
 
             <div class="rating-location">
               <div class="rating">
-                <ion-icon name="star" class="star-icon"></ion-icon>
+                <div class="stars-container">
+                  <ion-icon
+                    *ngFor="let star of getStarsArray(professional.rating); let i = index"
+                    [name]="star === 'full' ? 'star' : (star === 'half' ? 'star-half' : 'star-outline')"
+                    class="star-icon"
+                    [class.filled]="star === 'full'"
+                    [class.half-filled]="star === 'half'"
+                    [class.empty]="star === 'empty'">
+                  </ion-icon>
+                </div>
                 <span class="rating-text">{{ professional.rating }} ({{ professional.reviews }} reseñas)</span>
               </div>
               <div class="location">
                 <ion-icon name="location" class="location-icon"></ion-icon>
-                <span class="location-text">{{ professional.location }}</span>
+                <span class="location-text">
+                  {{ professional.location }}<ng-container *ngIf="professional.province">, {{ professional.province }}</ng-container>
+                </span>
               </div>
             </div>
 
