@@ -522,10 +522,11 @@ ion-spinner {
   display: flex;
   gap: 0.25rem;
   align-items: center;
+  margin-right: 0.5rem;
 }
 
 .star-icon {
-  font-size: 1.25rem;
+  font-size: 1rem;
   transition: color 0.2s ease;
 }
 

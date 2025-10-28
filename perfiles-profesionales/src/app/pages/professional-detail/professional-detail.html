@@ -37,7 +37,16 @@
               <p class="profession">{{ professional.profession }}</p>
               <div class="rating-location">
                 <div class="rating">
-                  <ion-icon name="star" class="star-icon"></ion-icon>
+                  <div class="stars-container">
+                    <ion-icon
+                      *ngFor="let star of getStarsArray(averageRating); let i = index"
+                      [name]="star === 'full' ? 'star' : (star === 'half' ? 'star-half' : 'star-outline')"
+                      class="star-icon"
+                      [class.filled]="star === 'full'"
+                      [class.half-filled]="star === 'half'"
+                      [class.empty]="star === 'empty'">
+                    </ion-icon>
+                  </div>
                   <span class="rating-text">{{ averageRating | number:'1.1-1' }} ({{ reviewsCount }} reseñas)</span>
                 </div>
                 <div class="location">

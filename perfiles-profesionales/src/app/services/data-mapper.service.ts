@@ -21,10 +21,8 @@ export class DataMapperService {
     const primaryActivity = apiUser.activities.length > 0 ? apiUser.activities[0] : null;
     const profession = primaryActivity?.name || 'Profesional';
 
-    // Obtener todas las habilidades de las actividades
-    const skills = apiUser.activities.flatMap(activity =>
-      activity.tags ? activity.tags.split(',').map(tag => tag.trim()) : []
-    );
+    // Para el listado, usar los nombres de las actividades como skills
+    const skills = apiUser.activities.map(activity => activity.name);
 
     // Obtener la ubicación
     const location = apiUser.locality?.name || 'Ubicación no disponible';
@@ -69,10 +67,8 @@ export class DataMapperService {
    * Mapea la respuesta del API de detalle a nuestro formato de ProfessionalDetail
    */
   mapApiUserDetailToProfessionalDetail(apiUserDetail: ApiUserDetail): ProfessionalDetail {
-    // Obtener todas las habilidades de las actividades
-    const skills = apiUserDetail.activities.flatMap(activity =>
-      activity.tags ? activity.tags.split(',').map(tag => tag.trim()) : []
-    );
+    // Usar los nombres de actividades como habilidades para el detalle
+    const skills = apiUserDetail.activities.map(activity => activity.name);
 
     // Obtener las zonas de trabajo (por ahora usamos la localidad)
     const workZones = apiUserDetail.locality ? [apiUserDetail.locality.name] : [];
@@ -135,9 +131,8 @@ export class DataMapperService {
     const fullName = `${apiUserDetail.first_name} ${apiUserDetail.last_name}`.trim();
     const primaryActivity = apiUserDetail.activities.length > 0 ? apiUserDetail.activities[0] : null;
     const profession = primaryActivity?.name || 'Profesional';
-    const skills = apiUserDetail.activities.flatMap(activity =>
-      activity.tags ? activity.tags.split(',').map(tag => tag.trim()) : []
-    );
+    // En el detalle, las "habilidades" serán los nombres de las actividades
+    const skills = apiUserDetail.activities.map(activity => activity.name);
     const location = apiUserDetail.locality?.name || 'Ubicación no disponible';
     const province = apiUserDetail.locality?.state?.name || undefined;
     const rating = parseFloat(apiUserDetail.reviews_avg_value) || 0;
