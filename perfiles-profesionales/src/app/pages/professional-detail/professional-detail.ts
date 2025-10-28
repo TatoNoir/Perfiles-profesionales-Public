@@ -96,9 +96,11 @@ export class ProfessionalDetailComponent implements OnInit, OnDestroy {
 
       private loadQuestions() {
         if (this.professional && (this.professional as any).questions) {
-          this.professionalQuestions = (this.professional as any).questions;
+          // Filtrar solo las preguntas publicadas (published: true)
+          const allQuestions = (this.professional as any).questions;
+          this.professionalQuestions = allQuestions.filter((question: any) => question.published === true);
           this.questionsCount = this.professionalQuestions.length;
-          // Mostrar solo las primeras 2 preguntas
+          // Mostrar solo las primeras 2 preguntas publicadas
           this.displayedQuestions = this.professionalQuestions.slice(0, 2);
         }
       }

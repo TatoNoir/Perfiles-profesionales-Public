@@ -15,9 +15,10 @@ export class ViewQuestionsModalComponent {
   @Input() isOpen = false;
   @Input() professionalName = '';
   @Input() set questions(questions: any[]) {
-    this.professionalQuestions = questions || [];
+    // Filtrar solo las preguntas publicadas (published: true)
+    this.professionalQuestions = (questions || []).filter((question: any) => question.published === true);
     this.questionsCount = this.professionalQuestions.length;
-    this.displayedQuestions = this.professionalQuestions.slice(0, 5); // Mostrar las primeras 5
+    this.displayedQuestions = this.professionalQuestions.slice(0, 5); // Mostrar las primeras 5 publicadas
   }
   @Output() modalClosed = new EventEmitter<void>();
 
