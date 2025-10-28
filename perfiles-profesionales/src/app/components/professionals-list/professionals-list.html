@@ -74,6 +74,11 @@
               </ion-chip>
             </div>
 
+              <!-- Sobre mí (resumen) -->
+              <div class="about-container" *ngIf="professional.description">
+                <p class="about-text">{{ professional.description }}</p>
+              </div>
+
             <div class="card-footer">
               <!-- <div class="price">
                 <span class="price-amount">${{ professional.pricePerHour }}</span>
