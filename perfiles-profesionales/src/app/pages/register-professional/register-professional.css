@@ -17,6 +17,7 @@
   justify-content: center;
   position: relative;
   padding: 1rem 0;
+  gap: 4.5rem;
 }
 
 .step {
@@ -785,7 +786,7 @@
 
   .progress-steps {
     padding: 0.5rem 0;
-    gap: 0.5rem;
+    gap: 4.5rem;
   }
 
   .step-circle {
@@ -1062,7 +1063,7 @@
 
   .progress-steps {
     padding: 0.25rem 0;
-    gap: 0.25rem;
+    gap: 3.25rem;
   }
 
   .step-circle {
