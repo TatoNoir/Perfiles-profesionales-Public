@@ -180,6 +180,17 @@ ion-radio {
   font-weight: 600;
 }
 
+.professionals-count {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #718096;
+  margin-left: 0.25rem;
+}
+
+.activity-item.selected .professionals-count {
+  color: #38b2ac;
+}
+
 .activity-description {
   font-size: 0.85rem;
   color: #718096;
