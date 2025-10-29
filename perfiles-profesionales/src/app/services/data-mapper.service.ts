@@ -14,6 +14,7 @@ export class DataMapperService {
    * Mapea la respuesta del API a nuestro formato de ProfessionalBasic
    */
   mapApiUserToProfessionalBasic(apiUser: ApiUser): ProfessionalBasic {
+
     // Combinar first_name y last_name
     const fullName = `${apiUser.first_name} ${apiUser.last_name}`.trim();
 
@@ -40,7 +41,7 @@ export class DataMapperService {
       reviews: apiUser.reviews_count,
       location: location,
       province: province,
-      avatar: apiUser.profile_picture || undefined,
+      profile_picture: apiUser.profile_picture || undefined,
       pricePerHour: 0, // Comentado por ahora
       isVerified: false, // Comentado por ahora
       status: 'available' as const, // Comentado por ahora

@@ -37,36 +37,20 @@ export class ImageEditorComponent implements OnInit, OnChanges {
   }
 
   imageCropped(event: any) {
-    console.log('Evento imageCropped recibido:', event);
-    console.log('Tipo de evento:', typeof event);
-    console.log('Propiedades del evento:', Object.keys(event));
-
     if (event.objectUrl) {
-      console.log('Usando objectUrl:', event.objectUrl);
       this.croppedImage = event.objectUrl;
     } else if (event.base64) {
-      console.log('Usando base64:', event.base64.substring(0, 50) + '...');
       this.croppedImage = event.base64;
     } else if (event.blob) {
-      console.log('Usando blob:', event.blob);
       this.croppedImage = event.blob;
     } else {
-      console.log('Formato no reconocido, usando evento completo:', event);
       this.croppedImage = event;
     }
   }
 
-  imageLoaded() {
-    console.log('Imagen cargada correctamente en el editor');
-  }
-
-  cropperReady() {
-    console.log('Cropper listo para usar');
-  }
-
-  loadImageFailed() {
-    console.error('Error al cargar la imagen en el editor');
-  }
+  imageLoaded() {}
+  cropperReady() {}
+  loadImageFailed() {}
 
   rotateLeft() {
     this.rotation -= 90;
@@ -90,13 +74,10 @@ export class ImageEditorComponent implements OnInit, OnChanges {
   }
 
   saveImage() {
-    console.log('Guardando imagen, croppedImage:', this.croppedImage);
-    console.log('Tipo de croppedImage:', typeof this.croppedImage);
 
     if (this.croppedImage) {
       // Si es un blob URL, convertir a File directamente
       if (typeof this.croppedImage === 'string' && this.croppedImage.startsWith('blob:')) {
-        console.log('Es un blob URL, usando archivo original');
         if (this.imageFile) {
           this.imageEdited.emit(this.imageFile);
           this.closeEditor();
@@ -106,14 +87,13 @@ export class ImageEditorComponent implements OnInit, OnChanges {
 
       // Si es base64, convertir a File
       if (typeof this.croppedImage === 'string' && this.croppedImage.includes('data:')) {
-        console.log('Es base64, convirtiendo a File');
         this.dataURLtoFile(this.croppedImage, 'profile-photo.jpg')
           .then(file => {
             this.imageEdited.emit(file);
             this.closeEditor();
           })
           .catch(error => {
-            console.error('Error converting image:', error);
+
             // Fallback: usar el archivo original si hay error
             if (this.imageFile) {
               this.imageEdited.emit(this.imageFile);
@@ -125,7 +105,6 @@ export class ImageEditorComponent implements OnInit, OnChanges {
 
       // Si es un Blob, convertir a File
       if (this.croppedImage instanceof Blob) {
-        console.log('Es un Blob, convirtiendo a File');
         const file = new File([this.croppedImage], 'profile-photo.jpg', { type: this.croppedImage.type });
         this.imageEdited.emit(file);
         this.closeEditor();
@@ -134,7 +113,6 @@ export class ImageEditorComponent implements OnInit, OnChanges {
     }
 
     // Fallback: usar el archivo original
-    console.log('Usando archivo original como fallback');
     if (this.imageFile) {
       this.imageEdited.emit(this.imageFile);
       this.closeEditor();
@@ -149,7 +127,6 @@ export class ImageEditorComponent implements OnInit, OnChanges {
   private dataURLtoFile(dataurl: string, filename: string): Promise<File> {
     return new Promise((resolve, reject) => {
       try {
-        console.log('Convirtiendo dataURL:', dataurl.substring(0, 100) + '...');
 
         // Verificar que sea un data URL válido
         if (!dataurl.startsWith('data:')) {
@@ -170,7 +147,6 @@ export class ImageEditorComponent implements OnInit, OnChanges {
         }
 
         const mime = mimeMatch[1];
-        console.log('Tipo MIME detectado:', mime);
 
         const bstr = atob(arr[1]);
         let n = bstr.length;
@@ -180,10 +156,9 @@ export class ImageEditorComponent implements OnInit, OnChanges {
         }
 
         const file = new File([u8arr], filename, { type: mime });
-        console.log('Archivo creado exitosamente:', file.name, file.size, 'bytes');
         resolve(file);
       } catch (error) {
-        console.error('Error en dataURLtoFile:', error);
+
         reject(error);
       }
     });

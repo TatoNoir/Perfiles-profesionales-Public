@@ -14,7 +14,7 @@ export interface ProfessionalBasic {
   reviews: number;
     location: string;
     province?: string;
-  avatar?: string;
+    profile_picture?: string;
   pricePerHour: number;
   isVerified: boolean;
   status: 'available' | 'busy' | 'offline';

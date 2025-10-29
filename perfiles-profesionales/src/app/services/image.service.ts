@@ -25,7 +25,7 @@ export class ImageService {
     }
 
     // Construir la URL completa
-    return `${this.baseUrl}/storage/${imagePath}`;
+    return `${this.baseUrl}/${imagePath}`;
   }
 
   /**
@@ -41,7 +41,7 @@ export class ImageService {
       const response = await fetch(imageUrl, { method: 'HEAD' });
       return response.ok;
     } catch (error) {
-      console.warn('Error validating image:', error);
+
       return false;
     }
   }

@@ -28,9 +28,11 @@ export class ProfilePhotoThumbnailComponent implements OnInit, OnChanges {
 
   private loadImage() {
     if (this.photoUrl) {
+
       this.fullImageUrl = this.imageService.getProfileImageUrl(this.photoUrl);
       this.showFallback = false;
     } else {
+
       this.fullImageUrl = null;
       this.showFallback = true;
     }
