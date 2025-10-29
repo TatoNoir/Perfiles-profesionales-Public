@@ -3,6 +3,9 @@
   padding: 2rem;
   background-color: #f8fafc;
   min-height: 100vh;
+  min-width: 100%;
+  max-width: 100%;
+  width: 100%;
 }
 
 .professionals-header {
@@ -27,34 +30,50 @@
 
 /* Layout mejorado para pocos resultados */
 .professionals-grid.few-results {
-  /* Solo centrar el contenido, no interferir con el grid */
   text-align: center;
   min-width: 100%;
 }
 
 .professionals-grid.few-results ion-row {
-  /* Mantener el comportamiento normal del grid */
   justify-content: center;
   min-width: 100%;
 }
 
-/* Para un solo resultado, centrarlo completamente */
-.professionals-grid.single-result {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 60vh;
-}
-
+/* Para un solo resultado, centrarlo y ampliar ancho */
 .professionals-grid.single-result ion-row {
   width: 100%;
-  max-width: 500px;
   justify-content: center;
 }
 
+/* Forzar ancho máx del column en single-result */
+.professionals-grid.single-result ion-col,
 .professionals-grid.single-result .professional-col {
-  max-width: 100%;
+  flex: 0 1 800px; /* base width */
+  max-width: 800px;
   width: 100%;
+}
+
+/* Asegurar que la card use todo el ancho de la columna */
+.professional-card {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Empty state */
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #6b7280;
+  padding: 2rem 0 1rem;
+}
+
+.no-results ion-icon {
+  font-size: 24px;
+  color: #9ca3af;
 }
 
 /* Override para un solo resultado - hacer que ocupe más espacio */

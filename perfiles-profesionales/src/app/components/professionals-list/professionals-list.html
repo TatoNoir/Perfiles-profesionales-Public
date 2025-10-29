@@ -6,17 +6,26 @@
     <span class="professionals-count">{{ professionals.length }} profesionales encontrados</span>
   </div>
 
+  <!-- Empty state -->
+  <div *ngIf="displayedProfessionals.length === 0 && !isLoading" class="no-results">
+    <ion-icon name="search-outline"></ion-icon>
+    <p>No encontramos profesionales para esta búsqueda.</p>
+  </div>
+
   <ion-grid
+    *ngIf="displayedProfessionals.length > 0"
     class="professionals-grid"
     [class.single-result]="displayedProfessionals.length === 1"
     [class.few-results]="displayedProfessionals.length > 1 && displayedProfessionals.length <= 3">
-    <ion-row>
+    <ion-row [style.justify-content]="displayedProfessionals.length === 1 ? 'center' : (displayedProfessionals.length <= 3 ? 'center' : '')">
       <ion-col
         *ngFor="let professional of displayedProfessionals; trackBy: trackByProfessionalId"
-        size="12"
-        size-md="6"
-        size-lg="6"
-        class="professional-col">
+        [size]="12"
+        [sizeMd]="displayedProfessionals.length === 1 ? 12 : 6"
+        [sizeLg]="displayedProfessionals.length === 1 ? 12 : 6"
+        class="professional-col"
+        [style.max-width.px]="displayedProfessionals.length === 1 ? 800 : null"
+        [style.flex]="displayedProfessionals.length === 1 ? '0 1 800px' : null">
         <ion-card class="professional-card">
           <ion-card-content class="card-content">
             <div class="card-header">
