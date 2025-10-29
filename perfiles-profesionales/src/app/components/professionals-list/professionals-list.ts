@@ -4,10 +4,11 @@ import { IonCard, IonCardContent, IonButton, IonIcon, IonGrid, IonRow, IonCol, I
 import { addIcons } from 'ionicons';
 import { checkmarkCircle, star, starHalf, starOutline, location, eye } from 'ionicons/icons';
 import { ProfessionalBasic } from '../../pages/professionals/services/professionals-list.service';
+import { ProfilePhotoThumbnailComponent } from '../profile-photo-thumbnail/profile-photo-thumbnail';
 
 @Component({
   selector: 'app-professionals-list',
-  imports: [CommonModule, IonCard, IonCardContent, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonChip, IonSpinner],
+  imports: [CommonModule, IonCard, IonCardContent, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonChip, IonSpinner, ProfilePhotoThumbnailComponent],
   templateUrl: './professionals-list.html',
   styleUrl: './professionals-list.css'
 })

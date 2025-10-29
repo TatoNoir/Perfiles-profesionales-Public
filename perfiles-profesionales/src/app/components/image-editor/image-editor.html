@@ -1,0 +1,120 @@
+<ion-modal [isOpen]="showEditor" (didDismiss)="closeEditor()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Editar Foto</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeEditor()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="image-editor-content">
+      <div class="editor-container">
+        <!-- Controles de edición -->
+        <div class="editor-controls">
+          <div class="control-group">
+            <h3>Rotación</h3>
+            <div class="control-buttons">
+              <ion-button fill="outline" size="small" (click)="rotateLeft()">
+                <ion-icon name="refresh-outline"></ion-icon>
+                <span>Izquierda</span>
+              </ion-button>
+              <ion-button fill="outline" size="small" (click)="rotateRight()">
+                <ion-icon name="refresh-outline"></ion-icon>
+                <span>Derecha</span>
+              </ion-button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <h3>Proporción</h3>
+            <div class="control-buttons">
+              <ion-button
+                fill="outline"
+                size="small"
+                [color]="aspectRatio === 1 ? 'primary' : 'medium'"
+                (click)="changeAspectRatio(1)">
+                Cuadrada (1:1)
+              </ion-button>
+              <ion-button
+                fill="outline"
+                size="small"
+                [color]="aspectRatio === 4/3 ? 'primary' : 'medium'"
+                (click)="changeAspectRatio(4/3)">
+                Rectangular (4:3)
+              </ion-button>
+              <ion-button
+                fill="outline"
+                size="small"
+                [color]="aspectRatio === 16/9 ? 'primary' : 'medium'"
+                (click)="changeAspectRatio(16/9)">
+                Panorámica (16:9)
+              </ion-button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <h3>Herramientas</h3>
+            <div class="control-buttons">
+              <ion-button fill="outline" size="small" (click)="flipHorizontal()">
+                <ion-icon name="swap-horizontal-outline"></ion-icon>
+                <span>Voltear</span>
+              </ion-button>
+              <ion-button fill="outline" size="small" (click)="resetImage()">
+                <ion-icon name="refresh-outline"></ion-icon>
+                <span>Resetear</span>
+              </ion-button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Editor de imagen -->
+        <div class="image-cropper-container">
+          <image-cropper
+            [imageFile]="imageFile"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="aspectRatio"
+            [resizeToWidth]="resizeToWidth"
+            [cropperMinWidth]="100"
+            [cropperMinHeight]="100"
+            [onlyScaleDown]="true"
+            [roundCropper]="false"
+            [canvasRotation]="rotation"
+            [transform]="{ scale: scale }"
+            [containWithinAspectRatio]="containWithinAspectRatio"
+            format="jpeg"
+            (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()">
+          </image-cropper>
+        </div>
+
+        <!-- Vista previa -->
+        <div class="preview-container" *ngIf="croppedImage">
+          <h3>Vista Previa</h3>
+          <div class="preview-image">
+            <img [src]="croppedImage" alt="Vista previa">
+          </div>
+        </div>
+      </div>
+    </ion-content>
+
+    <ion-footer>
+      <ion-toolbar>
+        <div class="footer-buttons">
+          <ion-button fill="outline" (click)="closeEditor()">
+            Cancelar
+          </ion-button>
+          <ion-button (click)="saveImage()" [disabled]="!croppedImage">
+            <ion-icon name="checkmark"></ion-icon>
+            Guardar Foto
+          </ion-button>
+        </div>
+      </ion-toolbar>
+    </ion-footer>
+  </ng-template>
+</ion-modal>

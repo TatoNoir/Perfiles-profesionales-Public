@@ -128,11 +128,6 @@
   flex-shrink: 0;
 }
 
-.star-icon {
-  --color: #FCD34D;
-  font-size: 16px;
-}
-
 .location-icon {
   --color: #6B7280;
   font-size: 16px;
@@ -157,9 +152,29 @@
   gap: 0.5rem;
 }
 
+.stars-container {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+}
+
 .star-icon {
+  font-size: 1rem;
+  transition: color 0.2s ease;
   width: 16px;
   height: 16px;
+}
+
+.star-icon.filled {
+  color: #fbbf24;
+}
+
+.star-icon.half-filled {
+  color: #fbbf24;
+}
+
+.star-icon.empty {
+  color: #d1d5db;
 }
 
 .rating-text {

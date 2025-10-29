@@ -456,6 +456,12 @@
             <div *ngIf="profilePhoto.profilePhoto" class="photo-preview">
               <img [src]="getPhotoPreview()" alt="Preview">
               <p class="photo-name">{{ profilePhoto.profilePhoto.name }}</p>
+              <div class="photo-actions">
+                <ion-button fill="outline" size="small" (click)="openImageEditor()">
+                  <ion-icon name="create"></ion-icon>
+                  Editar Foto
+                </ion-button>
+              </div>
             </div>
           </div>
         </ion-card-content>
@@ -498,3 +504,11 @@
     </div>
   </div>
 </ion-content>
+
+<!-- Editor de imagen -->
+<app-image-editor
+  [imageFile]="profilePhoto.profilePhoto"
+  [showEditor]="showImageEditor"
+  (imageEdited)="onImageEdited($event)"
+  (editorClosed)="onEditorClosed()">
+</app-image-editor>

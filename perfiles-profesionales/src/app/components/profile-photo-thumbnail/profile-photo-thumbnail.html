@@ -2,14 +2,14 @@
   <!-- Photo Display -->
   <div class="photo-container">
     <img
-      *ngIf="photoUrl"
-      [src]="photoUrl"
+      *ngIf="fullImageUrl && !showFallback"
+      [src]="fullImageUrl"
       [alt]="name + ' - Foto de perfil'"
       class="profile-image"
       (error)="onImageError($event)">
 
     <div
-      *ngIf="!photoUrl"
+      *ngIf="!fullImageUrl || showFallback"
       class="avatar-fallback">
       {{ getInitials() }}
     </div>

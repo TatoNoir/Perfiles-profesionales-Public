@@ -1,24 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonItem, IonLabel, IonInput, IonTextarea, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { close, person, location, camera, checkmark, arrowBack } from 'ionicons/icons';
+import { close, person, location, camera, checkmark, arrowBack, create } from 'ionicons/icons';
 import { RegisterService, PersonalData, LocationData, ProfilePhoto, ProfessionalRegistration } from './services/register.service';
 import { ApiActivity, GeoState, GeoLocality, ZipCode } from '../../services/shared-data.service';
+import { ImageEditorComponent } from '../../components/image-editor/image-editor';
 
 @Component({
   selector: 'app-register-professional',
-  imports: [CommonModule, FormsModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonItem, IonLabel, IonInput, IonTextarea, IonSpinner],
+  imports: [CommonModule, FormsModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonItem, IonLabel, IonInput, IonTextarea, IonSpinner, ImageEditorComponent],
   templateUrl: './register-professional.html',
   styleUrl: './register-professional.css'
 })
-export class RegisterProfessionalComponent implements OnInit {
+export class RegisterProfessionalComponent implements OnInit, OnDestroy {
   currentStep = 1;
   totalSteps = 3;
   isSubmitting = false;
   showSuccessMessage = false;
+  showImageEditor = false;
+  photoPreviewUrl: string = ''; // Mantener el blob URL estable
 
   // Form data
   personalData: PersonalData = {
@@ -73,9 +76,10 @@ export class RegisterProfessionalComponent implements OnInit {
 
   constructor(
     private registerService: RegisterService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {
-    addIcons({ close, person, location, camera, checkmark, arrowBack });
+    addIcons({ close, person, location, camera, checkmark, arrowBack, create });
   }
 
   ngOnInit() {
@@ -178,7 +182,42 @@ export class RegisterProfessionalComponent implements OnInit {
         return;
       }
 
+      // Limpiar blob URL anterior si existe
+      if (this.photoPreviewUrl) {
+        URL.revokeObjectURL(this.photoPreviewUrl);
+      }
+
+      // Crear nuevo blob URL
+      this.photoPreviewUrl = URL.createObjectURL(file);
       this.profilePhoto.profilePhoto = file;
+      this.showImageEditor = true;
+    }
+  }
+
+  // Métodos para el editor de imagen
+  onImageEdited(editedFile: File) {
+    // Limpiar blob URL anterior
+    if (this.photoPreviewUrl) {
+      URL.revokeObjectURL(this.photoPreviewUrl);
+    }
+
+    // Crear nuevo blob URL para la imagen editada
+    this.photoPreviewUrl = URL.createObjectURL(editedFile);
+    this.profilePhoto.profilePhoto = editedFile;
+    this.showImageEditor = false;
+
+    // Forzar la detección de cambios
+    this.cdr.detectChanges();
+  }
+
+  onEditorClosed() {
+    this.showImageEditor = false;
+    this.cdr.detectChanges();
+  }
+
+  openImageEditor() {
+    if (this.profilePhoto.profilePhoto) {
+      this.showImageEditor = true;
     }
   }
 
@@ -294,10 +333,7 @@ export class RegisterProfessionalComponent implements OnInit {
   }
 
   getPhotoPreview(): string {
-    if (this.profilePhoto.profilePhoto) {
-      return URL.createObjectURL(this.profilePhoto.profilePhoto);
-    }
-    return '';
+    return this.photoPreviewUrl;
   }
 
   // Métodos para manejar actividades
@@ -510,4 +546,10 @@ export class RegisterProfessionalComponent implements OnInit {
     this.showZipCodesDropdown = false;
   }
 
+  ngOnDestroy() {
+    // Limpiar blob URLs para evitar memory leaks
+    if (this.photoPreviewUrl) {
+      URL.revokeObjectURL(this.photoPreviewUrl);
+    }
+  }
 }

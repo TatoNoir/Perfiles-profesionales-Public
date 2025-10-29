@@ -1,0 +1,144 @@
+.image-editor-content {
+  --background: #f8f9fa;
+}
+
+.editor-container {
+  padding: 16px;
+  max-width: 100%;
+}
+
+.editor-controls {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.control-group {
+  margin-bottom: 20px;
+}
+
+.control-group:last-child {
+  margin-bottom: 0;
+}
+
+.control-group h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.control-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.control-buttons ion-button {
+  --border-radius: 8px;
+  font-size: 14px;
+}
+
+.control-buttons ion-button ion-icon {
+  margin-right: 4px;
+}
+
+.image-cropper-container {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-cropper-container image-cropper {
+  max-width: 100%;
+  height: auto;
+  min-height: 250px;
+}
+
+.preview-container {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.preview-container h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.preview-image {
+  text-align: center;
+}
+
+.preview-image img {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.footer-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  gap: 12px;
+}
+
+.footer-buttons ion-button {
+  flex: 1;
+  --border-radius: 8px;
+  height: 48px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .editor-container {
+    padding: 12px;
+  }
+
+  .control-buttons {
+    flex-direction: column;
+  }
+
+  .control-buttons ion-button {
+    width: 100%;
+  }
+
+  .footer-buttons {
+    flex-direction: column;
+  }
+
+  .footer-buttons ion-button {
+    width: 100%;
+  }
+}
+
+/* Estilos para el cropper */
+::ng-deep .ngx-ic-move {
+  cursor: move;
+}
+
+::ng-deep .ngx-ic-resize {
+  cursor: nw-resize;
+}
+
+::ng-deep .ngx-ic-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+::ng-deep .ngx-ic-cropper {
+  border: 2px solid #007bff;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+}

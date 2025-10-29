@@ -20,9 +20,9 @@
           <div class="profile-header">
             <div class="avatar-container">
         <app-profile-photo-thumbnail
-          [photoUrl]="professional.avatar"
+          [photoUrl]="professional.profile_picture"
           [name]="professional.name"
-          size="medium">
+          size="large">
         </app-profile-photo-thumbnail>
             </div>
             <div class="profile-info">
@@ -164,7 +164,7 @@
         <ion-card-content>
           <div class="reviews-content" *ngIf="hasReviews; else noReviews">
             <div class="rating-display">
-              <div class="rating-number">{{ averageRating }}</div>
+              <div class="rating-number">{{ averageRating | number:'1.1-1' }}</div>
               <div class="stars-container">
                 <ion-icon
                   *ngFor="let star of getStarsArray(averageRating); let i = index"
