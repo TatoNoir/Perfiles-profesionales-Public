@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Panel del Profesional</ion-title>
+    <div style="margin-left:auto;display:flex;gap:.5rem;">
+      <a routerLink="/panel/inicio">Inicio</a>
+      <a routerLink="/panel/mi-perfil">Mi perfil</a>
+      <a routerLink="/panel/valoraciones">Valoraciones</a>
+      <a routerLink="/panel/preguntas">Preguntas</a>
+      <ion-button size="small" (click)="logout()" routerLink="/login">Salir</ion-button>
+    </div>
+  </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+  <router-outlet></router-outlet>
+</ion-content>
+
+

@@ -1,0 +1,5 @@
+a { color:#1f2937; text-decoration:none; padding:0 .25rem; }
+a:hover { text-decoration:underline; }
+ion-content { --padding-start: 1rem; --padding-end: 1rem; }
+
+

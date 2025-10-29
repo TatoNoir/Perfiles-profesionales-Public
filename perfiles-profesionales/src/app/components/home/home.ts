@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonIcon } from '@ionic/angular/standalone';
+import { RouterLink } from '@angular/router';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonButtons, IonButton } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { grid } from 'ionicons/icons';
 import { SearchBarComponent } from '../search-bar/search-bar';
@@ -11,7 +12,7 @@ import { FooterComponent } from '../footer/footer';
 @Component({
   selector: 'app-home',
   imports: [
-    IonContent, IonHeader, IonTitle, IonToolbar, IonIcon,
+    IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonButtons, IonButton, RouterLink,
     SearchBarComponent, ActivityCardsComponent, /* PopularSearchesComponent, */ ProfessionalCardsComponent, FooterComponent
   ],
   templateUrl: './home.html',
