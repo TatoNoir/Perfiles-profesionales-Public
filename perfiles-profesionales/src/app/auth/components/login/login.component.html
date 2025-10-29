@@ -1,16 +1,19 @@
 <ion-card class="login-card">
   <ion-card-content>
-    <h2>Acceder</h2>
-    <ion-item>
+    <h2 class="login-title">Acceder</h2>
+    <ion-item class="form-item">
       <ion-label position="stacked">Email</ion-label>
       <ion-input type="email" [(ngModel)]="email"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item class="form-item password-item">
       <ion-label position="stacked">Contraseña</ion-label>
       <ion-input type="password" [(ngModel)]="password"></ion-input>
     </ion-item>
     <div class="error" *ngIf="error">{{ error }}</div>
-    <ion-button expand="block" (click)="onSubmit()">Ingresar</ion-button>
+    <ion-button class="btn-login" expand="block" (click)="onSubmit()">Ingresar</ion-button>
+    <div class="links">
+      <a routerLink="/forgot-password">¿Olvidaste tu contraseña?</a>
+    </div>
   </ion-card-content>
   </ion-card>
 

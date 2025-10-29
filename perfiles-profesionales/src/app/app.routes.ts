@@ -11,6 +11,7 @@ export const routes: Routes = [
   { path: 'professionals/:id', component: ProfessionalDetailComponent },
   { path: 'register-professional', component: RegisterProfessionalComponent },
   { path: 'login', loadComponent: () => import('./auth/components/login/login.component').then(m => m.LoginComponent) },
+  { path: 'forgot-password', loadComponent: () => import('./auth/components/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent) },
   {
     path: 'panel',
     canActivate: [authGuard, professionalGuard],

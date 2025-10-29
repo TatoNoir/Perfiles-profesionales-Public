@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { IonButton, IonInput, IonItem, IonLabel, IonCard, IonCardContent } from '@ionic/angular/standalone';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, IonButton, IonInput, IonItem, IonLabel, IonCard, IonCardContent],
+  imports: [CommonModule, FormsModule, RouterLink, IonButton, IonInput, IonItem, IonLabel, IonCard, IonCardContent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

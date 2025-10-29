@@ -3,5 +3,13 @@
   margin: 2rem auto;
 }
 .error { color: #ef4444; margin: 0.5rem 0; }
+.links { margin-top: .75rem; text-align: center; }
+.links a { color: #20B2AA; text-decoration: none; font-size: .9rem; }
+.links a:hover { text-decoration: underline; }
+
+.login-title { text-align: center; margin: 0 0 1rem 0; }
+.form-item { margin-bottom: .75rem; }
+.password-item { margin-bottom: 1rem; }
+.btn-login { --border-radius: 10px; }
 
 
