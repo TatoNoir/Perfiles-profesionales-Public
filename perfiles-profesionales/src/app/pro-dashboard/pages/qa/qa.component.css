@@ -1,3 +1,11 @@
 /* estilos mínimos */
+.qa-page { padding: 1rem 0; }
+.title { margin: 0 0 1rem 0; font-weight: 700; color: #1f2937; }
 
-
+.qa-list { padding: 0; }
+.qa-item { display:flex; align-items:center; justify-content:space-between; gap: 1rem; }
+.qa-item .left { flex: 1; min-width: 0; }
+.question { color: #111827; }
+.answer { color: #374151; margin-top: .25rem; }
+.answer.empty { color: #9ca3af; font-style: italic; }
+.right { flex-shrink: 0; }
