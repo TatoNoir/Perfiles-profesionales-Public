@@ -3,7 +3,7 @@
 
   <ion-grid class="stats-grid">
     <ion-row>
-      <ion-col size="12" size-md="6" size-lg="3">
+      <ion-col size="6" size-md="6" size-lg="3">
         <ion-card class="stat-card">
           <ion-card-content>
             <div class="stat-row">
@@ -17,7 +17,7 @@
         </ion-card>
       </ion-col>
 
-      <ion-col size="12" size-md="6" size-lg="3">
+      <ion-col size="6" size-md="6" size-lg="3">
         <ion-card class="stat-card">
           <ion-card-content>
             <div class="stat-row">
@@ -31,7 +31,7 @@
         </ion-card>
       </ion-col>
 
-      <ion-col size="12" size-md="6" size-lg="3">
+      <ion-col size="6" size-md="6" size-lg="3">
         <ion-card class="stat-card">
           <ion-card-content>
             <div class="stat-row">
@@ -45,7 +45,7 @@
         </ion-card>
       </ion-col>
 
-      <ion-col size="12" size-md="6" size-lg="3">
+      <ion-col size="6" size-md="6" size-lg="3">
         <ion-card class="stat-card">
           <ion-card-content>
             <div class="stat-row">
@@ -55,6 +55,55 @@
                 <div class="stat-label">Perfil completo</div>
               </div>
             </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="actions">
+    <ion-button class="zone-button" fill="solid" routerLink="/panel/mi-perfil">
+      <ion-icon name="map" slot="start"></ion-icon>
+      Zona de trabajo
+    </ion-button>
+  </div>
+
+  <ion-grid class="lists-grid">
+    <ion-row>
+      <ion-col size="12" size-lg="6">
+        <ion-card>
+          <ion-card-content>
+            <div class="card-header">
+              <h3>Últimas 5 Valoraciones</h3>
+              <ion-button size="small" fill="clear" routerLink="/panel/valoraciones">Ver todo</ion-button>
+            </div>
+            <ion-list>
+              <ion-item *ngFor="let r of lastReviews">
+                <ion-label>
+                  <div class="item-title">{{ r.user }} • {{ r.rating }}★</div>
+                  <div class="item-sub">{{ r.comment }}</div>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" size-lg="6">
+        <ion-card>
+          <ion-card-content>
+            <div class="card-header">
+              <h3>Últimas 5 Preguntas</h3>
+              <ion-button size="small" fill="clear" routerLink="/panel/preguntas">Ver todo</ion-button>
+            </div>
+            <ion-list>
+              <ion-item *ngFor="let q of lastQuestions">
+                <ion-label>
+                  <div class="item-title">{{ q.user }}</div>
+                  <div class="item-sub">{{ q.text }}</div>
+                </ion-label>
+              </ion-item>
+            </ion-list>
           </ion-card-content>
         </ion-card>
       </ion-col>

@@ -1,3 +1,15 @@
+<ion-header>
+ <ion-toolbar>
+   <ion-buttons slot="start">
+     <ion-menu-button></ion-menu-button>
+   </ion-buttons>
+   <ion-title>Panel del Profesional</ion-title>
+   <ion-buttons slot="end">
+     <ion-button fill="outline" color="medium" (click)="logout()" routerLink="/login">Salir</ion-button>
+   </ion-buttons>
+ </ion-toolbar>
+</ion-header>
+
 <ion-split-pane contentId="pro-content">
 <ion-menu contentId="pro-content">
   <ion-header>
@@ -30,21 +42,7 @@
   </ion-content>
  </ion-menu>
 
- <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Panel del Profesional</ion-title>
-    <ion-buttons slot="end">
-      <ion-button fill="outline" color="medium" (click)="logout()" routerLink="/login">Salir</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
- </ion-header>
-
- <ion-content id="pro-content">
-   <router-outlet></router-outlet>
- </ion-content>
+ <ion-router-outlet id="pro-content"></ion-router-outlet>
 
 </ion-split-pane>
 

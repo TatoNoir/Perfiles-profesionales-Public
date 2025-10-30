@@ -11,4 +11,15 @@
 .stat-value { font-size: 1.5rem; font-weight: 700; color: #111827; }
 .stat-label { font-size: .9rem; color: #6b7280; }
 
+.actions { margin: 1rem 0; display:flex; justify-content: center; }
+@media (min-width: 992px) {
+  .actions { padding: 0 2%; }
+}
+.zone-button { --background: #3b82f6; --color: #ffffff; }
+.lists-grid ion-card { --border-radius: 14px; }
+.card-header { display:flex; align-items:center; justify-content: space-between; margin-bottom: .5rem; }
+.card-header h3 { margin: 0; font-size: 1.1rem; color: #111827; }
+.item-title { font-weight: 600; color: #111827; }
+.item-sub { color: #6b7280; font-size: .95rem; }
+
 
