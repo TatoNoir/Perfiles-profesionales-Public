@@ -1,4 +1,48 @@
-<h2>Valoraciones</h2>
-<p>Gestiona tus reseñas y respuestas.</p>
+<div class="reviews-page">
+  <h2 class="title">Valoraciones</h2>
+  <ion-card>
+    <ion-card-content>
+      <ion-list class="reviews-list">
+        <ion-item lines="full" *ngFor="let r of reviews" class="review-item">
+          <div class="left">
+            <div class="top-row">
+              <span class="user">{{ r.user }}</span>
+              <span class="stars">
+                <ion-icon *ngFor="let i of range(5)" [name]="i < r.rating ? 'star' : 'star-outline'"></ion-icon>
+              </span>
+              <span class="rating-number">({{ r.rating }}/5)</span>
+            </div>
+            <div class="comment">{{ r.comment }}</div>
+            <div class="meta">
+              <span class="date">{{ r.date | date:'dd/MM/yyyy' }}</span>
+            </div>
+          </div>
+          <div class="right">
+            <ion-button size="small" fill="clear" (click)="onReply(r.id)">Responder</ion-button>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 
+  <ion-modal [isOpen]="isReplyOpen" (didDismiss)="closeReply()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Responder valoración</ion-title>
+          <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="closeReply()">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-textarea label="Respuesta" labelPlacement="stacked" placeholder="Escribe tu respuesta..." [(ngModel)]="replyText"></ion-textarea>
+        <div style="margin-top: .75rem; display:flex; justify-content:flex-end; gap:.5rem;">
+          <ion-button fill="outline" color="medium" (click)="closeReply()">Cancelar</ion-button>
+          <ion-button color="primary" (click)="submitReply()">Enviar</ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</div>
 
