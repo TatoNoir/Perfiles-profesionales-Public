@@ -1,3 +1,12 @@
 /* estilos mínimos */
+.ion-padding { --padding-top: 60px; }
+.header { display:flex; align-items:center; justify-content:flex-end; margin-bottom: 1rem; }
+.form-grid ion-item { --inner-padding-end: 0; }
+.phone-row { display:flex; gap:.5rem; width:100%; }
+.phone-row .phone { flex:1; }
+.street-row { display:flex; gap:.5rem; width:100%; }
+.street-row .number { max-width: 140px; }
+.activities { margin-top: .75rem; }
+.activities .label { font-weight: 600; margin-bottom: .25rem; color:#111827; }
 
 

@@ -1,3 +1,7 @@
 ion-content { --padding-start: 1rem; --padding-end: 1rem; }
+#pro-content {
+  display: block;
+  padding-top: 56px; /* altura aproximada del toolbar */
+}
 
 

@@ -21,5 +21,7 @@
 .card-header h3 { margin: 0; font-size: 1.1rem; color: #111827; }
 .item-title { font-weight: 600; color: #111827; }
 .item-sub { color: #6b7280; font-size: .95rem; }
+.stars ion-icon { color: #f59e0b; font-size: 18px; margin-left: 4px; }
+.rating-number { color: #6b7280; margin-left: .25rem; font-size: .9rem; }
 
 

@@ -1,4 +1,154 @@
-<h2>Mi Perfil</h2>
-<p>Editar datos, foto y actividades.</p>
+<ion-content class="ion-padding">
+  <div class="header">
+    <div class="actions">
+      <ion-button *ngIf="!editMode" fill="solid" color="primary" (click)="toggleEdit(true)">
+        <ion-icon name="create" slot="start"></ion-icon>
+        Editar
+      </ion-button>
+      <ng-container *ngIf="editMode">
+        <ion-button fill="outline" color="medium" (click)="toggleEdit(false)">
+          <ion-icon name="close" slot="start"></ion-icon>
+          Cancelar
+        </ion-button>
+        <ion-button color="primary" (click)="save()">
+          <ion-icon name="save" slot="start"></ion-icon>
+          Actualizar Usuario
+        </ion-button>
+      </ng-container>
+    </div>
+  </div>
 
+  <ion-grid class="form-grid">
+    <ion-row>
+      <ion-col size="12" size-md="6">
+        <ion-item>
+          <ion-label position="stacked">Nombre de usuario</ion-label>
+          <ion-input [(ngModel)]="profile.username" [disabled]="!editMode"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-md="6">
+        <ion-item>
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input type="email" [(ngModel)]="profile.email" [disabled]="!editMode"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12" size-md="6">
+        <ion-item>
+          <ion-label position="stacked">Nombre</ion-label>
+          <ion-input [(ngModel)]="profile.first_name" [disabled]="!editMode"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-md="6">
+        <ion-item>
+          <ion-label position="stacked">Apellido</ion-label>
+          <ion-input [(ngModel)]="profile.last_name" [disabled]="!editMode"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12" size-md="4">
+        <ion-item>
+          <ion-label position="stacked">Teléfono</ion-label>
+          <div class="phone-row">
+            <ion-input class="phone" [(ngModel)]="profile.country_phone" [disabled]="!editMode"></ion-input>
+            <ion-input class="phone" [(ngModel)]="profile.area_code" [disabled]="!editMode"></ion-input>
+            <ion-input class="phone" [(ngModel)]="profile.phone_number" [disabled]="!editMode"></ion-input>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12" size-md="4">
+        <ion-item>
+          <ion-label position="stacked">Tipo de Documento</ion-label>
+          <ion-select [(ngModel)]="profile.document_type" [disabled]="!editMode">
+            <ion-select-option value="DNI">Documento Nacional de Identidad</ion-select-option>
+            <ion-select-option value="LE">Libreta de Enrolamiento</ion-select-option>
+            <ion-select-option value="LC">Libreta Cívica</ion-select-option>
+            <ion-select-option value="PAS">Pasaporte</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-md="4">
+        <ion-item>
+          <ion-label position="stacked">Número de documento</ion-label>
+          <ion-input [(ngModel)]="profile.document_number" [disabled]="!editMode"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12" size-md="4">
+        <ion-item>
+          <ion-label position="stacked">Fecha de nacimiento</ion-label>
+          <ion-input type="date" [(ngModel)]="profile.birth_date" [disabled]="!editMode"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-md="4">
+        <ion-item>
+          <ion-label position="stacked">Nacionalidad</ion-label>
+          <ion-input [(ngModel)]="profile.nationality" [disabled]="!editMode"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="stacked">Descripción</ion-label>
+          <ion-textarea [(ngModel)]="profile.description" [disabled]="!editMode"></ion-textarea>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="stacked">Domicilio</ion-label>
+          <ion-input [(ngModel)]="profile.address" [disabled]="!editMode"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-md="8">
+        <ion-item>
+          <ion-label position="stacked">Calle y número</ion-label>
+          <div class="street-row">
+            <ion-input [(ngModel)]="profile.street" [disabled]="!editMode"></ion-input>
+            <ion-input class="number" [(ngModel)]="profile.street_number" [disabled]="!editMode"></ion-input>
+          </div>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6" size-md="2">
+        <ion-item>
+          <ion-label position="stacked">Piso</ion-label>
+          <ion-input [(ngModel)]="profile.floor" [disabled]="!editMode"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6" size-md="2">
+        <ion-item>
+          <ion-label position="stacked">Depto</ion-label>
+          <ion-input [(ngModel)]="profile.apartment" [disabled]="!editMode"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12" size-md="6">
+        <ion-item>
+          <ion-label position="stacked">País</ion-label>
+          <ion-input [value]="'Argentina'" [disabled]="true"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-md="6">
+        <ion-item>
+          <ion-label position="stacked">Provincia</ion-label>
+          <ion-input [value]="profile.locality?.state?.name" [disabled]="true"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-md="6">
+        <ion-item>
+          <ion-label position="stacked">Localidad</ion-label>
+          <ion-input [value]="profile.locality?.name" [disabled]="true"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12">
+        <div class="activities">
+          <div class="label">Actividades</div>
+          <ion-chip *ngFor="let a of profile.activities">{{ a.name }}</ion-chip>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
 

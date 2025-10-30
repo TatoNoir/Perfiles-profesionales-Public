@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonIcon, IonButton, IonList, IonItem, IonLabel } from '@ionic/angular/standalone';
+import { IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonIcon, IonButton, IonList, IonItem, IonLabel, IonContent } from '@ionic/angular/standalone';
+import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { star, chatbubbles, personCircle, trendingUp, map } from 'ionicons/icons';
+import { star, starOutline, chatbubbles, personCircle, trendingUp, map } from 'ionicons/icons';
 
 @Component({
   selector: 'app-overview',
   standalone: true,
-  imports: [CommonModule, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonIcon, IonButton, IonList, IonItem, IonLabel],
+  imports: [CommonModule, RouterModule, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonIcon, IonButton, IonList, IonItem, IonLabel],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.css'
 })
@@ -36,7 +37,7 @@ export class OverviewComponent {
   ];
 
   constructor() {
-    addIcons({ star, chatbubbles, personCircle, trendingUp, map });
+    addIcons({ star, starOutline, chatbubbles, personCircle, trendingUp, map });
   }
 }
 

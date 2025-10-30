@@ -1,3 +1,4 @@
+<ion-content [fullscreen]="true">
 <div class="overview">
   <h2 class="title">Resumen</h2>
 
@@ -80,7 +81,13 @@
             <ion-list>
               <ion-item *ngFor="let r of lastReviews">
                 <ion-label>
-                  <div class="item-title">{{ r.user }} • {{ r.rating }}★</div>
+                  <div class="item-title">
+                    {{ r.user }}
+                    <span class="stars">
+                      <ion-icon *ngFor="let i of [0,1,2,3,4]" [name]="i < r.rating ? 'star' : 'star-outline'"></ion-icon>
+                    </span>
+                    <span class="rating-number">({{ r.rating }}/5)</span>
+                  </div>
                   <div class="item-sub">{{ r.comment }}</div>
                 </ion-label>
               </ion-item>
@@ -110,5 +117,6 @@
     </ion-row>
   </ion-grid>
 </div>
+</ion-content>
 
 
