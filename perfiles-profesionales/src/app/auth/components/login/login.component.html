@@ -1,5 +1,6 @@
 <ion-card class="login-card">
   <ion-card-content>
+    <a class="back-button" routerLink="/" aria-label="Volver al inicio">←</a>
     <h2 class="login-title">Acceder</h2>
     <ion-item class="form-item">
       <ion-label position="stacked">Email</ion-label>
@@ -10,9 +11,16 @@
       <ion-input type="password" [(ngModel)]="password"></ion-input>
     </ion-item>
     <div class="error" *ngIf="error">{{ error }}</div>
-    <ion-button class="btn-login" expand="block" (click)="onSubmit()">Ingresar</ion-button>
+    <ion-button class="btn-login" expand="block" (click)="onSubmit()" [disabled]="isLoading">
+      <ng-container *ngIf="!isLoading; else loadingTpl">Ingresar</ng-container>
+      <ng-template #loadingTpl>
+        <ion-spinner name="crescent" style="margin-right:8px"></ion-spinner>
+        Ingresando...
+      </ng-template>
+    </ion-button>
     <div class="links">
       <a routerLink="/forgot-password">¿Olvidaste tu contraseña?</a>
+      <a class="register-link" routerLink="/register-professional">REGISTRARSE</a>
     </div>
   </ion-card-content>
   </ion-card>

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ApiService } from '../../services/api.service';
 
 interface StoredUser {
   id: number;
@@ -11,6 +13,8 @@ interface StoredUser {
 export class AuthService {
   private readonly TOKEN_KEY = 'pp_auth_token';
   private readonly USER_KEY = 'pp_auth_user';
+
+  constructor(private api: ApiService) {}
 
   login(token: string, user: StoredUser) {
     localStorage.setItem(this.TOKEN_KEY, token);
@@ -38,6 +42,11 @@ export class AuthService {
   isProfessional(): boolean {
     const u = this.getUser();
     return !!u && u.user_type_id === 2;
+  }
+
+  // Login de profesionales contra el backend
+  professionalLogin(payload: { email: string; password: string }): Observable<any> {
+    return this.api.post<any>('/api/professionals/login', payload);
   }
 }
 

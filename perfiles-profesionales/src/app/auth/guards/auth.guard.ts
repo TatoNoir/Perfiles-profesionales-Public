@@ -13,7 +13,8 @@ export const authGuard: CanActivateFn = () => {
 export const professionalGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
-  if (auth.isAuthenticated() && auth.isProfessional()) return true;
+  // Permitir acceso al panel si está autenticado, sin chequear user_type_id
+  if (auth.isAuthenticated()) return true;
   router.navigate(['/login']);
   return false;
 };

@@ -1,15 +1,31 @@
 .login-card {
   max-width: 420px;
   margin: 2rem auto;
+  position: relative;
 }
 .error { color: #ef4444; margin: 0.5rem 0; }
 .links { margin-top: .75rem; text-align: center; }
 .links a { color: #20B2AA; text-decoration: none; font-size: .9rem; }
 .links a:hover { text-decoration: underline; }
+.links .register-link { display: block; margin-top: .5rem; font-weight: 600; }
 
 .login-title { text-align: center; margin: 0 0 1rem 0; }
 .form-item { margin-bottom: .75rem; }
 .password-item { margin-bottom: 1rem; }
 .btn-login { --border-radius: 10px; }
+
+/* Back button (inside card, top-left) */
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  text-decoration: none;
+  color: inherit;
+  font-size: 22px;
+  line-height: 1;
+  padding: 6px 10px;
+  border-radius: 9999px;
+}
 
 
