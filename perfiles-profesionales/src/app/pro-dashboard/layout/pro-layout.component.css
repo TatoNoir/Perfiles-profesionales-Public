@@ -1,5 +1,27 @@
-a { color:#1f2937; text-decoration:none; padding:0 .25rem; }
-a:hover { text-decoration:underline; }
 ion-content { --padding-start: 1rem; --padding-end: 1rem; }
+.menubar {
+  display: flex;
+  gap: .25rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.menubar ion-button span { color: #1f2937; }
+@media (max-width: 768px) {
+  .menubar { display: none; }
+  .mobile-only { display: flex; }
+  .menubar ion-button { --padding-start: .5rem; --padding-end: .5rem; --border-radius: 9999px; }
+}
+@media (max-width: 640px) {
+  .menubar { gap: .125rem; }
+  .menubar ion-button { --padding-start: .4rem; --padding-end: .4rem; }
+}
+
+/* Opcional: esconder la barra de scroll visual sin perder scroll */
+.menubar::-webkit-scrollbar { display: none; }
+.mobile-only { display: flex; }
+@media (min-width: 992px) {
+  .mobile-only { display: none; }
+}
 
 

@@ -1,3 +1,14 @@
 .overview { padding: 1rem 0; }
+.title { margin: 0 0 1rem 0; font-weight: 700; color: #1f2937; }
+.stat-card { --border-radius: 14px; }
+.stat-row { display:flex; align-items: center; gap: .75rem; }
+.stat-icon { font-size: 28px; }
+.stat-icon.rating { color: #f59e0b; }
+.stat-icon.reviews { color: #3b82f6; }
+.stat-icon.questions { color: #22c55e; }
+.stat-icon.profile { color: #8b5cf6; }
+.stat-data { display:flex; flex-direction: column; }
+.stat-value { font-size: 1.5rem; font-weight: 700; color: #111827; }
+.stat-label { font-size: .9rem; color: #6b7280; }
 
 

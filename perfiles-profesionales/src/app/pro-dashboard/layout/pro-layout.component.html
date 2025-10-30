@@ -1,17 +1,68 @@
+<!-- Mobile overlay menu -->
+<ion-menu contentId="pro-content" class="mobile-menu">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-menu-toggle autoHide="true">
+        <ion-item routerLink="/panel/inicio">
+          <ion-icon name="home" slot="start"></ion-icon>
+          <ion-label>Inicio</ion-label>
+        </ion-item>
+        <ion-item routerLink="/panel/mi-perfil">
+          <ion-icon name="person-circle" slot="start"></ion-icon>
+          <ion-label>Mi Perfil</ion-label>
+        </ion-item>
+        <ion-item routerLink="/panel/valoraciones">
+          <ion-icon name="star" slot="start"></ion-icon>
+          <ion-label>Valoraciones</ion-label>
+        </ion-item>
+        <ion-item routerLink="/panel/preguntas">
+          <ion-icon name="chatbubbles" slot="start"></ion-icon>
+          <ion-label>Preguntas</ion-label>
+        </ion-item>
+        <ion-item button (click)="logout()" routerLink="/login">
+          <ion-label>Salir</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start" class="mobile-only">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>Panel del Profesional</ion-title>
-    <div style="margin-left:auto;display:flex;gap:.5rem;">
-      <a routerLink="/panel/inicio">Inicio</a>
-      <a routerLink="/panel/mi-perfil">Mi perfil</a>
-      <a routerLink="/panel/valoraciones">Valoraciones</a>
-      <a routerLink="/panel/preguntas">Preguntas</a>
-      <ion-button size="small" (click)="logout()" routerLink="/login">Salir</ion-button>
+    <div class="menubar" slot="end">
+      <ion-button fill="clear" routerLink="/panel/inicio">
+        <ion-icon name="home" slot="start"></ion-icon>
+        <span>Inicio</span>
+      </ion-button>
+      <ion-button fill="clear" routerLink="/panel/mi-perfil">
+        <ion-icon name="person-circle" slot="start"></ion-icon>
+        <span>Mi Perfil</span>
+      </ion-button>
+      <ion-button fill="clear" routerLink="/panel/valoraciones">
+        <ion-icon name="star" slot="start"></ion-icon>
+        <span>Valoraciones</span>
+      </ion-button>
+      <ion-button fill="clear" routerLink="/panel/preguntas">
+        <ion-icon name="chatbubbles" slot="start"></ion-icon>
+        <span>Preguntas</span>
+      </ion-button>
+      <ion-button fill="outline" color="medium" (click)="logout()" routerLink="/login">
+        <span>Salir</span>
+      </ion-button>
     </div>
   </ion-toolbar>
-  </ion-header>
+</ion-header>
 
-<ion-content>
+<ion-content id="pro-content">
   <router-outlet></router-outlet>
 </ion-content>
 
