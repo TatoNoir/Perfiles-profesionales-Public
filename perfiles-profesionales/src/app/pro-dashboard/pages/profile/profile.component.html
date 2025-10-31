@@ -1,24 +1,30 @@
 <ion-content class="ion-padding">
   <div class="header">
     <div class="actions">
-      <ion-button *ngIf="!editMode" fill="solid" color="primary" (click)="toggleEdit(true)">
+      <ion-button *ngIf="!editMode && profile" fill="solid" color="primary" (click)="toggleEdit(true)">
         <ion-icon name="create" slot="start"></ion-icon>
         Editar
       </ion-button>
       <ng-container *ngIf="editMode">
-        <ion-button fill="outline" color="medium" (click)="toggleEdit(false)">
+        <ion-button fill="outline" color="medium" (click)="toggleEdit(false)" [disabled]="savingProfile">
           <ion-icon name="close" slot="start"></ion-icon>
           Cancelar
         </ion-button>
-        <ion-button color="primary" (click)="save()">
-          <ion-icon name="save" slot="start"></ion-icon>
+        <ion-button color="primary" (click)="save()" [disabled]="savingProfile">
+          <ion-spinner *ngIf="savingProfile" name="crescent"></ion-spinner>
+          <ion-icon *ngIf="!savingProfile" name="save" slot="start"></ion-icon>
           Actualizar Usuario
         </ion-button>
       </ng-container>
     </div>
   </div>
 
-  <ion-grid class="form-grid">
+  <div *ngIf="loadingProfile" style="text-align: center; padding: 3rem;">
+    <ion-spinner></ion-spinner>
+    <p>Cargando perfil...</p>
+  </div>
+
+  <ion-grid *ngIf="!loadingProfile && profile" class="form-grid">
     <ion-row>
       <ion-col size="12" size-md="6">
         <ion-item>
@@ -146,9 +152,22 @@
         <div class="activities">
           <div class="label">Actividades</div>
           <ion-chip *ngFor="let a of profile.activities">{{ a.name }}</ion-chip>
+          <p *ngIf="!profile.activities || profile.activities.length === 0" class="empty-state">Sin actividades asignadas</p>
         </div>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <div *ngIf="!loadingProfile && !profile" style="text-align: center; padding: 3rem;">
+    <p>No se pudo cargar el perfil</p>
+  </div>
+
+  <ion-toast
+    [isOpen]="showToast"
+    [message]="toastMessage"
+    [color]="toastColor"
+    [duration]="3000"
+    (didDismiss)="showToast = false">
+  </ion-toast>
 </ion-content>
 
