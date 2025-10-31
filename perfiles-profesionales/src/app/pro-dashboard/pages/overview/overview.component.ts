@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonIcon, IonButton, IonList, IonItem, IonLabel, IonContent } from '@ionic/angular/standalone';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { star, starOutline, chatbubbles, personCircle, trendingUp, map } from 'ionicons/icons';
+import { star, starOutline, chatbubbles, trendingUp, map } from 'ionicons/icons';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-overview',
@@ -14,10 +15,9 @@ import { star, starOutline, chatbubbles, personCircle, trendingUp, map } from 'i
 })
 export class OverviewComponent {
   stats = {
-    averageRating: 4.6,
-    totalReviews: 23,
-    pendingQuestions: 5,
-    profileCompletion: 80
+    averageRating: 0,
+    totalReviews: 0,
+    pendingQuestions: 0
   };
 
   lastReviews = [
@@ -36,8 +36,14 @@ export class OverviewComponent {
     { id: 105, user: 'Elena', text: '¿Métodos de pago aceptados?' }
   ];
 
-  constructor() {
-    addIcons({ star, starOutline, chatbubbles, personCircle, trendingUp, map });
+  constructor(private auth: AuthService) {
+    addIcons({ star, starOutline, chatbubbles, trendingUp, map });
+    const user = this.auth.getUser();
+    if (user) {
+      this.stats.averageRating = user.rates_average ?? 0;
+      this.stats.totalReviews = user.rates_count ?? 0;
+      this.stats.pendingQuestions = user.unanswered_questions ?? 0;
+    }
   }
 }
 

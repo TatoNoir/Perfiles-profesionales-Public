@@ -7,6 +7,9 @@ interface StoredUser {
   email: string;
   user_type_id?: number;
   name?: string;
+  rates_count?: number;
+  rates_average?: number;
+  unanswered_questions?: number;
 }
 
 @Injectable({ providedIn: 'root' })

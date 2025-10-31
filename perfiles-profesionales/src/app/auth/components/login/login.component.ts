@@ -40,7 +40,10 @@ export class LoginComponent {
             id: user.id ?? 0,
             email: user.email ?? this.email,
             user_type_id: user.user_type_id ?? user.user_type?.id,
-            name: user.username || user.first_name || 'Usuario'
+            name: user.username || user.first_name || 'Usuario',
+            rates_count: user.rates_count ?? 0,
+            rates_average: user.rates_average ?? 0,
+            unanswered_questions: user.unanswered_questions ?? 0
           });
           this.router.navigate(['/panel']);
         } else {

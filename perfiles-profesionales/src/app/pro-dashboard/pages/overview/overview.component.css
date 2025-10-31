@@ -6,7 +6,6 @@
 .stat-icon.rating { color: #f59e0b; }
 .stat-icon.reviews { color: #3b82f6; }
 .stat-icon.questions { color: #22c55e; }
-.stat-icon.profile { color: #8b5cf6; }
 .stat-data { display:flex; flex-direction: column; }
 .stat-value { font-size: 1.5rem; font-weight: 700; color: #111827; }
 .stat-label { font-size: .9rem; color: #6b7280; }
