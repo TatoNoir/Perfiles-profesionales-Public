@@ -122,7 +122,7 @@ export class QuestionsService {
     const body: AnswerQuestionRequest = { answer };
     const endpoint = `/api/professionals/respond/question/${questionId}`;
 
-    return this.apiService.postWithAuth<QuestionsResponse>(
+    return this.apiService.putWithAuth<QuestionsResponse>(
       endpoint,
       body,
       token
@@ -151,7 +151,7 @@ export class QuestionsService {
     }
 
     const body: AnswerQuestionRequest = { answer };
-    const endpoint = `/api/professionals/questions/${questionId}/answer`;
+    const endpoint = `/api/professionals/respond/question/${questionId}`;
 
     return this.apiService.putWithAuth<QuestionsResponse>(
       endpoint,
