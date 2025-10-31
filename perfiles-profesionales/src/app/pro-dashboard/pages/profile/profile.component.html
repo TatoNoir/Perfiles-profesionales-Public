@@ -138,13 +138,34 @@
       <ion-col size="12" size-md="6">
         <ion-item>
           <ion-label position="stacked">Provincia</ion-label>
-          <ion-input [value]="profile.locality?.state?.name" [disabled]="true"></ion-input>
+          <ion-select
+            [value]="selectedProvinceId?.toString()"
+            [disabled]="!editMode"
+            (ionChange)="onProvinceChange($event)"
+            placeholder="Seleccionar provincia">
+            <ion-select-option [value]="null">Seleccionar provincia</ion-select-option>
+            <ion-select-option *ngFor="let province of provinces" [value]="province.id.toString()">
+              {{ province.name }}
+            </ion-select-option>
+          </ion-select>
         </ion-item>
       </ion-col>
       <ion-col size="12" size-md="6">
         <ion-item>
           <ion-label position="stacked">Localidad</ion-label>
-          <ion-input [value]="profile.locality?.name" [disabled]="true"></ion-input>
+          <ion-select
+            [value]="selectedLocalityId?.toString()"
+            [disabled]="!editMode || !selectedProvinceId || loadingLocalities"
+            (ionChange)="onLocalityChange($event)"
+            placeholder="Seleccionar localidad">
+            <ion-select-option [value]="null">Seleccionar localidad</ion-select-option>
+            <ion-select-option *ngIf="loadingLocalities" [value]="null" disabled>
+              Cargando localidades...
+            </ion-select-option>
+            <ion-select-option *ngFor="let locality of localities" [value]="locality.id.toString()">
+              {{ locality.name }}
+            </ion-select-option>
+          </ion-select>
         </ion-item>
       </ion-col>
 
