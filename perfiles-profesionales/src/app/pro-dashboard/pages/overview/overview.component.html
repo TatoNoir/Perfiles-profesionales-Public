@@ -65,16 +65,29 @@
               <ion-button size="small" fill="clear" routerLink="/panel/valoraciones">Ver todo</ion-button>
             </div>
             <ion-list>
+              <ion-item *ngIf="loadingReviews">
+                <ion-label>
+                  <div style="text-align: center; padding: 1rem;">
+                    <ion-spinner></ion-spinner>
+                  </div>
+                </ion-label>
+              </ion-item>
+              <ion-item *ngIf="!loadingReviews && lastReviews.length === 0">
+                <ion-label>
+                  <div class="item-sub">No hay valoraciones disponibles</div>
+                </ion-label>
+              </ion-item>
               <ion-item *ngFor="let r of lastReviews">
                 <ion-label>
                   <div class="item-title">
-                    {{ r.user }}
+                    {{ getUserDisplayName(r) }}
                     <span class="stars">
-                      <ion-icon *ngFor="let i of [0,1,2,3,4]" [name]="i < r.rating ? 'star' : 'star-outline'"></ion-icon>
+                      <ion-icon *ngFor="let i of [0,1,2,3,4]" [name]="i < r.value ? 'star' : 'star-outline'"></ion-icon>
                     </span>
-                    <span class="rating-number">({{ r.rating }}/5)</span>
+                    <span class="rating-number">({{ r.value }}/5)</span>
                   </div>
-                  <div class="item-sub">{{ r.comment }}</div>
+                  <div class="item-sub" *ngIf="hasComment(r)">{{ r.comment }}</div>
+                  <div class="item-sub" *ngIf="!hasComment(r)"><em>Sin comentario</em></div>
                 </ion-label>
               </ion-item>
             </ion-list>
