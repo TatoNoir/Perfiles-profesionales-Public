@@ -6,6 +6,7 @@ import { addIcons } from 'ionicons';
 import { star, starOutline, chatbubbles, trendingUp, map } from 'ionicons/icons';
 import { AuthService } from '../../../auth/services/auth.service';
 import { ReviewsService, Review } from '../../services/reviews.service';
+import { QuestionsService, Question } from '../../services/questions.service';
 
 @Component({
   selector: 'app-overview',
@@ -24,17 +25,13 @@ export class OverviewComponent implements OnInit {
   lastReviews: Review[] = [];
   loadingReviews = false;
 
-  lastQuestions = [
-    { id: 101, user: 'Pedro', text: '¿Cuánto tarda el servicio estándar?' },
-    { id: 102, user: 'Sofía', text: '¿Trabajás fines de semana?' },
-    { id: 103, user: 'Martín', text: '¿Emitís factura?' },
-    { id: 104, user: 'Laura', text: '¿Zona de cobertura?' },
-    { id: 105, user: 'Elena', text: '¿Métodos de pago aceptados?' }
-  ];
+  lastQuestions: Question[] = [];
+  loadingQuestions = false;
 
   constructor(
     private auth: AuthService,
-    private reviewsService: ReviewsService
+    private reviewsService: ReviewsService,
+    private questionsService: QuestionsService
   ) {
     addIcons({ star, starOutline, chatbubbles, trendingUp, map });
   }
@@ -42,6 +39,7 @@ export class OverviewComponent implements OnInit {
   ngOnInit() {
     this.loadUserStats();
     this.loadReviews();
+    this.loadQuestions();
   }
 
   private loadUserStats() {
@@ -79,6 +77,24 @@ export class OverviewComponent implements OnInit {
 
   hasComment(review: Review): boolean {
     return !!review.comment && review.comment.trim().length > 0;
+  }
+
+  private loadQuestions() {
+    this.loadingQuestions = true;
+    this.questionsService.getOverviewQuestions().subscribe({
+      next: (questions) => {
+        this.lastQuestions = questions;
+        this.loadingQuestions = false;
+      },
+      error: (error) => {
+        console.error('Error al cargar preguntas:', error);
+        this.loadingQuestions = false;
+      }
+    });
+  }
+
+  getQuestionDisplayName(question: Question): string {
+    return question.name || `${question.user.first_name} ${question.user.last_name}`.trim() || 'Usuario';
   }
 }
 

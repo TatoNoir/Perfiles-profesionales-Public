@@ -103,10 +103,22 @@
               <ion-button size="small" fill="clear" routerLink="/panel/preguntas">Ver todo</ion-button>
             </div>
             <ion-list>
+              <ion-item *ngIf="loadingQuestions">
+                <ion-label>
+                  <div style="text-align: center; padding: 1rem;">
+                    <ion-spinner></ion-spinner>
+                  </div>
+                </ion-label>
+              </ion-item>
+              <ion-item *ngIf="!loadingQuestions && lastQuestions.length === 0">
+                <ion-label>
+                  <div class="item-sub">No hay preguntas disponibles</div>
+                </ion-label>
+              </ion-item>
               <ion-item *ngFor="let q of lastQuestions">
                 <ion-label>
-                  <div class="item-title">{{ q.user }}</div>
-                  <div class="item-sub">{{ q.text }}</div>
+                  <div class="item-title">{{ getQuestionDisplayName(q) }}</div>
+                  <div class="item-sub">{{ q.question }}</div>
                 </ion-label>
               </ion-item>
             </ion-list>
