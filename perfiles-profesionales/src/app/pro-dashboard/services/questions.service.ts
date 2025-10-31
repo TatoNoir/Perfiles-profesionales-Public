@@ -120,7 +120,7 @@ export class QuestionsService {
     }
 
     const body: AnswerQuestionRequest = { answer };
-    const endpoint = `/api/professionals/questions/${questionId}/answer`;
+    const endpoint = `/api/professionals/respond/question/${questionId}`;
 
     return this.apiService.postWithAuth<QuestionsResponse>(
       endpoint,

@@ -123,7 +123,7 @@ export class ReviewsService {
     }
 
     const body: AnswerReviewRequest = { answer };
-    const endpoint = `/api/professionals/reviews/${reviewId}/answer`;
+    const endpoint = `/api/professionals/respond/review/${reviewId}`;
 
     return this.apiService.postWithAuth<ReviewsResponse>(
       endpoint,
