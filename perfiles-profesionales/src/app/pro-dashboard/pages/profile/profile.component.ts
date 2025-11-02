@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonTextarea, IonChip, IonButton, IonIcon, IonSpinner, IonToast } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { save, create, close } from 'ionicons/icons';
-import { ProfileService, ProfessionalProfile } from '../../services/profile.service';
+import { ProfileService, ProfessionalProfile, UpdateProfileRequest } from '../../services/profile.service';
 import { SharedDataService, GeoState, GeoLocality } from '../../../services/shared-data.service';
 
 @Component({
@@ -167,18 +167,52 @@ export class ProfileComponent implements OnInit {
     }
 
     this.savingProfile = true;
-    // TODO: llamar endpoint de actualización
-    console.log('Guardar perfil', this.profile);
 
-    // Simular guardado (reemplazar con llamada real al API)
-    setTimeout(() => {
-      if (this.profile) {
-        this.originalProfile = JSON.parse(JSON.stringify(this.profile));
+    // Preparar datos para el endpoint
+    const updateData: UpdateProfileRequest = {
+      username: this.profile.username || '',
+      first_name: this.profile.first_name || '',
+      last_name: this.profile.last_name || '',
+      document_type: this.profile.document_type || '',
+      document_number: this.profile.document_number || '',
+      birth_date: this.profile.birth_date || '',
+      nationality: this.profile.nationality || '',
+      country_phone: this.profile.country_phone || '',
+      area_code: this.profile.area_code || '',
+      phone_number: this.profile.phone_number || '',
+      email: this.profile.email || '',
+      description: this.profile.description || '',
+      address: this.profile.address || '',
+      street: this.profile.street || '',
+      street_number: this.profile.street_number || '',
+      floor: this.profile.floor || '',
+      apartment: this.profile.apartment || '',
+      locality_id: this.profile.locality_id || 0,
+      activities: this.profile.activities ? this.profile.activities.map(a => a.id) : []
+    };
+
+    this.profileService.updateProfile(updateData).subscribe({
+      next: (updatedProfile) => {
+        this.profile = updatedProfile;
+        this.originalProfile = JSON.parse(JSON.stringify(updatedProfile));
+
+        // Actualizar provincia y localidad seleccionadas
+        if (updatedProfile.locality_id && updatedProfile.locality?.state_id) {
+          this.selectedProvinceId = updatedProfile.locality.state_id;
+          this.selectedLocalityId = updatedProfile.locality_id;
+          this.loadLocalitiesByProvince(updatedProfile.locality.state_id);
+        }
+
+        this.editMode = false;
+        this.savingProfile = false;
+        this.showSuccessToast('Perfil actualizado correctamente');
+      },
+      error: (error) => {
+        console.error('Error al actualizar el perfil:', error);
+        this.savingProfile = false;
+        this.showErrorToast('Error al actualizar el perfil. Por favor, intenta nuevamente.');
       }
-      this.editMode = false;
-      this.savingProfile = false;
-      this.showSuccessToast('Perfil actualizado correctamente');
-    }, 1000);
+    });
   }
 
   getActivitiesDisplay(): string {

@@ -85,11 +85,34 @@ export interface ProfessionalProfileResponse {
   data: ProfessionalProfile;
 }
 
+export interface UpdateProfileRequest {
+  username: string;
+  first_name: string;
+  last_name: string;
+  document_type: string;
+  document_number: string;
+  birth_date: string;
+  nationality: string;
+  country_phone: string;
+  area_code: string;
+  phone_number: string;
+  email: string;
+  description: string;
+  address: string;
+  street: string;
+  street_number: string;
+  floor: string;
+  apartment: string;
+  locality_id: number;
+  activities: number[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
   private readonly endpoint = '/api/professionals/get/detail';
+  private readonly updateEndpoint = '/api/professionals/update_profile';
 
   constructor(
     private apiService: ApiService,
@@ -113,6 +136,33 @@ export class ProfileService {
       map((response: ProfessionalProfileResponse) => response.data),
       catchError(error => {
         console.error('Error al obtener el perfil:', error);
+        throw error;
+      })
+    );
+  }
+
+  /**
+   * Actualiza el perfil del profesional
+   * @param profileData Datos del perfil a actualizar
+   * @returns Observable con la respuesta de la actualización
+   */
+  updateProfile(profileData: UpdateProfileRequest): Observable<ProfessionalProfile> {
+    const token = this.authService.getToken();
+    if (!token) {
+      throw new Error('No hay token de autenticación disponible');
+    }
+
+    return this.apiService.putWithAuth<ProfessionalProfileResponse>(
+      this.updateEndpoint,
+      profileData,
+      token
+    ).pipe(
+      map((response: any) => {
+        // La respuesta puede venir como { data: ProfessionalProfile } o directamente como ProfessionalProfile
+        return response.data || response;
+      }),
+      catchError(error => {
+        console.error('Error al actualizar el perfil:', error);
         throw error;
       })
     );
