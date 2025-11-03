@@ -26,6 +26,9 @@ export class ReviewsComponent implements OnInit {
   showToast = false;
   toastColor: 'success' | 'danger' = 'success';
 
+  // IDs de valoraciones con respuesta enviada y pendiente de aprobación
+  private pendingApprovalIds = new Set<number>();
+
   constructor(private reviewsService: ReviewsService) {
     addIcons({ star, starOutline });
   }
@@ -65,6 +68,10 @@ export class ReviewsComponent implements OnInit {
     return !!review.answer && review.answer.trim().length > 0;
   }
 
+  isPending(review: Review): boolean {
+    return this.pendingApprovalIds.has(review.id);
+  }
+
   onReply(review: Review) {
     this.selectedReview = review;
     this.replyText = review.answer || '';
@@ -91,17 +98,12 @@ export class ReviewsComponent implements OnInit {
       : this.reviewsService.updateReviewAnswer(reviewId, this.replyText);
 
     request.subscribe({
-      next: (updatedReview) => {
-        // Actualizar la review en la lista
-        const index = this.reviews.findIndex(r => r.id === reviewId);
-        if (index !== -1) {
-          this.reviews[index] = updatedReview;
-        }
+      next: () => {
+        // No refrescamos la lista automáticamente; marcamos como pendiente
+        this.pendingApprovalIds.add(reviewId);
         this.savingAnswer = false;
         this.closeReply();
-        this.showSuccessToast(
-          isNewAnswer ? 'Respuesta enviada correctamente' : 'Respuesta actualizada correctamente'
-        );
+        this.showSuccessToast('Respuesta pendiente de aprobación.');
       },
       error: (error) => {
         console.error('Error al guardar la respuesta:', error);

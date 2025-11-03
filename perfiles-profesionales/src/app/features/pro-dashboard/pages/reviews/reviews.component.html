@@ -32,9 +32,9 @@
             <div class="meta">
               <span class="date">{{ formatDate(r.created_at) | date:'dd/MM/yyyy' }}</span>
             </div>
-            <div class="answer-section" *ngIf="hasAnswer(r)">
+            <div class="answer-section" *ngIf="hasAnswer(r) || isPending(r)">
               <div class="answer-label">Tu respuesta:</div>
-              <div class="answer-text">{{ r.answer }}</div>
+              <div class="answer-text">{{ hasAnswer(r) ? r.answer : 'Respuesta pendiente de aprobación.' }}</div>
             </div>
           </div>
           <div class="right">
