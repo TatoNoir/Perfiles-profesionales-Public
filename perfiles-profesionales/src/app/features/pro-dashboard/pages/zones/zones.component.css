@@ -1,0 +1,25 @@
+.zones-page { padding: 1rem 0; }
+.title { margin: 0 0 1rem 0; font-weight: 700; color: #1f2937; }
+
+.location-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.location-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.location-item strong {
+  color: var(--ion-color-primary, #3880ff);
+  font-weight: 600;
+}
+
+.location-item span {
+  color: #374151;
+  font-size: 1rem;
+}
+

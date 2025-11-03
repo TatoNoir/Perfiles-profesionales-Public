@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonIcon, IonMenu, IonList, IonItem, IonLabel, IonSplitPane, IonMenuButton, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { home, personCircle, star, chatbubbles, logOut } from 'ionicons/icons';
+import { home, personCircle, star, chatbubbles, logOut, map } from 'ionicons/icons';
 import { AuthService } from '../../../core/auth/services/auth.service';
 
 @Component({
@@ -19,7 +19,7 @@ import { AuthService } from '../../../core/auth/services/auth.service';
 })
 export class ProLayoutComponent {
   constructor(private auth: AuthService) {
-    addIcons({ home, personCircle, star, chatbubbles, logOut });
+    addIcons({ home, personCircle, star, chatbubbles, logOut, map });
   }
   logout() { this.auth.logout(); }
 }

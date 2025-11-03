@@ -1,0 +1,31 @@
+<ion-content class="ion-padding">
+  <h2 class="title">Zonas de Trabajo</h2>
+
+  <div *ngIf="loadingProfile" style="text-align: center; padding: 3rem;">
+    <ion-spinner></ion-spinner>
+    <p>Cargando información...</p>
+  </div>
+
+  <ion-card *ngIf="!loadingProfile && profile">
+    <ion-card-header>
+      <ion-card-title>Ubicación Actual</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="location-info">
+        <div class="location-item">
+          <strong>Localidad:</strong>
+          <span>{{ localityName }}</span>
+        </div>
+        <div class="location-item">
+          <strong>Provincia:</strong>
+          <span>{{ provinceName }}</span>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="!loadingProfile && !profile" style="text-align: center; padding: 3rem;">
+    <p>No se pudo cargar la información de ubicación</p>
+  </div>
+</ion-content>
+
