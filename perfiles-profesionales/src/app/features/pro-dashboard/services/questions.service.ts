@@ -86,10 +86,12 @@ export class QuestionsService {
       map((response: QuestionsResponse) => {
         const list: any[] = (response as any).data || response || [];
         // Normalizar el payload del backend: usa 'message' en lugar de 'question'
-        return list.map((q: any) => ({
+        const normalized = list.map((q: any) => ({
           ...q,
           question: q.question ?? q.message ?? '',
         }));
+        // Mostrar solo publicadas
+        return normalized.filter((q: any) => q.published === true);
       }),
       catchError(error => {
         console.error('Error al obtener preguntas:', error);

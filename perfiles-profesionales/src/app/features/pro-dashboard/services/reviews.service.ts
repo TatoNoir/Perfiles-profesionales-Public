@@ -86,7 +86,10 @@ export class ReviewsService {
       token,
       params
     ).pipe(
-      map((response: ReviewsResponse) => response.data || []),
+      map((response: ReviewsResponse) => {
+        const list: Review[] = response.data || (response as any) || [] as any;
+        return list.filter(r => r.published === true);
+      }),
       catchError(error => {
         console.error('Error al obtener reviews:', error);
         throw error;
