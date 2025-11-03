@@ -113,6 +113,7 @@ export interface UpdateProfileRequest {
 export class ProfileService {
   private readonly endpoint = '/api/professionals/get/detail';
   private readonly updateEndpoint = '/api/professionals/update_profile';
+  private readonly updatePhotoEndpoint = '/api/professionals/update_profile_picture';
 
   constructor(
     private apiService: ApiService,
@@ -163,6 +164,34 @@ export class ProfileService {
       }),
       catchError(error => {
         console.error('Error al actualizar el perfil:', error);
+        throw error;
+      })
+    );
+  }
+
+  /**
+   * Actualiza la foto de perfil del profesional
+   * @param file Archivo de imagen
+   * @returns Observable con { message, photo_url }
+   */
+  updateProfilePicture(file: File): Observable<{ message: string; photo_url: string }> {
+    const token = this.authService.getToken();
+    if (!token) {
+      throw new Error('No hay token de autenticación disponible');
+    }
+
+    const formData = new FormData();
+    // El backend espera el campo 'photo'
+    formData.append('photo', file);
+
+    return this.apiService.postWithAuth<{ message: string; photo_url: string }>(
+      this.updatePhotoEndpoint,
+      formData,
+      token
+    ).pipe(
+      map((response: any) => response),
+      catchError(error => {
+        console.error('Error al actualizar la foto de perfil:', error);
         throw error;
       })
     );

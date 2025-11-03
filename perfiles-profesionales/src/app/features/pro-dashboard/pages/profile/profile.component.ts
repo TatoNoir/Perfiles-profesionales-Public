@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonTextarea, IonChip, IonButton, IonIcon, IonSpinner, IonToast } from '@ionic/angular/standalone';
+import { IonContent, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonTextarea, IonChip, IonButton, IonIcon, IonSpinner, IonToast, IonModal } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { save, create, close } from 'ionicons/icons';
+import { save, create, close, camera } from 'ionicons/icons';
 import { ProfileService, ProfessionalProfile, UpdateProfileRequest } from '../../services/profile.service';
 import { SharedDataService, GeoState, GeoLocality } from '../../../../shared/services/shared-data.service';
+import { ProfilePhotoThumbnailComponent } from '../../../../shared/components/cards/profile-photo-thumbnail/profile-photo-thumbnail';
+import { ImageEditorComponent } from '../../../../shared/components/ui/image-editor/image-editor';
+import { ImageService } from '../../../../shared/services/image.service';
 
 @Component({
   selector: 'app-profile-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, IonContent, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonTextarea, IonChip, IonButton, IonIcon, IonSpinner, IonToast],
+  imports: [CommonModule, FormsModule, IonContent, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonTextarea, IonChip, IonButton, IonIcon, IonSpinner, IonToast, IonModal, ProfilePhotoThumbnailComponent, ImageEditorComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -33,11 +36,16 @@ export class ProfileComponent implements OnInit {
   showToast = false;
   toastColor: 'success' | 'danger' = 'success';
 
+  // Foto de perfil
+  isPhotoEditorOpen = false;
+  tempImageFile: File | null = null;
+
   constructor(
     private profileService: ProfileService,
-    private sharedDataService: SharedDataService
+    private sharedDataService: SharedDataService,
+    private imageService: ImageService
   ) {
-    addIcons({ save, create, close });
+    addIcons({ save, create, close, camera });
   }
 
   ngOnInit() {
@@ -257,6 +265,52 @@ export class ProfileComponent implements OnInit {
     this.toastMessage = message;
     this.toastColor = 'danger';
     this.showToast = true;
+  }
+
+  // Helpers foto de perfil
+  get profilePhotoUrl(): string | null {
+    if (!this.profile || !this.profile.profile_picture) return null;
+    return this.imageService.getProfileImageUrl(this.profile.profile_picture);
+  }
+
+  openPhotoEditor() {
+    this.isPhotoEditorOpen = true;
+  }
+
+  onFileSelected(event: any) {
+    const file: File | null = event?.target?.files?.[0] || null;
+    if (file) {
+      this.tempImageFile = file;
+      this.isPhotoEditorOpen = true;
+    }
+  }
+
+  onImageEdited(file: File) {
+    if (!file) return;
+    this.savingProfile = true;
+    this.profileService.updateProfilePicture(file).subscribe({
+      next: (resp) => {
+        if (this.profile) {
+          // Actualizar la url de la foto en memoria
+          this.profile.profile_picture = resp.photo_url;
+        }
+        this.savingProfile = false;
+        this.isPhotoEditorOpen = false;
+        this.tempImageFile = null;
+        this.showSuccessToast('Foto actualizada correctamente');
+      },
+      error: () => {
+        this.savingProfile = false;
+        this.isPhotoEditorOpen = false;
+        this.tempImageFile = null;
+        this.showErrorToast('Error al actualizar la foto');
+      }
+    });
+  }
+
+  onEditorClosed() {
+    this.isPhotoEditorOpen = false;
+    this.tempImageFile = null;
   }
 }
 
