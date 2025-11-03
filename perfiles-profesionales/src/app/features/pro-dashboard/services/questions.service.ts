@@ -83,7 +83,14 @@ export class QuestionsService {
       token,
       params
     ).pipe(
-      map((response: QuestionsResponse) => response.data || []),
+      map((response: QuestionsResponse) => {
+        const list: any[] = (response as any).data || response || [];
+        // Normalizar el payload del backend: usa 'message' en lugar de 'question'
+        return list.map((q: any) => ({
+          ...q,
+          question: q.question ?? q.message ?? '',
+        }));
+      }),
       catchError(error => {
         console.error('Error al obtener preguntas:', error);
         throw error;
