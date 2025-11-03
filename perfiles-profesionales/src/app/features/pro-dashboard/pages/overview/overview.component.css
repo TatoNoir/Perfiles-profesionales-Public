@@ -2,6 +2,8 @@
 .title { margin: 0 0 1rem 0; font-weight: 700; color: #1f2937; }
 .stat-card { --border-radius: 14px; }
 .stat-row { display:flex; align-items: center; gap: .75rem; }
+.stat-card.center .stat-row { justify-content: center; text-align: center; }
+.stat-card.center .stat-data { align-items: center; }
 .stat-icon { font-size: 28px; }
 .stat-icon.rating { color: #f59e0b; }
 .stat-icon.reviews { color: #3b82f6; }
@@ -22,5 +24,15 @@
 .item-sub { color: #6b7280; font-size: .95rem; }
 .stars ion-icon { color: #f59e0b; font-size: 18px; margin-left: 4px; }
 .rating-number { color: #6b7280; margin-left: .25rem; font-size: .9rem; }
+
+/* Welcome card */
+.welcome-card .welcome-title { color: var(--ion-color-title, #10B981); }
+.welcome-card .right-col { display:flex; align-items:center; justify-content:flex-end; }
+.welcome-card .avatar {
+  width: 72px; height: 72px; border-radius: 50%; object-fit: cover; margin-left: auto;
+}
+.welcome-card .initials {
+  width: 72px; height: 72px; border-radius: 50%; background:#e5e7eb; display:flex; align-items:center; justify-content:center; font-weight:700; margin-left:auto;
+}
 
 

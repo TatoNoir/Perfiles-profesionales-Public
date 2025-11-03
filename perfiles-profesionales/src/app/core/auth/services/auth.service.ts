@@ -6,7 +6,11 @@ interface StoredUser {
   id: number;
   email: string;
   user_type_id?: number;
+  username?: string;
+  first_name?: string;
+  last_name?: string;
   name?: string;
+  profile_picture?: string | null;
   rates_count?: number;
   rates_average?: number;
   unanswered_questions?: number;

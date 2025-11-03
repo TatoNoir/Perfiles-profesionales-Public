@@ -40,7 +40,11 @@ export class LoginComponent {
             id: user.id ?? 0,
             email: user.email ?? this.email,
             user_type_id: user.user_type_id ?? user.user_type?.id,
+            username: user.username,
+            first_name: user.first_name,
+            last_name: user.last_name,
             name: user.username || user.first_name || 'Usuario',
+            profile_picture: user.profile_picture,
             rates_count: user.rates_count ?? 0,
             rates_average: user.rates_average ?? 0,
             unanswered_questions: user.unanswered_questions ?? 0

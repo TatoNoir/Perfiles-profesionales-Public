@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonIcon, IonButton, IonList, IonItem, IonLabel, IonContent, IonSpinner } from '@ionic/angular/standalone';
+import { IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonButton, IonList, IonItem, IonLabel, IonContent, IonSpinner } from '@ionic/angular/standalone';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { star, starOutline, chatbubbles, trendingUp, map } from 'ionicons/icons';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { ReviewsService, Review } from '../../services/reviews.service';
 import { QuestionsService, Question } from '../../services/questions.service';
+import { ImageService } from '../../../../shared/services/image.service';
 
 @Component({
   selector: 'app-overview',
   standalone: true,
-  imports: [CommonModule, RouterModule, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonIcon, IonButton, IonList, IonItem, IonLabel, IonSpinner],
+  imports: [CommonModule, RouterModule, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonButton, IonList, IonItem, IonLabel, IonSpinner],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.css'
 })
@@ -31,9 +32,26 @@ export class OverviewComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private reviewsService: ReviewsService,
-    private questionsService: QuestionsService
+    private questionsService: QuestionsService,
+    private imageService: ImageService
   ) {
     addIcons({ star, starOutline, chatbubbles, trendingUp, map });
+  }
+
+  // Datos de usuario actual
+  get currentUser() {
+    return this.auth.getUser();
+  }
+
+  get fullName(): string {
+    const u: any = this.currentUser;
+    return `${u?.first_name || ''} ${u?.last_name || ''}`.trim() || (u?.name || '');
+  }
+
+  get profilePhotoUrl(): string | null {
+    const u: any = this.currentUser;
+    if (!u?.profile_picture) return null;
+    return this.imageService.getProfileImageUrl(u.profile_picture);
   }
 
   ngOnInit() {
