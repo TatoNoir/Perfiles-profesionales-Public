@@ -7,14 +7,14 @@
     <ion-card-content>
       <ion-grid>
         <ion-row class="ion-align-items-center">
-          <ion-col size="6" size-md="8">
+          <ion-col size="6" size-md="11">
             <div style="display:flex; flex-direction:column; gap:.25rem;">
               <div class="welcome-title" style="font-weight:700;">Bienvenido {{ fullName }}!</div>
               <div>Usuario: {{ currentUser?.username }}</div>
               <div>Email: {{ currentUser?.email }}</div>
             </div>
           </ion-col>
-          <ion-col size="6" size-md="4" class="ion-text-right right-col">
+          <ion-col size="6" size-md="1" class=" right-col">
             <img *ngIf="profilePhotoUrl; else initials" [src]="profilePhotoUrl" alt="Foto de perfil" class="avatar" />
             <ng-template #initials>
               <div class="initials">
@@ -74,9 +74,9 @@
   </ion-grid>
 
   <div class="actions">
-    <ion-button class="zone-button" fill="solid" routerLink="/panel/zonas">
-      <ion-icon name="map" slot="start"></ion-icon>
-      Zona de trabajo
+    <ion-button class="zone-button" fill="outline" routerLink="/panel/zonas">
+      <ion-icon name="globe" slot="start"></ion-icon>
+      Zonas
     </ion-button>
   </div>
 

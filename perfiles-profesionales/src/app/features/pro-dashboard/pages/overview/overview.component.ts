@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonButton, IonList, IonItem, IonLabel, IonContent, IonSpinner } from '@ionic/angular/standalone';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { star, starOutline, chatbubbles, trendingUp, map } from 'ionicons/icons';
+import { star, starOutline, chatbubbles, trendingUp, globe } from 'ionicons/icons';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { ReviewsService, Review } from '../../services/reviews.service';
 import { QuestionsService, Question } from '../../services/questions.service';
@@ -35,7 +35,7 @@ export class OverviewComponent implements OnInit {
     private questionsService: QuestionsService,
     private imageService: ImageService
   ) {
-    addIcons({ star, starOutline, chatbubbles, trendingUp, map });
+    addIcons({ star, starOutline, chatbubbles, trendingUp, globe });
   }
 
   // Datos de usuario actual

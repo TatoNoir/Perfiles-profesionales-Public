@@ -27,13 +27,7 @@ addIcons({ checkmarkCircle, star, starHalf, starOutline, location, eye });
   }
 
   ngOnInit() {
-    this.subscription = this.professionalsListService.getProfessionals()
-      .pipe(
-        map(professionals => {
-          // Limitar a 8 resultados para el home
-          return professionals.slice(0, 8);
-        })
-      )
+    this.subscription = this.professionalsListService.getProfessionalsForHome()
       .subscribe(professionals => {
         this.latestProfessionals = professionals;
       });

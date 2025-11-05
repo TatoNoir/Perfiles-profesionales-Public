@@ -109,6 +109,25 @@ export class ProfessionalsListService {
     );
   }
 
+  public getProfessionalsForHome(): Observable<ProfessionalBasic[]> {
+    const params = this.apiService.createParams({
+      limit: '9',
+      page: '1'
+    });
+
+    return this.apiService.get<ApiProfessionalsResponse>('/api/professionals', params).pipe(
+      map(apiResponse => {
+        const professionals = this.dataMapper.mapApiResponseToProfessionals(apiResponse);
+        this.professionalsSubject.next(professionals);
+        return professionals;
+      }),
+      catchError(error => {
+        console.warn('Error al obtener profesionales para la home:', error);
+        return of([]);
+      })
+    );
+  }
+
   // Métodos específicos para filtros
   public setLocationFilter(location: string): void {
     this.locationFilter.next(location);
