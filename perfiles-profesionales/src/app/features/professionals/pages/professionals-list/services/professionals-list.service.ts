@@ -93,8 +93,23 @@ export class ProfessionalsListService {
   }
 
   // Obtener lista de profesionales
-  public getProfessionals(): Observable<ProfessionalBasic[]> {
-    return this.apiService.get<ApiProfessionalsResponse>('/api/professionals').pipe(
+  public getProfessionals(stateId?: number, localityId?: number): Observable<ProfessionalBasic[]> {
+    let params = this.apiService.createParams({
+      page: '1',
+      limit: '100' // Un límite razonable, puedes ajustarlo
+    });
+
+    // Agregar state_id si está presente
+    if (stateId) {
+      params = params.set('state_id', stateId.toString());
+    }
+
+    // Agregar locality_id si está presente
+    if (localityId) {
+      params = params.set('locality_id', localityId.toString());
+    }
+
+    return this.apiService.get<ApiProfessionalsResponse>('/api/professionals', params).pipe(
       map(apiResponse => {
         const professionals = this.dataMapper.mapApiResponseToProfessionals(apiResponse);
 

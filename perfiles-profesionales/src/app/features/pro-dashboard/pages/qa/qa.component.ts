@@ -3,6 +3,8 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonCard, IonCardContent, IonList, IonItem, IonButton, IonModal, IonHeader, IonToolbar, IonTitle, IonButtons, IonTextarea, IonContent, IonSpinner, IonToast } from '@ionic/angular/standalone';
 import { QuestionsService, Question } from '../../services/questions.service';
+import { addIcons } from 'ionicons';
+import { helpCircleOutline, checkmarkCircle } from 'ionicons/icons';
 
 @Component({
   selector: 'app-qa-page',
@@ -27,7 +29,17 @@ export class QaComponent implements OnInit {
   // IDs de preguntas con respuesta enviada y pendiente de aprobación
   private pendingApprovalIds = new Set<number>();
 
-  constructor(private questionsService: QuestionsService) {}
+  get answeredQuestions(): Question[] {
+    return this.questions.filter(q => q.answer !== null && q.answer !== undefined && q.answer.trim().length > 0);
+  }
+
+  get unansweredQuestions(): Question[] {
+    return this.questions.filter(q => q.answer === null || q.answer === undefined || q.answer.trim().length === 0);
+  }
+
+  constructor(private questionsService: QuestionsService) {
+    addIcons({ helpCircleOutline, checkmarkCircle });
+  }
 
   ngOnInit() {
     this.loadQuestions();
@@ -88,7 +100,7 @@ export class QaComponent implements OnInit {
     request.subscribe({
       next: () => {
         // No refrescamos la lista automáticamente; marcamos como pendiente
-        this.pendingApprovalIds.add(questionId);
+        this.loadQuestions();
         this.savingAnswer = false;
         this.closeReply();
         this.showSuccessToast('Respuesta pendiente de aprobación.');

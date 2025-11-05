@@ -54,7 +54,9 @@ export class DataMapperService {
    * Mapea la respuesta completa del API
    */
   mapApiResponseToProfessionals(apiResponse: ApiProfessionalsResponse): ProfessionalBasic[] {
-    return apiResponse.data.map(apiUser => this.mapApiUserToProfessionalBasic(apiUser));
+    return apiResponse.data
+      .filter(apiUser => apiUser.is_active === true)
+      .map(apiUser => this.mapApiUserToProfessionalBasic(apiUser));
   }
 
   /**

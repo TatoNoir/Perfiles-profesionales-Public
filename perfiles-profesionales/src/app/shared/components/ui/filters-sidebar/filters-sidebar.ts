@@ -13,7 +13,8 @@ import { SharedDataService, ApiActivity, GeoState, GeoLocality } from '../../../
 })
 export class FiltersSidebarComponent implements OnInit, OnDestroy {
   @Output() activitySelected = new EventEmitter<string>();
-
+  @Output() provinceSelected = new EventEmitter<number | null>();
+  @Output() citySelected = new EventEmitter<number | null>();
   // Actividades del backend
   activities: ApiActivity[] = [];
   filteredActivities: ApiActivity[] = [];
@@ -117,8 +118,14 @@ export class FiltersSidebarComponent implements OnInit, OnDestroy {
           this.filteredCities = cities;
         })
       );
+      // Emitir el ID de la provincia al componente padre
+      this.provinceSelected.emit(provinceId);
+    } else {
+      // Si es 'all', emitir null
+      this.provinceSelected.emit(null);
     }
 
+    // Mantener el filtro del lado del cliente por si acaso (opcional)
     this.professionalsListService.setLocationFilter(province);
   }
 
@@ -139,6 +146,17 @@ export class FiltersSidebarComponent implements OnInit, OnDestroy {
 
   onCityChange(city: string) {
     this.selectedCity = city;
+
+    if (city !== 'all') {
+      const cityId = parseInt(city);
+      // Emitir el ID de la ciudad al componente padre
+      this.citySelected.emit(cityId);
+    } else {
+      // Si es 'all', emitir null (usar solo el filtro de provincia)
+      this.citySelected.emit(null);
+    }
+
+    // Mantener el filtro del lado del cliente por si acaso (opcional)
     this.professionalsListService.setLocationFilter(city);
   }
 }

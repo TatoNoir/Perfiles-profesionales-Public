@@ -24,6 +24,9 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   isSearching = false;
   hasActiveSearch = false;
 
+  selectedStateId: number | null = null;
+  selectedLocalityId: number | null = null;
+
   private itemsPerPage = 6;
   private currentPage = 0;
   private subscription: Subscription = new Subscription();
@@ -61,7 +64,10 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   private loadProfessionals() {
     // Cargar todos los profesionales del API
     this.subscription.add(
-      this.professionalsListService.getProfessionals().subscribe(professionals => {
+      this.professionalsListService.getProfessionals(
+        this.selectedStateId || undefined,
+        this.selectedLocalityId || undefined
+      ).subscribe(professionals => {
         this.professionals = professionals;
         this.resetPagination();
         this.loadMoreProfessionals();
@@ -156,6 +162,17 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
       // Si se selecciona "all", mostrar todos
       this.onShowAll();
     }
+  }
+
+  onProvinceSelected(stateId: number | null) {
+    this.selectedStateId = stateId;
+    this.selectedLocalityId = null; // Reset ciudad cuando cambia provincia
+    this.loadProfessionals(); // Recargar con el nuevo filtro
+  }
+
+  onCitySelected(localityId: number | null) {
+    this.selectedLocalityId = localityId;
+    this.loadProfessionals(); // Recargar con el nuevo filtro
   }
 
   onSearchInputEvent(event: any) {

@@ -18,6 +18,7 @@ export interface ApiUser {
   description: string;
   created_at: string;
   updated_at: string;
+  is_active?: boolean;
   locality_id: number;
   address: string;
   street: string;
