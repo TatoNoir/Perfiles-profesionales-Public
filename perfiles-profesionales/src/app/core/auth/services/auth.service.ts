@@ -55,6 +55,21 @@ export class AuthService {
   professionalLogin(payload: { email: string; password: string }): Observable<any> {
     return this.api.post<any>('/api/professionals/login', payload);
   }
+
+  // Solicitar token de recuperación de contraseña
+  forgotPassword(email: string): Observable<{ message: string; reset_token: string }> {
+    return this.api.post<{ message: string; reset_token: string }>('/api/forgot-password', { email });
+  }
+
+  // Resetear contraseña con token
+  resetPassword(payload: {
+    email: string;
+    token: string;
+    password: string;
+    password_confirmation: string;
+  }): Observable<{ message: string }> {
+    return this.api.post<{ message: string }>('/api/reset-password', payload);
+  }
 }
 
 
