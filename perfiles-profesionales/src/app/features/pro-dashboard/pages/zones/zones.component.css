@@ -1,10 +1,12 @@
 .zones-page {
   padding: 1rem 0;
 }
+
 .title {
   margin: 0 0 1rem 0;
   font-weight: 700;
   color: #1f2937;
+  font-size: 1.75rem;
 }
 
 .location-info {
@@ -27,4 +29,125 @@
 .location-item span {
   color: #374151;
   font-size: 1rem;
+}
+
+.info-text {
+  color: #718096;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+/* Form Sections */
+.country-section,
+.province-section,
+.city-section,
+.zip-code-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.field-label {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.form-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+.search-item {
+  position: relative;
+  z-index: 5;
+}
+
+/* Dropdowns */
+.provinces-dropdown,
+.cities-dropdown,
+.zip-codes-dropdown {
+  position: relative;
+  z-index: 10;
+  margin-top: 0.5rem;
+}
+
+.provinces-list,
+.cities-list,
+.zip-codes-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.2s ease-out;
+}
+
+.province-item,
+.city-item,
+.zip-code-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.province-item:hover,
+.city-item:hover,
+.zip-code-item:hover {
+  background: #f8fafc;
+}
+
+.province-item:last-child,
+.city-item:last-child,
+.zip-code-item:last-child {
+  border-bottom: none;
+}
+
+.province-name,
+.city-name,
+.zip-code-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.no-results {
+  padding: 1rem;
+  text-align: center;
+  color: #718096;
+  font-size: 0.9rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f7fafc;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Change Location Section */
+.change-location-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #e2e8f0;
+}
+
+.change-location-section ion-button {
+  --border-radius: 8px;
+  font-weight: 600;
+  height: 48px;
 }

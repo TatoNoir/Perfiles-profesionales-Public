@@ -6,9 +6,10 @@
     <p>Cargando información...</p>
   </div>
 
+  <!-- Ubicación Actual -->
   <ion-card *ngIf="!loadingProfile && profile">
     <ion-card-header>
-      <ion-card-title>Ubicación Actual</ion-card-title>
+      <ion-card-title>Ubicaciónes de Trabajo</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <div class="location-info">
@@ -23,6 +24,148 @@
       </div>
     </ion-card-content>
   </ion-card>
+
+  <!-- Desplegables Informativos -->
+  <ion-card *ngIf="!loadingProfile">
+    <ion-card-header>
+      <ion-card-title>Información de Ubicación</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p class="info-text">Selecciona país, provincia, localidad y código postal para ver información detallada.</p>
+
+      <!-- País (fijo, solo informativo) -->
+      <div class="country-section">
+        <ion-label class="field-label">País</ion-label>
+        <ion-item class="form-item">
+          <ion-input
+            value="Argentina"
+            [disabled]="true"
+            placeholder="País">
+          </ion-input>
+        </ion-item>
+      </div>
+
+      <!-- Provincia -->
+      <div class="province-section">
+        <ion-label class="field-label">Provincia</ion-label>
+        <ion-item class="form-item search-item">
+          <ion-input
+            [(ngModel)]="provinceSearchTerm"
+            (ionInput)="onProvinceSearch($event)"
+            (ionFocus)="onProvinceFocus()"
+            (ionBlur)="onProvinceBlur()"
+            placeholder="Buscar provincia..."
+            clearInput="true"
+            name="provinceSearch">
+          </ion-input>
+        </ion-item>
+
+        <!-- Province Dropdown -->
+        <div class="provinces-dropdown"
+             *ngIf="showProvincesDropdown && (filteredProvinces.length > 0 || provinceSearchTerm)">
+          <div class="provinces-list" *ngIf="filteredProvinces.length > 0">
+            <div
+              class="province-item"
+              *ngFor="let province of filteredProvinces"
+              (click)="onProvinceSelect(province)">
+              <span class="province-name">{{ province.name }}</span>
+            </div>
+          </div>
+          <div class="no-results" *ngIf="filteredProvinces.length === 0 && provinceSearchTerm">
+            <p>No se encontraron provincias con ese término.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ciudad -->
+      <div class="city-section">
+        <ion-label class="field-label">Localidad</ion-label>
+        <ion-item class="form-item search-item">
+          <ion-input
+            [(ngModel)]="citySearchTerm"
+            (ionInput)="onCitySearch($event)"
+            (ionFocus)="onCityFocus()"
+            (ionBlur)="onCityBlur()"
+            placeholder="Buscar localidad..."
+            clearInput="true"
+            name="citySearch"
+            [disabled]="!selectedProvince">
+          </ion-input>
+        </ion-item>
+
+        <!-- City Dropdown -->
+        <div class="cities-dropdown"
+             *ngIf="showCitiesDropdown && (filteredCities.length > 0 || citySearchTerm)">
+          <div class="cities-list" *ngIf="filteredCities.length > 0">
+            <div
+              class="city-item"
+              *ngFor="let city of filteredCities"
+              (click)="onCitySelect(city)">
+              <span class="city-name">{{ city.name }}</span>
+            </div>
+          </div>
+          <div class="no-results" *ngIf="filteredCities.length === 0 && citySearchTerm">
+            <p>No se encontraron localidades con ese término.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Código Postal -->
+      <div class="zip-code-section">
+        <ion-label class="field-label">Código Postal</ion-label>
+        <ion-item class="form-item search-item">
+          <ion-input
+            [(ngModel)]="zipCodeSearchTerm"
+            (ionInput)="onZipCodeSearch($event)"
+            (ionFocus)="onZipCodeFocus()"
+            (ionBlur)="onZipCodeBlur()"
+            placeholder="Buscar código postal..."
+            clearInput="true"
+            name="zipCodeSearch"
+            [disabled]="!selectedCity">
+          </ion-input>
+        </ion-item>
+
+        <!-- Zip Code Dropdown -->
+        <div class="zip-codes-dropdown"
+             *ngIf="showZipCodesDropdown && (filteredZipCodes.length > 0 || zipCodeSearchTerm)">
+          <div class="zip-codes-list" *ngIf="filteredZipCodes.length > 0">
+            <div
+              class="zip-code-item"
+              *ngFor="let zipCode of filteredZipCodes"
+              (click)="onZipCodeSelect(zipCode)">
+              <span class="zip-code-name">{{ zipCode.name }} ({{ zipCode.code }})</span>
+            </div>
+          </div>
+          <div class="no-results" *ngIf="filteredZipCodes.length === 0 && zipCodeSearchTerm">
+            <p>No se encontraron códigos postales con ese término.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón Cambiar Ubicación -->
+      <div class="change-location-section">
+        <ion-button
+          color="primary"
+          expand="block"
+          (click)="onChangeLocation()"
+          [disabled]="!selectedCity || updatingLocation">
+          <ion-spinner *ngIf="updatingLocation" name="crescent"></ion-spinner>
+          <span *ngIf="!updatingLocation">Cambiar ubicación</span>
+          <span *ngIf="updatingLocation">Actualizando...</span>
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Toast para mensajes -->
+  <ion-toast
+    [isOpen]="showToast"
+    [message]="toastMessage"
+    [color]="toastColor"
+    [duration]="3000"
+    (didDismiss)="showToast = false">
+  </ion-toast>
 
   <div *ngIf="!loadingProfile && !profile" style="text-align: center; padding: 3rem;">
     <p>No se pudo cargar la información de ubicación</p>
