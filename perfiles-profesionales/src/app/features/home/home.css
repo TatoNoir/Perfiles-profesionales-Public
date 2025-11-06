@@ -24,6 +24,32 @@
   font-weight: 600;
 }
 
+/* Toolbar styles para evitar superposición en mobile */
+ion-toolbar {
+  --min-height: 56px;
+}
+
+ion-title {
+  font-size: 1rem;
+  font-weight: 600;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+  max-width: calc(100% - 140px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+ion-buttons[slot="end"] {
+  margin-inline-start: 0.5rem;
+  flex-shrink: 0;
+}
+
+ion-buttons[slot="end"] ion-button {
+  white-space: nowrap;
+}
+
 .hero-content {
   text-align: center;
   max-width: 800px;
@@ -83,6 +109,19 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  ion-title {
+    font-size: 0.9rem;
+    max-width: calc(100% - 130px);
+  }
+
+  .login-cta {
+    --padding-start: 0.75rem;
+    --padding-end: 0.75rem;
+    --padding-top: 0.4rem;
+    --padding-bottom: 0.4rem;
+    font-size: 0.85rem;
+  }
+
   .hero-title {
     font-size: 2.5rem;
   }
@@ -111,6 +150,19 @@
 }
 
 @media (max-width: 480px) {
+  ion-title {
+    font-size: 0.8rem;
+    max-width: calc(100% - 120px);
+  }
+
+  .login-cta {
+    --padding-start: 0.5rem;
+    --padding-end: 0.5rem;
+    --padding-top: 0.35rem;
+    --padding-bottom: 0.35rem;
+    font-size: 0.75rem;
+  }
+
   .hero-title {
     font-size: 2rem;
   }

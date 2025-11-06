@@ -72,11 +72,24 @@ export class ProfessionalsListService {
     // Ya no cargamos datos de muestra, solo datos del API
   }
 
-  // Buscar profesionales por actividad
-  public searchProfessionalsByActivity(activityTerm: string): Observable<ProfessionalBasic[]> {
-    const params = this.apiService.createParams({
-      activity: activityTerm
-    });
+  // Buscar profesionales por actividad (opcional) y/o ubicación
+  public searchProfessionalsByActivity(activityTerm?: string, stateId?: number, localityId?: number): Observable<ProfessionalBasic[]> {
+    let params = this.apiService.createParams({});
+
+    // Agregar activity solo si está presente
+    if (activityTerm && activityTerm !== 'all') {
+      params = params.set('activity', activityTerm);
+    }
+
+    // Agregar state_id si está presente
+    if (stateId) {
+      params = params.set('state_id', stateId.toString());
+    }
+
+    // Agregar locality_id si está presente
+    if (localityId) {
+      params = params.set('locality_id', localityId.toString());
+    }
 
     return this.apiService.get<ApiProfessionalsResponse>('/api/professionals', params).pipe(
       map(apiResponse => {

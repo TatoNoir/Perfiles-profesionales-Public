@@ -1,17 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon, IonButtons } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon, IonButtons, IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { search, refresh } from 'ionicons/icons';
 import { FiltersSidebarComponent } from '../../../../shared/components/ui/filters-sidebar/filters-sidebar';
 import { ProfessionalsListComponent } from '../../components/professionals-list/professionals-list';
 import { ProfessionalsListService, ProfessionalBasic } from './services/professionals-list.service';
+import { SharedDataService, GeoState, GeoLocality } from '../../../../shared/services/shared-data.service';
 
 @Component({
   selector: 'app-professionals',
-  imports: [CommonModule, RouterModule, IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon, IonButtons, FiltersSidebarComponent, ProfessionalsListComponent],
+  imports: [CommonModule, FormsModule, RouterModule, IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon, IonButtons, IonItem, IonLabel, IonSelect, IonSelectOption, FiltersSidebarComponent, ProfessionalsListComponent],
   templateUrl: './professionals.html',
   styleUrl: './professionals.css'
 })
@@ -24,6 +26,13 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   isSearching = false;
   hasActiveSearch = false;
 
+  // Filtros de ubicación para búsqueda
+  provinces: GeoState[] = [];
+  selectedProvince: number | null = null;
+  cities: GeoLocality[] = [];
+  selectedCity: number | null = null;
+
+  // Filtros de ubicación del sidebar
   selectedStateId: number | null = null;
   selectedLocalityId: number | null = null;
 
@@ -34,12 +43,14 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   constructor(
     private professionalsListService: ProfessionalsListService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sharedDataService: SharedDataService
   ) {
     addIcons({ search, refresh });
   }
 
   ngOnInit() {
+    this.loadProvinces();
     // Verificar si hay parámetros de consulta para filtrar por actividad o búsqueda
     this.route.queryParams.subscribe(params => {
       if (params['activity']) {
@@ -55,6 +66,40 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
         this.loadProfessionals();
       }
     });
+  }
+
+  loadProvinces() {
+    this.sharedDataService.getProvincesByCountry(13).subscribe({
+      next: (provinces) => {
+        this.provinces = provinces;
+      },
+      error: (error) => {
+        console.error('Error loading provinces:', error);
+      }
+    });
+  }
+
+  onProvinceChange(event: any) {
+    const provinceId = event.detail.value;
+    this.selectedProvince = provinceId && provinceId !== 'all' ? parseInt(provinceId) : null;
+    this.selectedCity = null;
+    this.cities = [];
+
+    if (this.selectedProvince) {
+      this.sharedDataService.getLocalitiesByState(this.selectedProvince).subscribe({
+        next: (cities) => {
+          this.cities = cities;
+        },
+        error: (error) => {
+          console.error('Error loading cities:', error);
+        }
+      });
+    }
+  }
+
+  onCityChange(event: any) {
+    const cityId = event.detail.value;
+    this.selectedCity = cityId && cityId !== 'all' ? parseInt(cityId) : null;
   }
 
   ngOnDestroy() {
@@ -124,16 +169,22 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   }
 
   onSearch() {
-    if (this.searchQuery.trim()) {
-      this.searchByActivity(this.searchQuery.trim());
+    // Permitir búsqueda si hay texto O si hay filtros de ubicación
+    if (this.searchQuery.trim() || this.selectedProvince || this.selectedCity) {
+      const activityTerm = this.searchQuery.trim() || undefined;
+      this.searchByActivity(activityTerm);
     }
   }
 
-  private searchByActivity(activityTerm: string) {
+  private searchByActivity(activityTerm?: string) {
     this.isSearching = true;
 
-    // Llamar al endpoint del backend para buscar por actividad
-    this.professionalsListService.searchProfessionalsByActivity(activityTerm).subscribe({
+    // Llamar al endpoint del backend para buscar por actividad con filtros de ubicación
+    this.professionalsListService.searchProfessionalsByActivity(
+      activityTerm,
+      this.selectedProvince || undefined,
+      this.selectedCity || undefined
+    ).subscribe({
       next: (professionals) => {
         this.professionals = professionals;
         this.resetPagination();
@@ -148,9 +199,18 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Getter para verificar si se puede buscar
+  get canSearch(): boolean {
+    return !!(this.searchQuery.trim() || this.selectedProvince || this.selectedCity);
+  }
+
   onShowAll() {
     this.searchQuery = '';
     this.hasActiveSearch = false;
+    // Limpiar filtros de ubicación de búsqueda
+    this.selectedProvince = null;
+    this.selectedCity = null;
+    this.cities = [];
     this.loadProfessionals();
   }
 

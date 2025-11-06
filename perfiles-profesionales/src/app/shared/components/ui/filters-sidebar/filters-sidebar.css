@@ -8,6 +8,8 @@
   position: sticky;
   top: 0;
   overflow-y: auto;
+  display: block;
+  flex-shrink: 0;
 }
 
 .filters-content {
@@ -368,10 +370,13 @@ ion-radio {
   .filters-sidebar {
     width: 100%;
     height: auto;
+    max-height: none;
     position: static;
     border-right: none;
     border-bottom: 1px solid #e2e8f0;
     padding: 1.5rem 1rem;
+    display: block;
+    overflow-y: visible;
   }
 
   .filters-content {
@@ -424,7 +429,14 @@ ion-radio {
   .activity-select-mobile,
   .province-select-mobile,
   .city-select-mobile {
-    display: block;
+    display: block !important;
+    width: 100%;
+  }
+
+  .activity-select-mobile ion-select,
+  .province-select-mobile ion-select,
+  .city-select-mobile ion-select {
+    width: 100%;
   }
 }
 

@@ -3,7 +3,7 @@
   <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-title>
-        <a routerLink="/" class="home-link">Encuentra tu Profesional</a>
+        <a routerLink="/" class="home-link">Portal de profesionales</a>
       </ion-title>
       <ion-buttons slot="end">
         <ion-button routerLink="/login" color="primary" fill="solid">
@@ -24,22 +24,57 @@
 
         <!-- Search Bar -->
         <div class="search-container">
-          <ion-searchbar
-            class="search-input"
-            placeholder="Buscar profesionales..."
-            [value]="searchQuery"
-            (ionInput)="onSearchInputEvent($event)"
-            (keyup.enter)="onSearch()"
-            show-clear-button="focus"
-            animated="true"
-            [disabled]="isSearching">
-          </ion-searchbar>
+          <div class="search-wrapper">
+            <ion-searchbar
+              class="search-input"
+              placeholder="Buscar..."
+              [value]="searchQuery"
+              (ionInput)="onSearchInputEvent($event)"
+              (keyup.enter)="onSearch()"
+              show-clear-button="focus"
+              animated="false"
+              [disabled]="isSearching">
+            </ion-searchbar>
+
+            <!-- Filtros de Ubicación dentro del input -->
+            <div class="location-filters-inline">
+              <ion-item class="filter-item-inline">
+                <ion-select
+                  [(ngModel)]="selectedProvince"
+                  (ionChange)="onProvinceChange($event)"
+                  placeholder="Provincia"
+                  interface="popover"
+                  class="filter-select">
+                  <ion-select-option value="all">Todas</ion-select-option>
+                  <ion-select-option *ngFor="let province of provinces" [value]="province.id.toString()">
+                    {{ province.name }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item class="filter-item-inline">
+                <ion-select
+                  [(ngModel)]="selectedCity"
+                  (ionChange)="onCityChange($event)"
+                  placeholder="Localidad"
+                  interface="popover"
+                  [disabled]="!selectedProvince"
+                  class="filter-select">
+                  <ion-select-option value="all">Todas</ion-select-option>
+                  <ion-select-option *ngFor="let city of cities" [value]="city.id.toString()">
+                    {{ city.name }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+          </div>
+
           <ion-button
             class="search-button"
             (click)="onSearch()"
             fill="solid"
             color="primary"
-            [disabled]="isSearching || !searchQuery.trim()">
+            [disabled]="isSearching || !canSearch">
             <ion-icon name="search" slot="start"></ion-icon>
             {{ isSearching ? 'Buscando...' : 'Buscar' }}
           </ion-button>
