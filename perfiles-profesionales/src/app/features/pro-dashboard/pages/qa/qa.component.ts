@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonCard, IonCardContent, IonList, IonItem, IonButton, IonModal, IonHeader, IonToolbar, IonTitle, IonButtons, IonTextarea, IonContent, IonSpinner, IonToast } from '@ionic/angular/standalone';
+import { IonCard, IonCardContent, IonList, IonItem, IonButton, IonModal, IonHeader, IonToolbar, IonTitle, IonButtons, IonTextarea, IonContent, IonSpinner, IonToast, IonIcon } from '@ionic/angular/standalone';
 import { QuestionsService, Question } from '../../services/questions.service';
 import { addIcons } from 'ionicons';
 import { helpCircleOutline, checkmarkCircle } from 'ionicons/icons';
@@ -9,7 +9,7 @@ import { helpCircleOutline, checkmarkCircle } from 'ionicons/icons';
 @Component({
   selector: 'app-qa-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, DatePipe, IonCard, IonCardContent, IonList, IonItem, IonButton, IonModal, IonHeader, IonToolbar, IonTitle, IonButtons, IonTextarea, IonContent, IonSpinner, IonToast],
+  imports: [CommonModule, FormsModule, DatePipe, IonCard, IonCardContent, IonList, IonItem, IonButton, IonModal, IonHeader, IonToolbar, IonTitle, IonButtons, IonTextarea, IonContent, IonSpinner, IonToast, IonIcon],
   templateUrl: './qa.component.html',
   styleUrl: './qa.component.css'
 })
