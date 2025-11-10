@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonTextarea, IonChip, IonButton, IonIcon, IonSpinner, IonToast, IonModal } from '@ionic/angular/standalone';
+import { IonContent, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonTextarea, IonChip, IonButton, IonIcon, IonSpinner, IonToast } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { save, create, close, camera } from 'ionicons/icons';
 import { ProfileService, ProfessionalProfile, UpdateProfileRequest } from '../../services/profile.service';
@@ -13,7 +13,7 @@ import { ImageService } from '../../../../shared/services/image.service';
 @Component({
   selector: 'app-profile-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, IonContent, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonTextarea, IonChip, IonButton, IonIcon, IonSpinner, IonToast, IonModal, ProfilePhotoThumbnailComponent, ImageEditorComponent],
+  imports: [CommonModule, FormsModule, IonContent, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonTextarea, IonChip, IonButton, IonIcon, IonSpinner, IonToast, ProfilePhotoThumbnailComponent, ImageEditorComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })

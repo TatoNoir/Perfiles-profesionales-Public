@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon, IonButtons, IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon, IonButtons, IonItem, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { search, refresh } from 'ionicons/icons';
 import { FiltersSidebarComponent } from '../../../../shared/components/ui/filters-sidebar/filters-sidebar';
@@ -13,7 +13,7 @@ import { SharedDataService, GeoState, GeoLocality } from '../../../../shared/ser
 
 @Component({
   selector: 'app-professionals',
-  imports: [CommonModule, FormsModule, RouterModule, IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon, IonButtons, IonItem, IonLabel, IonSelect, IonSelectOption, FiltersSidebarComponent, ProfessionalsListComponent],
+  imports: [CommonModule, FormsModule, RouterModule, IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon, IonButtons, IonItem, IonSelect, IonSelectOption, FiltersSidebarComponent, ProfessionalsListComponent],
   templateUrl: './professionals.html',
   styleUrl: './professionals.css'
 })

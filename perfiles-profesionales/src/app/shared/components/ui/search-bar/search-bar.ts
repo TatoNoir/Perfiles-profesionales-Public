@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonSearchbar, IonButton, IonIcon, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
+import { IonSearchbar, IonButton, IonIcon, IonItem, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { search } from 'ionicons/icons';
 import { ApiService } from '../../../../core/services/api.service';
@@ -13,7 +13,7 @@ import { SharedDataService, GeoState, GeoLocality } from '../../../services/shar
 
 @Component({
   selector: 'app-search-bar',
-  imports: [CommonModule, FormsModule, IonSearchbar, IonButton, IonIcon, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption],
+  imports: [CommonModule, FormsModule, IonSearchbar, IonButton, IonIcon, IonItem, IonSelect, IonSelectOption],
   templateUrl: './search-bar.html',
   styleUrl: './search-bar.css'
 })

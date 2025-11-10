@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonButton, IonList, IonItem, IonLabel, IonContent, IonSpinner } from '@ionic/angular/standalone';
+import { IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonIcon, IonButton, IonList, IonItem, IonLabel, IonContent, IonSpinner } from '@ionic/angular/standalone';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { star, starOutline, chatbubbles, trendingUp, globe } from 'ionicons/icons';
@@ -12,7 +12,7 @@ import { ImageService } from '../../../../shared/services/image.service';
 @Component({
   selector: 'app-overview',
   standalone: true,
-  imports: [CommonModule, RouterModule, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonButton, IonList, IonItem, IonLabel, IonSpinner],
+  imports: [CommonModule, RouterModule, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonIcon, IonButton, IonList, IonItem, IonLabel, IonSpinner],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.css'
 })
