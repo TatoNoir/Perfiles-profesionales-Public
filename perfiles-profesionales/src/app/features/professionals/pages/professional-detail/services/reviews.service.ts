@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { ApiService } from '../../../../../core/services/api.service';
+import { Review } from '../../../../../shared/interfaces/api-response.interface';
 
 export interface ReviewForm {
   value: number;
@@ -79,6 +80,40 @@ export class ReviewsService {
             }
           });
           observer.complete();
+        });
+      })
+    );
+  }
+
+  /**
+   * Obtiene las valoraciones de un profesional con paginación
+   * @param professionalId - ID del profesional
+   * @param page - Número de página (default: 1)
+   * @param limit - Cantidad de resultados por página (default: 5)
+   */
+  public getReviews(professionalId: string, page: number = 1, limit: number = 5): Observable<{ reviews: Review[], total: number, page: number, totalPages: number }> {
+    let params = this.apiService.createParams({
+      page: page.toString(),
+      limit: limit.toString()
+    });
+
+    return this.apiService.get<{ data: Review[], total: number, page: number, total_pages: number }>(
+      `/api/professionals/${professionalId}/get/reviews`,
+      params
+    ).pipe(
+      map(response => ({
+        reviews: response.data || [],
+        total: response.total || 0,
+        page: response.page || page,
+        totalPages: response.total_pages || 0
+      })),
+      catchError(error => {
+        console.error('Error al obtener valoraciones:', error);
+        return of({
+          reviews: [],
+          total: 0,
+          page: page,
+          totalPages: 0
         });
       })
     );

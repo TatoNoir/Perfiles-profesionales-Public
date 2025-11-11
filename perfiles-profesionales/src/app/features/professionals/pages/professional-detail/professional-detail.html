@@ -367,6 +367,7 @@
 <app-view-reviews-modal
   [isOpen]="isViewReviewsModalOpen"
   [professionalName]="professional?.name || ''"
+  [professionalId]="professional?.id || ''"
   [reviews]="professionalReviews"
   (modalClosed)="onCloseViewReviewsModal()">
 </app-view-reviews-modal>

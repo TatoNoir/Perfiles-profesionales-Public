@@ -57,7 +57,7 @@ export class SharedDataService {
 
   // Obtener provincias por país
   getProvincesByCountry(countryId: number = 13): Observable<GeoState[]> {
-    return this.apiService.get<{ data: GeoState[] } | GeoState[]>(`/api/states?country_id=${encodeURIComponent(countryId)}`).pipe(
+    return this.apiService.get<{ data: GeoState[] } | GeoState[]>(`/api/common/states?country_id=${encodeURIComponent(countryId)}`).pipe(
       map((response: any) => {
         if (response?.data && Array.isArray(response.data)) return response.data as GeoState[];
         if (Array.isArray(response)) return response as GeoState[];
@@ -81,7 +81,7 @@ export class SharedDataService {
 
   // Obtener ciudades por provincia
   getLocalitiesByState(stateId: number): Observable<GeoLocality[]> {
-    return this.apiService.get<{ data: GeoLocality[] } | GeoLocality[]>(`/api/localities?state_id=${encodeURIComponent(stateId)}`).pipe(
+    return this.apiService.get<{ data: GeoLocality[] } | GeoLocality[]>(`/api/common/localities?state_id=${encodeURIComponent(stateId)}`).pipe(
       map((response: any) => {
         if (response?.data && Array.isArray(response.data)) return response.data as GeoLocality[];
         if (Array.isArray(response)) return response as GeoLocality[];
