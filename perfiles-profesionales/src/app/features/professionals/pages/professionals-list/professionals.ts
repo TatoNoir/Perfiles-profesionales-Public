@@ -176,14 +176,14 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private searchByActivity(activityTerm?: string) {
+  private searchByActivityId(activityId: number) {
     this.isSearching = true;
 
-    // Llamar al endpoint del backend para buscar por actividad con filtros de ubicación
+    // Llamar al endpoint del backend para buscar por activity_id con filtros de ubicación
     this.professionalsListService.searchProfessionalsByActivity(
-      activityTerm,
-      this.selectedProvince || undefined,
-      this.selectedCity || undefined
+      activityId,
+      this.selectedStateId || undefined,
+      this.selectedLocalityId || undefined
     ).subscribe({
       next: (professionals) => {
         this.professionals = professionals;
@@ -197,6 +197,14 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
         this.isSearching = false;
       }
     });
+  }
+
+  private searchByActivity(activityTerm?: string) {
+    // NOTA: Este método se mantiene por compatibilidad pero actualmente no se usa
+    // La búsqueda ahora se hace por activity_id a través de searchByActivityId
+    // TODO: Implementar búsqueda por texto si es necesario en el futuro
+    console.warn('searchByActivity con texto no está implementado. Usar activity_id en su lugar.');
+    this.onShowAll();
   }
 
   // Getter para verificar si se puede buscar
@@ -214,10 +222,10 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
     this.loadProfessionals();
   }
 
-  onActivitySelected(activity: string) {
-    if (activity && activity !== 'all') {
-      this.searchQuery = activity;
-      this.searchByActivity(activity);
+  onActivitySelected(activityId: number | null) {
+    if (activityId !== null && activityId !== undefined) {
+      // Buscar profesionales por activity_id
+      this.searchByActivityId(activityId);
     } else {
       // Si se selecciona "all", mostrar todos
       this.onShowAll();

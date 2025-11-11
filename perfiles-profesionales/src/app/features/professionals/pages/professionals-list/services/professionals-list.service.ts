@@ -73,12 +73,15 @@ export class ProfessionalsListService {
   }
 
   // Buscar profesionales por actividad (opcional) y/o ubicación
-  public searchProfessionalsByActivity(activityTerm?: string, stateId?: number, localityId?: number): Observable<ProfessionalBasic[]> {
-    let params = this.apiService.createParams({});
+  public searchProfessionalsByActivity(activityId?: number | null, stateId?: number, localityId?: number): Observable<ProfessionalBasic[]> {
+    let params = this.apiService.createParams({
+      page: '1',
+      limit: '6'
+    });
 
-    // Agregar activity solo si está presente
-    if (activityTerm && activityTerm !== 'all') {
-      params = params.set('activity', activityTerm);
+    // Agregar activity_id solo si está presente y no es null
+    if (activityId !== null && activityId !== undefined) {
+      params = params.set('activity_id', activityId.toString());
     }
 
     // Agregar state_id si está presente

@@ -12,7 +12,7 @@ import { SharedDataService, ApiActivity, GeoState, GeoLocality } from '../../../
   styleUrl: './filters-sidebar.css'
 })
 export class FiltersSidebarComponent implements OnInit, OnDestroy {
-  @Output() activitySelected = new EventEmitter<string>();
+  @Output() activitySelected = new EventEmitter<number | null>();
   @Output() provinceSelected = new EventEmitter<number | null>();
   @Output() citySelected = new EventEmitter<number | null>();
   // Actividades del backend
@@ -66,15 +66,34 @@ export class FiltersSidebarComponent implements OnInit, OnDestroy {
     );
   }
 
-  onActivityChange(activity: string) {
-    this.selectedActivity = activity;
-    // Emitir evento al componente padre para hacer búsqueda real en backend
-    this.activitySelected.emit(activity);
+  onActivityChange(activity: string | ApiActivity) {
+    if (typeof activity === 'string') {
+      // Si es 'all', emitir null
+      this.selectedActivity = activity;
+      this.activitySelected.emit(null);
+    } else {
+      // Si es un objeto ApiActivity, usar su id
+      this.selectedActivity = activity.name;
+      const activityId = parseInt(activity.id);
+      this.activitySelected.emit(isNaN(activityId) ? null : activityId);
+    }
   }
 
   onActivitySearch(event: any) {
     this.activitySearchTerm = event.target.value;
     this.filterActivities();
+  }
+
+  onActivitySelectChange(event: any) {
+    const value = event.detail.value;
+    if (value === 'all') {
+      this.onActivityChange('all');
+    } else {
+      const activity = this.activities.find(a => a.name === value);
+      if (activity) {
+        this.onActivityChange(activity);
+      }
+    }
   }
 
   private filterActivities() {

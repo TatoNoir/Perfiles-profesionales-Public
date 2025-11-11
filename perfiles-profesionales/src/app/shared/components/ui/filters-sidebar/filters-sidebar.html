@@ -29,7 +29,7 @@
               *ngFor="let activity of filteredActivities"
               class="activity-item"
               [class.selected]="selectedActivity === activity.name"
-              (click)="onActivityChange(activity.name)">
+              (click)="onActivityChange(activity)">
               <span class="activity-name">
                 {{ activity.name }}
                 <span class="professionals-count" *ngIf="activity.professionals_count !== undefined">({{ activity.professionals_count }})</span>
@@ -43,7 +43,7 @@
         <div class="activity-select-mobile">
           <ion-select
             [value]="selectedActivity"
-            (ionChange)="onActivityChange($event.detail.value)"
+            (ionChange)="onActivitySelectChange($event)"
             placeholder="Seleccionar actividad"
             class="filter-select">
             <ion-select-option value="all">Todas las actividades</ion-select-option>
