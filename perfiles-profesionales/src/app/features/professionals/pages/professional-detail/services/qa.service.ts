@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { ApiService } from '../../../../../core/services/api.service';
+import { Question as ApiQuestion } from '../../../../../shared/interfaces/api-response.interface';
 
 export interface Question {
   id: string;
@@ -49,21 +50,30 @@ export interface QaStats {
 export class QaService {
   constructor(private apiService: ApiService) {}
 
-  // Obtener preguntas de un profesional
-  public getQuestions(professionalId: string, page: number = 1, limit: number = 10): Observable<{ questions: Question[], total: number, page: number, totalPages: number }> {
-    return this.apiService.get<{ questions: Question[], total: number, page: number, totalPages: number }>(
-      `/api/professionals/${professionalId}/questions?page=${page}&limit=${limit}`
+  // Obtener preguntas de un profesional con paginación
+  public getQuestions(professionalId: string, page: number = 1, limit: number = 5): Observable<{ questions: ApiQuestion[], total: number, page: number, totalPages: number }> {
+    let params = this.apiService.createParams({
+      page: page.toString(),
+      limit: limit.toString()
+    });
+
+    return this.apiService.get<{ data: ApiQuestion[], total: number, page: number, total_pages: number }>(
+      `/api/professionals/${professionalId}/get/questions`,
+      params
     ).pipe(
+      map(response => ({
+        questions: response.data || [],
+        total: response.total || 0,
+        page: response.page || page,
+        totalPages: response.total_pages || 0
+      })),
       catchError(error => {
-        console.warn('Error al obtener preguntas:', error);
-        return new Observable(observer => {
-          observer.next({
-            questions: [],
-            total: 0,
-            page: 1,
-            totalPages: 0
-          });
-          observer.complete();
+        console.error('Error al obtener preguntas:', error);
+        return of({
+          questions: [],
+          total: 0,
+          page: page,
+          totalPages: 0
         });
       })
     );

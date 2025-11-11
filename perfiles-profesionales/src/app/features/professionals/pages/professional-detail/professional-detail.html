@@ -376,6 +376,7 @@
 <app-view-questions-modal
   [isOpen]="isViewQuestionsModalOpen"
   [professionalName]="professional?.name || ''"
+  [professionalId]="professional?.id || ''"
   [questions]="professionalQuestions"
   (modalClosed)="onCloseViewQuestionsModal()">
 </app-view-questions-modal>

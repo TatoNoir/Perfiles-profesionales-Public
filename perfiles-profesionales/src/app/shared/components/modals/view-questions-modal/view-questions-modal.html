@@ -14,55 +14,78 @@
 
     <ion-content class="modal-content">
       <div class="modal-body">
-        <!-- Questions Count -->
-        <div class="questions-header" *ngIf="hasQuestions">
-          <div class="questions-count">{{ questionsCount }} preguntas respondidas</div>
+        <!-- Loading State -->
+        <div *ngIf="isLoading" class="loading-container">
+          <ion-spinner name="crescent"></ion-spinner>
+          <p>Cargando preguntas...</p>
         </div>
 
-        <!-- Questions List -->
-        <div class="questions-section" *ngIf="hasQuestions; else noQuestions">
-          <div class="questions-list">
-            <ion-card class="question-card" *ngFor="let question of displayedQuestions">
-              <ion-card-content class="question-content">
-                <div class="question-header">
-                  <div class="questioner-info">
-                    <span class="questioner-name">{{ question.name }}</span>
-                    <span class="question-date">{{ question.created_at | date:'dd/MM/yyyy' }}</span>
-                  </div>
-                </div>
-                <div class="question-text">
-                  <p class="question-message">{{ question.message }}</p>
-                  <div class="question-answer" *ngIf="question.answer">
-                    <div class="answer-header">
-                      <span class="answer-author">{{ professionalName }}</span>
+        <!-- Content -->
+        <div *ngIf="!isLoading">
+          <!-- Questions Count -->
+          <div class="questions-header" *ngIf="hasQuestions">
+            <div class="questions-count">{{ questionsCount }} preguntas respondidas</div>
+          </div>
+
+          <!-- Questions List -->
+          <div class="questions-section" *ngIf="hasQuestions; else noQuestions">
+            <div class="questions-list">
+              <ion-card class="question-card" *ngFor="let question of displayedQuestions">
+                <ion-card-content class="question-content">
+                  <div class="question-header">
+                    <div class="questioner-info">
+                      <span class="questioner-name">{{ question.name }}</span>
+                      <span class="question-date">{{ question.created_at | date:'dd/MM/yyyy' }}</span>
                     </div>
-                    <p class="answer-text">{{ question.answer }}</p>
                   </div>
-                </div>
-              </ion-card-content>
-            </ion-card>
+                  <div class="question-text">
+                    <p class="question-message">{{ question.message }}</p>
+                    <div class="question-answer" *ngIf="question.answer">
+                      <div class="answer-header">
+                        <span class="answer-author">{{ professionalName }}</span>
+                      </div>
+                      <p class="answer-text">{{ question.answer }}</p>
+                    </div>
+                  </div>
+                </ion-card-content>
+              </ion-card>
+            </div>
+
+            <!-- Pagination Controls -->
+            <div class="pagination-controls" *ngIf="totalPages > 1">
+              <div class="pagination-info">
+                <span>Página {{ currentPage }} de {{ totalPages }}</span>
+              </div>
+              <div class="pagination-buttons">
+                <ion-button
+                  fill="outline"
+                  size="small"
+                  [disabled]="!canGoPrevious"
+                  (click)="previousPage()">
+                  <ion-icon name="chevron-back" slot="start"></ion-icon>
+                  Anterior
+                </ion-button>
+                <ion-button
+                  fill="outline"
+                  size="small"
+                  [disabled]="!canGoNext"
+                  (click)="nextPage()">
+                  Siguiente
+                  <ion-icon name="chevron-forward" slot="end"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
           </div>
 
-          <!-- Show More Button -->
-          <div class="show-more-section" *ngIf="hasMoreQuestions && displayedQuestions.length < professionalQuestions.length">
-            <ion-button
-              class="show-more-button"
-              (click)="showMoreQuestions()"
-              fill="outline"
-              size="small">
-              Ver todas las preguntas
-            </ion-button>
-          </div>
+          <!-- No Questions State -->
+          <ng-template #noQuestions>
+            <div class="no-questions">
+              <ion-icon name="chatbubble-outline" class="empty-chat-icon"></ion-icon>
+              <h3 class="no-questions-title">Aún no hay preguntas</h3>
+              <p class="no-questions-text">Sé el primero en hacer una pregunta a este profesional.</p>
+            </div>
+          </ng-template>
         </div>
-
-        <!-- No Questions State -->
-        <ng-template #noQuestions>
-          <div class="no-questions">
-            <ion-icon name="chatbubble-outline" class="empty-chat-icon"></ion-icon>
-            <h3 class="no-questions-title">Aún no hay preguntas</h3>
-            <p class="no-questions-text">Sé el primero en hacer una pregunta a este profesional.</p>
-          </div>
-        </ng-template>
       </div>
     </ion-content>
   </ng-template>
