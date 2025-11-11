@@ -94,7 +94,7 @@ export class DataMapperService {
       location: location,
       // Provincia (si viene en el API dentro de locality.state)
       province: province,
-      avatar: apiUserDetail.profile_picture || undefined,
+      profile_picture: apiUserDetail.profile_picture || undefined,
       pricePerHour: 0,
       isVerified: false,
       status: 'available' as const,
