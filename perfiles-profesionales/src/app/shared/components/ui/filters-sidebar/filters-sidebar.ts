@@ -178,4 +178,23 @@ export class FiltersSidebarComponent implements OnInit, OnDestroy {
     // Mantener el filtro del lado del cliente por si acaso (opcional)
     this.professionalsListService.setLocationFilter(city);
   }
+
+  // Método para resetear todos los filtros
+  resetFilters() {
+    this.selectedActivity = 'all';
+    this.selectedProvince = 'all';
+    this.selectedCity = 'all';
+    this.cities = [];
+    this.filteredCities = [];
+    this.citySearchTerm = '';
+    this.activitySearchTerm = '';
+    this.provinceSearchTerm = '';
+    this.filteredActivities = this.activities;
+    this.filteredProvinces = this.provinces;
+    
+    // Emitir eventos para notificar al componente padre que los filtros se resetearon
+    this.activitySelected.emit(null);
+    this.provinceSelected.emit(null);
+    this.citySelected.emit(null);
+  }
 }

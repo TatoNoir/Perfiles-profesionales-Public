@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
@@ -19,6 +19,9 @@ import { SharedDataService } from '../../../../shared/services/shared-data.servi
   styleUrl: './professionals.css'
 })
 export class ProfessionalsComponent implements OnInit, OnDestroy {
+  @ViewChild('searchBar') searchBar!: SearchBarComponent;
+  @ViewChild('filtersSidebar') filtersSidebar!: FiltersSidebarComponent;
+
   professionals: ProfessionalBasic[] = [];
   displayedProfessionals: ProfessionalBasic[] = [];
   isLoading = false;
@@ -171,6 +174,19 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
 
   onShowAll() {
     this.hasActiveSearch = false;
+    
+    // Limpiar el search bar
+    if (this.searchBar) {
+      this.searchBar.clearSearch();
+    }
+    
+    // Limpiar filtros del sidebar
+    if (this.filtersSidebar) {
+      this.filtersSidebar.resetFilters();
+    }
+    this.selectedStateId = null;
+    this.selectedLocalityId = null;
+    
     // Limpiar query params y recargar
     this.router.navigate(['/professionals'], { queryParams: {} });
     this.loadProfessionals();

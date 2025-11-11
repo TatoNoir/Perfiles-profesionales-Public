@@ -1,82 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonSearchbar, IonButton, IonIcon, IonItem, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
+import { IonSearchbar, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { search } from 'ionicons/icons';
 import { ApiService } from '../../../../core/services/api.service';
 import { DataMapperService } from '../../../services/data-mapper.service';
 import { ApiProfessionalsResponse } from '../../../interfaces/api-response.interface';
-import { ProfessionalBasic } from '../../../../features/professionals/pages/professionals-list/services/professionals-list.service';
-import { SharedDataService, GeoState, GeoLocality } from '../../../services/shared-data.service';
 
 @Component({
   selector: 'app-search-bar',
-  imports: [CommonModule, FormsModule, IonSearchbar, IonButton, IonIcon, IonItem, IonSelect, IonSelectOption],
+  imports: [CommonModule, FormsModule, IonSearchbar, IonButton, IonIcon],
   templateUrl: './search-bar.html',
   styleUrl: './search-bar.css'
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent {
   searchQuery = '';
   isLoading = false;
-
-  // Filtros de ubicación
-  provinces: GeoState[] = [];
-  selectedProvince: number | null = null;
-  cities: GeoLocality[] = [];
-  selectedCity: number | null = null;
 
   constructor(
     private router: Router,
     private apiService: ApiService,
-    private dataMapper: DataMapperService,
-    private sharedDataService: SharedDataService
+    private dataMapper: DataMapperService
   ) {
     addIcons({ search });
   }
 
-  ngOnInit() {
-    this.loadProvinces();
-  }
-
-  loadProvinces() {
-    this.sharedDataService.getProvincesByCountry(13).subscribe({
-      next: (provinces) => {
-        this.provinces = provinces;
-      },
-      error: (error) => {
-        console.error('Error loading provinces:', error);
-      }
-    });
-  }
-
-  onProvinceChange(event: any) {
-    const provinceId = event.detail.value;
-    this.selectedProvince = provinceId && provinceId !== 'all' ? parseInt(provinceId) : null;
-    this.selectedCity = null;
-    this.cities = [];
-
-    if (this.selectedProvince) {
-      this.sharedDataService.getLocalitiesByState(this.selectedProvince).subscribe({
-        next: (cities) => {
-          this.cities = cities;
-        },
-        error: (error) => {
-          console.error('Error loading cities:', error);
-        }
-      });
-    }
-  }
-
-  onCityChange(event: any) {
-    const cityId = event.detail.value;
-    this.selectedCity = cityId && cityId !== 'all' ? parseInt(cityId) : null;
-  }
-
   onSearch() {
-    // Permitir búsqueda si hay texto O si hay filtros de ubicación
-    if (this.searchQuery.trim() || this.selectedProvince || this.selectedCity) {
+    // Permitir búsqueda solo si hay texto
+    if (this.searchQuery.trim()) {
       this.isLoading = true;
 
       // Llamar al endpoint del backend
@@ -85,20 +38,8 @@ export class SearchBarComponent implements OnInit {
         limit: '6'
       });
 
-      // Agregar search solo si hay texto
-      if (this.searchQuery.trim()) {
-        params = params.set('search', this.searchQuery.trim());
-      }
-
-      // Agregar state_id si está seleccionado
-      if (this.selectedProvince) {
-        params = params.set('state_id', this.selectedProvince.toString());
-      }
-
-      // Agregar locality_id si está seleccionado
-      if (this.selectedCity) {
-        params = params.set('locality_id', this.selectedCity.toString());
-      }
+      // Agregar search
+      params = params.set('search', this.searchQuery.trim());
 
       this.apiService.get<ApiProfessionalsResponse>('/api/professionals', params).subscribe({
         next: (apiResponse) => {
@@ -133,10 +74,15 @@ export class SearchBarComponent implements OnInit {
 
   // Getter para verificar si se puede buscar
   get canSearch(): boolean {
-    return !!(this.searchQuery.trim() || this.selectedProvince || this.selectedCity);
+    return !!this.searchQuery.trim();
   }
 
   onSearchInput(event: any) {
     this.searchQuery = event.detail.value;
+  }
+
+  // Método para limpiar el search bar
+  clearSearch() {
+    this.searchQuery = '';
   }
 }

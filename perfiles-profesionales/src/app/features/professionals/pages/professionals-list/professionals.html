@@ -23,7 +23,7 @@
         </p>
 
         <!-- Search Bar -->
-        <app-search-bar></app-search-bar>
+        <app-search-bar #searchBar></app-search-bar>
 
         <!-- Botón para limpiar búsqueda activa -->
         <ion-button
@@ -42,6 +42,7 @@
     <main class="main-content">
       <!-- Sidebar with Filters -->
       <app-filters-sidebar
+        #filtersSidebar
         (activitySelected)="onActivitySelected($event)"
         (provinceSelected)="onProvinceSelected($event)"
         (citySelected)="onCitySelected($event)">
