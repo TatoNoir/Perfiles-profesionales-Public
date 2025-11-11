@@ -1,5 +1,7 @@
 <div class="professionals-list-container">
+  <!-- Header con conteo (solo mostrar si hay profesionales o si está cargando) -->
   <div
+    *ngIf="professionals.length > 0 || isLoading"
     class="professionals-header"
     [class.single-result]="displayedProfessionals.length === 1"
     [class.few-results]="displayedProfessionals.length > 1 && displayedProfessionals.length <= 3">
@@ -7,7 +9,7 @@
   </div>
 
   <!-- Empty state -->
-  <div *ngIf="displayedProfessionals.length === 0 && !isLoading" class="no-results">
+  <div *ngIf="displayedProfessionals.length === 0 && professionals.length === 0 && !isLoading" class="no-results">
     <ion-icon name="search-outline"></ion-icon>
     <p>No encontramos profesionales para esta búsqueda.</p>
   </div>

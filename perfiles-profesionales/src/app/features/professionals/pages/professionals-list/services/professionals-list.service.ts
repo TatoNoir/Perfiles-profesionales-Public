@@ -108,6 +108,47 @@ export class ProfessionalsListService {
     );
   }
 
+  // Buscar profesionales con parámetros de búsqueda (search, activity_id, state_id, locality_id)
+  public searchProfessionals(search?: string, activityId?: number | null, stateId?: number, localityId?: number): Observable<ProfessionalBasic[]> {
+    let params = this.apiService.createParams({
+      page: '1',
+      limit: '6'
+    });
+
+    // Agregar search si está presente
+    if (search && search.trim()) {
+      params = params.set('search', search.trim());
+    }
+
+    // Agregar activity_id solo si está presente y no es null
+    if (activityId !== null && activityId !== undefined) {
+      params = params.set('activity_id', activityId.toString());
+    }
+
+    // Agregar state_id si está presente
+    if (stateId) {
+      params = params.set('state_id', stateId.toString());
+    }
+
+    // Agregar locality_id si está presente
+    if (localityId) {
+      params = params.set('locality_id', localityId.toString());
+    }
+
+    return this.apiService.get<ApiProfessionalsResponse>('/api/professionals', params).pipe(
+      map(apiResponse => {
+        const professionals = this.dataMapper.mapApiResponseToProfessionals(apiResponse);
+        // Actualizar el BehaviorSubject con los datos filtrados
+        this.professionalsSubject.next(professionals);
+        return professionals;
+      }),
+      catchError(error => {
+        console.error('❌ Error al buscar profesionales:', error);
+        return of([]);
+      })
+    );
+  }
+
   // Obtener lista de profesionales
   public getProfessionals(stateId?: number, localityId?: number): Observable<ProfessionalBasic[]> {
     let params = this.apiService.createParams({

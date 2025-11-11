@@ -3,34 +3,27 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon, IonButtons, IonItem, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonButtons } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { search, refresh } from 'ionicons/icons';
+import { refresh } from 'ionicons/icons';
 import { FiltersSidebarComponent } from '../../../../shared/components/ui/filters-sidebar/filters-sidebar';
+import { SearchBarComponent } from '../../../../shared/components/ui/search-bar/search-bar';
 import { ProfessionalsListComponent } from '../../components/professionals-list/professionals-list';
 import { ProfessionalsListService, ProfessionalBasic } from './services/professionals-list.service';
-import { SharedDataService, GeoState, GeoLocality } from '../../../../shared/services/shared-data.service';
+import { SharedDataService } from '../../../../shared/services/shared-data.service';
 
 @Component({
   selector: 'app-professionals',
-  imports: [CommonModule, FormsModule, RouterModule, IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonButton, IonIcon, IonButtons, IonItem, IonSelect, IonSelectOption, FiltersSidebarComponent, ProfessionalsListComponent],
+  imports: [CommonModule, FormsModule, RouterModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonButtons, FiltersSidebarComponent, SearchBarComponent, ProfessionalsListComponent],
   templateUrl: './professionals.html',
   styleUrl: './professionals.css'
 })
 export class ProfessionalsComponent implements OnInit, OnDestroy {
-  searchQuery = '';
   professionals: ProfessionalBasic[] = [];
   displayedProfessionals: ProfessionalBasic[] = [];
   isLoading = false;
   hasMoreData = true;
-  isSearching = false;
   hasActiveSearch = false;
-
-  // Filtros de ubicación para búsqueda
-  provinces: GeoState[] = [];
-  selectedProvince: number | null = null;
-  cities: GeoLocality[] = [];
-  selectedCity: number | null = null;
 
   // Filtros de ubicación del sidebar
   selectedStateId: number | null = null;
@@ -46,60 +39,39 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private sharedDataService: SharedDataService
   ) {
-    addIcons({ search, refresh });
+    addIcons({ refresh });
   }
 
   ngOnInit() {
-    this.loadProvinces();
-    // Verificar si hay parámetros de consulta para filtrar por actividad o búsqueda
+    // Verificar si hay parámetros de consulta para filtrar por búsqueda
     this.route.queryParams.subscribe(params => {
-      if (params['activity']) {
-        this.searchQuery = params['activity'];
-        // Hacer búsqueda por actividad en el backend
-        this.searchByActivity(params['activity']);
-      } else if (params['search']) {
-        this.searchQuery = params['search'];
-        // Hacer búsqueda por actividad directamente
-        this.searchByActivity(params['search']);
+      if (params['search'] && params['search'] !== 'all') {
+        // Hay una búsqueda activa desde el search bar
+        this.hasActiveSearch = true;
+        // Hacer la búsqueda con el parámetro search
+        this.isLoading = true;
+        this.professionalsListService.searchProfessionals(
+          params['search'],
+          undefined, // activityId
+          undefined, // stateId
+          undefined  // localityId
+        ).subscribe({
+          next: (professionals) => {
+            this.professionals = professionals;
+            this.resetPagination();
+            this.isLoading = false; // Poner isLoading en false antes de cargar más
+            this.loadMoreProfessionals();
+          },
+          error: (error) => {
+            console.error('❌ Error al buscar profesionales:', error);
+            this.isLoading = false;
+          }
+        });
       } else {
         // Solo cargar lista completa si no hay parámetros de búsqueda
         this.loadProfessionals();
       }
     });
-  }
-
-  loadProvinces() {
-    this.sharedDataService.getProvincesByCountry(13).subscribe({
-      next: (provinces) => {
-        this.provinces = provinces;
-      },
-      error: (error) => {
-        console.error('Error loading provinces:', error);
-      }
-    });
-  }
-
-  onProvinceChange(event: any) {
-    const provinceId = event.detail.value;
-    this.selectedProvince = provinceId && provinceId !== 'all' ? parseInt(provinceId) : null;
-    this.selectedCity = null;
-    this.cities = [];
-
-    if (this.selectedProvince) {
-      this.sharedDataService.getLocalitiesByState(this.selectedProvince).subscribe({
-        next: (cities) => {
-          this.cities = cities;
-        },
-        error: (error) => {
-          console.error('Error loading cities:', error);
-        }
-      });
-    }
-  }
-
-  onCityChange(event: any) {
-    const cityId = event.detail.value;
-    this.selectedCity = cityId && cityId !== 'all' ? parseInt(cityId) : null;
   }
 
   ngOnDestroy() {
@@ -123,27 +95,33 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
   private resetPagination() {
     this.currentPage = 0;
     this.displayedProfessionals = [];
-    this.hasMoreData = true;
+    // hasMoreData será true si hay profesionales para mostrar
+    this.hasMoreData = this.professionals.length > 0;
   }
 
   loadMoreProfessionals() {
-    if (this.isLoading || !this.hasMoreData) return;
+    // Si no hay profesionales, no hay nada que mostrar
+    if (this.professionals.length === 0) {
+      this.hasMoreData = false;
+      return;
+    }
 
-    this.isLoading = true;
+    if (!this.hasMoreData) return;
 
-    // Simular carga asíncrona
-    setTimeout(() => {
-      const startIndex = this.currentPage * this.itemsPerPage;
-      const endIndex = startIndex + this.itemsPerPage;
-      const newProfessionals = this.professionals.slice(startIndex, endIndex);
+    const startIndex = this.currentPage * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    const newProfessionals = this.professionals.slice(startIndex, endIndex);
 
+    if (newProfessionals.length > 0) {
       this.displayedProfessionals = [...this.displayedProfessionals, ...newProfessionals];
       this.currentPage++;
 
       // Verificar si hay más datos
       this.hasMoreData = endIndex < this.professionals.length;
-      this.isLoading = false;
-    }, 500);
+    } else {
+      // Si no hay más profesionales para mostrar, marcar como sin más datos
+      this.hasMoreData = false;
+    }
   }
 
   onScroll(event: any) {
@@ -168,16 +146,8 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/professionals', professional.id]);
   }
 
-  onSearch() {
-    // Permitir búsqueda si hay texto O si hay filtros de ubicación
-    if (this.searchQuery.trim() || this.selectedProvince || this.selectedCity) {
-      const activityTerm = this.searchQuery.trim() || undefined;
-      this.searchByActivity(activityTerm);
-    }
-  }
-
   private searchByActivityId(activityId: number) {
-    this.isSearching = true;
+    this.isLoading = true;
 
     // Llamar al endpoint del backend para buscar por activity_id con filtros de ubicación
     this.professionalsListService.searchProfessionalsByActivity(
@@ -188,37 +158,21 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
       next: (professionals) => {
         this.professionals = professionals;
         this.resetPagination();
+        this.isLoading = false; // Poner isLoading en false antes de cargar más
         this.loadMoreProfessionals();
-        this.isSearching = false;
         this.hasActiveSearch = true; // Marcar que hay búsqueda activa
       },
       error: (error) => {
         console.error('❌ Error al buscar profesionales:', error);
-        this.isSearching = false;
+        this.isLoading = false;
       }
     });
   }
 
-  private searchByActivity(activityTerm?: string) {
-    // NOTA: Este método se mantiene por compatibilidad pero actualmente no se usa
-    // La búsqueda ahora se hace por activity_id a través de searchByActivityId
-    // TODO: Implementar búsqueda por texto si es necesario en el futuro
-    console.warn('searchByActivity con texto no está implementado. Usar activity_id en su lugar.');
-    this.onShowAll();
-  }
-
-  // Getter para verificar si se puede buscar
-  get canSearch(): boolean {
-    return !!(this.searchQuery.trim() || this.selectedProvince || this.selectedCity);
-  }
-
   onShowAll() {
-    this.searchQuery = '';
     this.hasActiveSearch = false;
-    // Limpiar filtros de ubicación de búsqueda
-    this.selectedProvince = null;
-    this.selectedCity = null;
-    this.cities = [];
+    // Limpiar query params y recargar
+    this.router.navigate(['/professionals'], { queryParams: {} });
     this.loadProfessionals();
   }
 
@@ -243,8 +197,4 @@ export class ProfessionalsComponent implements OnInit, OnDestroy {
     this.loadProfessionals(); // Recargar con el nuevo filtro
   }
 
-  onSearchInputEvent(event: any) {
-    this.searchQuery = event.detail.value;
-    // this.professionalsListService.setSearchQuery(this.searchQuery); // Desactivado para búsqueda manual con botón
-  }
 }

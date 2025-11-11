@@ -80,11 +80,14 @@ export class SearchBarComponent implements OnInit {
       this.isLoading = true;
 
       // Llamar al endpoint del backend
-      let params = this.apiService.createParams({});
+      let params = this.apiService.createParams({
+        page: '1',
+        limit: '6'
+      });
 
-      // Agregar activity solo si hay texto
+      // Agregar search solo si hay texto
       if (this.searchQuery.trim()) {
-        params = params.set('activity', this.searchQuery.trim());
+        params = params.set('search', this.searchQuery.trim());
       }
 
       // Agregar state_id si está seleccionado
